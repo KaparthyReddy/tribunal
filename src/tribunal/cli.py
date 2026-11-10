@@ -1,4 +1,5 @@
 import json
+import os
 import shlex
 from pathlib import Path
 from typing import Annotated, NoReturn
@@ -6,8 +7,9 @@ from typing import Annotated, NoReturn
 import typer
 
 from tribunal import __version__
+from tribunal.ci import CIError, load_pr_context, upsert_comment, write_outputs, write_step_summary
 from tribunal.config import get_settings
-from tribunal.gitutil import GitError
+from tribunal.gitutil import GitError, merge_base
 from tribunal.ledger import compute_trust
 from tribunal.llm import LLMError
 from tribunal.models import SignedReceipt, Verdict
@@ -15,7 +17,7 @@ from tribunal.pipeline import PipelineError, SubmissionError, build_pipeline
 from tribunal.receipts import ReceiptSigner, verify_receipt
 from tribunal.sandbox import SandboxUnavailableError, WorkspaceError
 from tribunal.store import Store
-from tribunal.summary import render_text
+from tribunal.summary import render_markdown, render_text
 
 app = typer.Typer(
     add_completion=False,
@@ -25,6 +27,16 @@ app = typer.Typer(
 
 EXIT_CODES = {Verdict.PASS: 0, Verdict.FAIL: 1, Verdict.INCONCLUSIVE: 2}
 EXIT_ERROR = 3
+
+HANDLED = (
+    CIError,
+    GitError,
+    LLMError,
+    PipelineError,
+    SandboxUnavailableError,
+    SubmissionError,
+    WorkspaceError,
+)
 
 
 def _fail(message: str) -> NoReturn:
@@ -52,9 +64,7 @@ def version() -> None:
 
 @app.command()
 def submit(
-    repo_path: Annotated[Path, typer.Option("--repo-path", help="Local git repository")] = Path(
-        "."
-    ),
+    repo_path: Annotated[Path, typer.Option("--repo-path", help="Local git repo")] = Path("."),
     base: Annotated[str, typer.Option(help="Base ref")] = "HEAD~1",
     head: Annotated[str, typer.Option(help="Head ref")] = "HEAD",
     title: Annotated[str, typer.Option(help="PR title")] = "",
@@ -77,18 +87,85 @@ def submit(
             test_command=shlex.split(test_cmd) if test_cmd else [],
         )
         receipt = pipeline.run(submission.id)
-    except (
-        SubmissionError,
-        PipelineError,
-        LLMError,
-        SandboxUnavailableError,
-        WorkspaceError,
-        GitError,
-    ) as exc:
+    except HANDLED as exc:
         _fail(str(exc))
 
     typer.echo(receipt.model_dump_json(indent=2) if as_json else render_text(receipt))
     raise typer.Exit(EXIT_CODES[receipt.body.verdict])
+
+
+@app.command("ci")
+def ci_cmd(
+    repo_path: Annotated[Path, typer.Option("--repo-path", help="Repository checkout")] = Path("."),
+    test_cmd: Annotated[
+        str | None,
+        typer.Option("--test-cmd", envvar="TRIBUNAL_TEST_COMMAND", help="Test command"),
+    ] = None,
+    agent: Annotated[
+        str | None,
+        typer.Option(envvar="TRIBUNAL_AGENT", help="Agent name, defaults to the PR author"),
+    ] = None,
+    comment: Annotated[
+        bool,
+        typer.Option("--comment/--no-comment", envvar="TRIBUNAL_COMMENT", help="Post a PR comment"),
+    ] = True,
+    fail_on: Annotated[
+        str,
+        typer.Option(envvar="TRIBUNAL_FAIL_ON", help="Fail the job on 'fail' or 'inconclusive'"),
+    ] = "fail",
+    receipt_out: Annotated[
+        Path | None,
+        typer.Option("--receipt-out", envvar="TRIBUNAL_RECEIPT_OUT", help="Write receipt JSON"),
+    ] = None,
+) -> None:
+    if fail_on not in {"fail", "inconclusive"}:
+        _fail("--fail-on must be 'fail' or 'inconclusive'")
+    event_path = os.environ.get("GITHUB_EVENT_PATH")
+    if not event_path:
+        _fail("GITHUB_EVENT_PATH is not set; run this inside GitHub Actions")
+
+    try:
+        context = load_pr_context(event_path)
+        base = merge_base(repo_path, context.base_sha, context.head_sha)
+        pipeline = build_pipeline()
+        submission = pipeline.submit(
+            repo_path=repo_path,
+            base=base,
+            head=context.head_sha,
+            repo=context.repo,
+            title=context.title,
+            description=context.body,
+            agent=agent or context.author,
+            test_command=shlex.split(test_cmd) if test_cmd else [],
+        )
+        receipt = pipeline.run(submission.id)
+    except HANDLED as exc:
+        _fail(str(exc))
+
+    markdown = render_markdown(receipt)
+    write_step_summary(markdown)
+    write_outputs(receipt)
+    if receipt_out is not None:
+        receipt_out.parent.mkdir(parents=True, exist_ok=True)
+        receipt_out.write_text(receipt.model_dump_json(indent=2), encoding="utf-8")
+    typer.echo(render_text(receipt))
+
+    if comment:
+        token = os.environ.get("GITHUB_TOKEN")
+        if not token:
+            typer.echo("warning: GITHUB_TOKEN is not set, skipping comment", err=True)
+        else:
+            try:
+                typer.echo(f"comment: {upsert_comment(context.repo, context.number, token, markdown)}")
+            except CIError as exc:
+                typer.echo(f"warning: {exc}", err=True)
+
+    verdict = receipt.body.verdict
+    if verdict is Verdict.FAIL:
+        raise typer.Exit(EXIT_CODES[Verdict.FAIL])
+    if verdict is Verdict.INCONCLUSIVE and fail_on == "inconclusive":
+        raise typer.Exit(EXIT_CODES[Verdict.INCONCLUSIVE])
+    raise typer.Exit(0)
 
 
 @app.command()
@@ -129,13 +206,15 @@ def verify_receipt_cmd(
     intact = verify_receipt(receipt)
     signer_ok = expected is None or receipt.public_key == expected
 
-    typer.echo(f"integrity: {'valid' if intact else 'INVALID'}")
     if expected is None:
-        typer.echo("signer: not checked")
+        signer_text = "not checked"
+    elif signer_ok:
+        signer_text = "matches expected key"
     else:
-        typer.echo(
-            f"signer: {'matches expected key' if signer_ok else 'DIFFERENT from expected key'}"
-        )
+        signer_text = "DIFFERENT from expected key"
+
+    typer.echo(f"integrity: {'valid' if intact else 'INVALID'}")
+    typer.echo(f"signer: {signer_text}")
     typer.echo(f"verdict: {receipt.body.verdict.value}  head: {receipt.body.head_sha[:12]}")
     raise typer.Exit(0 if intact and signer_ok else 1)
 
