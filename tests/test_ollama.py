@@ -87,9 +87,7 @@ def test_ping_ok() -> None:
 
 
 def test_ping_missing_model() -> None:
-    client = _client(
-        lambda request: httpx.Response(200, json={"models": [{"name": "other:2"}]})
-    )
+    client = _client(lambda request: httpx.Response(200, json={"models": [{"name": "other:2"}]}))
     with pytest.raises(LLMError, match="ollama pull"):
         client.ping()
 
