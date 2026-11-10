@@ -28,6 +28,12 @@ A human reads the verdict and the receipt, not the raw diff.
 - A verdict is bound to a head SHA; a new commit invalidates old evidence
 - Only the Judge decides the verdict, and it uses no LLM
 
+## Models
+
+Tribunal runs on a local model through Ollama by default. No API key is needed.
+Anthropic is supported by setting `TRIBUNAL_LLM_PROVIDER=anthropic` and `ANTHROPIC_API_KEY`.
+Weaker models produce weaker probes and more `inconclusive` verdicts, never a false `pass`.
+
 ## Quick start
 
 ```bash
@@ -35,10 +41,11 @@ git clone https://github.com/KaparthyReddy/tribunal.git
 cd tribunal
 cp .env.example .env
 uv sync
+ollama pull qwen2.5-coder:7b
 docker info
 ```
 
-Put `ANTHROPIC_API_KEY` in `.env`, then verify a change:
+Verify a change:
 
 ```bash
 uv run tribunal submit --repo-path /path/to/repo --base HEAD~1 --head HEAD \
