@@ -32,3 +32,12 @@ def changed_files(repo_path: Path, base_sha: str, head_sha: str) -> list[str]:
 def tracked_files(repo_path: Path, sha: str, limit: int = 300) -> list[str]:
     text = _git(repo_path, "ls-tree", "-r", "--name-only", sha)
     return text.splitlines()[:limit]
+
+
+def merge_base(repo_path: Path, a: str, b: str) -> str:
+    try:
+        return _git(repo_path, "merge-base", a, b).strip()
+    except GitError as exc:
+        raise GitError(
+            f"no merge base for {a[:12]} and {b[:12]}; fetch full history (fetch-depth: 0)"
+        ) from exc
