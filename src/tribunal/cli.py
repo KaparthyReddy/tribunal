@@ -156,7 +156,9 @@ def ci_cmd(
             typer.echo("warning: GITHUB_TOKEN is not set, skipping comment", err=True)
         else:
             try:
-                typer.echo(f"comment: {upsert_comment(context.repo, context.number, token, markdown)}")
+                typer.echo(
+                    f"comment: {upsert_comment(context.repo, context.number, token, markdown)}"
+                )
             except CIError as exc:
                 typer.echo(f"warning: {exc}", err=True)
 

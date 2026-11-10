@@ -1,8 +1,8 @@
 from pathlib import Path
 
 import pytest
-from conftest import git
 
+from conftest import git
 from tribunal.gitutil import GitError, merge_base
 
 
