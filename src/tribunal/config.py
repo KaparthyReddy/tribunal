@@ -1,5 +1,6 @@
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import AliasChoices, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -22,8 +23,16 @@ class Settings(BaseSettings):
     sandbox_pids_limit: int = 256
     sandbox_max_output_bytes: int = 65536
 
-    llm_model: str = "claude-sonnet-5-5"
+    llm_provider: Literal["ollama", "anthropic"] = "ollama"
     llm_max_tokens: int = 4096
+    llm_temperature: float = 0.0
+
+    ollama_host: str = "http://localhost:11434"
+    ollama_model: str = "qwen2.5-coder:7b"
+    ollama_num_ctx: int = 16384
+    ollama_timeout_s: int = 600
+
+    llm_model: str = "claude-sonnet-5-5"
     anthropic_api_key: str | None = Field(
         default=None,
         validation_alias=AliasChoices("TRIBUNAL_ANTHROPIC_API_KEY", "ANTHROPIC_API_KEY"),
