@@ -1,0 +1,24 @@
+name: Tribunal
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  verify:
+    if: >-
+      contains(github.event.pull_request.labels.*.name, 'tribunal') &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./action
+        with:
+          anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
