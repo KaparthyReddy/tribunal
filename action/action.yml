@@ -65,6 +65,7 @@ runs:
       env:
         ANTHROPIC_API_KEY: ${{ inputs.anthropic-api-key }}
         GITHUB_TOKEN: ${{ inputs.github-token }}
+        TRIBUNAL_LLM_PROVIDER: anthropic
         TRIBUNAL_DATA_DIR: ${{ runner.temp }}/tribunal
         TRIBUNAL_SANDBOX_IMAGE: ${{ inputs.sandbox-image }}
         TRIBUNAL_LLM_MODEL: ${{ inputs.model }}
