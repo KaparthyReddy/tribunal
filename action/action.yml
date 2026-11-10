@@ -1,0 +1,82 @@
+name: Tribunal
+description: Adversarial verification for AI-written code. Attacks a pull request in a sandbox and reports a signed verdict.
+author: Tribunal contributors
+
+branding:
+  icon: shield
+  color: blue
+
+inputs:
+  anthropic-api-key:
+    description: Anthropic API key used by the verification agents.
+    required: true
+  github-token:
+    description: Token used to post the verdict comment.
+    required: false
+    default: ${{ github.token }}
+  test-command:
+    description: Command that runs the project tests inside the sandbox image, for example "python -m pytest -q".
+    required: false
+    default: ""
+  sandbox-image:
+    description: Docker image used for every sandboxed command. It must already contain the project's test dependencies.
+    required: false
+    default: python:3.12-slim
+  model:
+    description: Anthropic model used by the agents.
+    required: false
+    default: claude-sonnet-5-5
+  agent:
+    description: Name of the agent that wrote the change. Defaults to the pull request author.
+    required: false
+    default: ""
+  comment:
+    description: Post or update a verdict comment on the pull request.
+    required: false
+    default: "true"
+  fail-on:
+    description: Fail the job on "fail" verdicts only, or also on "inconclusive" ones.
+    required: false
+    default: fail
+
+outputs:
+  verdict:
+    description: pass, fail or inconclusive.
+    value: ${{ steps.verify.outputs.verdict }}
+  receipt-id:
+    description: Id of the signed receipt.
+    value: ${{ steps.verify.outputs.receipt-id }}
+  digest:
+    description: SHA-256 digest of the receipt body.
+    value: ${{ steps.verify.outputs.digest }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - name: Install Tribunal
+      shell: bash
+      run: python -m pip install --quiet "${{ github.action_path }}/.."
+    - name: Verify pull request
+      id: verify
+      shell: bash
+      env:
+        ANTHROPIC_API_KEY: ${{ inputs.anthropic-api-key }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        TRIBUNAL_DATA_DIR: ${{ runner.temp }}/tribunal
+        TRIBUNAL_SANDBOX_IMAGE: ${{ inputs.sandbox-image }}
+        TRIBUNAL_LLM_MODEL: ${{ inputs.model }}
+        TRIBUNAL_TEST_COMMAND: ${{ inputs.test-command }}
+        TRIBUNAL_AGENT: ${{ inputs.agent }}
+        TRIBUNAL_COMMENT: ${{ inputs.comment }}
+        TRIBUNAL_FAIL_ON: ${{ inputs.fail-on }}
+        TRIBUNAL_RECEIPT_OUT: ${{ runner.temp }}/tribunal-receipt.json
+      run: tribunal ci
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: tribunal-receipt
+        path: ${{ runner.temp }}/tribunal-receipt.json
+        if-no-files-found: ignore
