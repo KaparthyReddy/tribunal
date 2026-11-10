@@ -32,7 +32,9 @@ def test_pass_end_to_end(scenario, make_runner, make_pipeline, probes_json) -> N
 
 def test_regression_fails(scenario, make_runner, make_pipeline, probes_json, is_head) -> None:
     repo, shas = scenario
-    runner = make_runner(lambda workdir, argv: (1, "FAILED", "") if is_head(workdir) else (0, "", ""))
+    runner = make_runner(
+        lambda workdir, argv: (1, "FAILED", "") if is_head(workdir) else (0, "", "")
+    )
     pipe = make_pipeline(runner, ScriptedLLM([probes_json]))
 
     submission = pipe.submit(

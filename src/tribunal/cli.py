@@ -52,7 +52,9 @@ def version() -> None:
 
 @app.command()
 def submit(
-    repo_path: Annotated[Path, typer.Option("--repo-path", help="Local git repository")] = Path("."),
+    repo_path: Annotated[Path, typer.Option("--repo-path", help="Local git repository")] = Path(
+        "."
+    ),
     base: Annotated[str, typer.Option(help="Base ref")] = "HEAD~1",
     head: Annotated[str, typer.Option(help="Head ref")] = "HEAD",
     title: Annotated[str, typer.Option(help="PR title")] = "",
@@ -131,7 +133,9 @@ def verify_receipt_cmd(
     if expected is None:
         typer.echo("signer: not checked")
     else:
-        typer.echo(f"signer: {'matches expected key' if signer_ok else 'DIFFERENT from expected key'}")
+        typer.echo(
+            f"signer: {'matches expected key' if signer_ok else 'DIFFERENT from expected key'}"
+        )
     typer.echo(f"verdict: {receipt.body.verdict.value}  head: {receipt.body.head_sha[:12]}")
     raise typer.Exit(0 if intact and signer_ok else 1)
 

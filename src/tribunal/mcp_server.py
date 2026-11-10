@@ -113,9 +113,7 @@ def create_server(pipeline: Pipeline | None = None, settings: Settings | None = 
         and description so every claim in them is checked. test_command is the argv that runs
         the project's tests, for example ["python", "-m", "pytest", "-q"].
         """
-        return tools.submit(
-            repo_path, base, head, title, description, agent, test_command, repo
-        )
+        return tools.submit(repo_path, base, head, title, description, agent, test_command, repo)
 
     @server.tool()
     def verdict(submission_id: str) -> dict[str, Any]:
