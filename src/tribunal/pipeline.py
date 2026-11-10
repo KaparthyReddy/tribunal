@@ -16,7 +16,7 @@ from tribunal.agents import (
 from tribunal.config import Settings, get_settings
 from tribunal.graph import changed_ranges
 from tribunal.ledger import compute_trust, policy_for
-from tribunal.llm import AnthropicClient, LLMClient, LLMError
+from tribunal.llm import LLMClient, LLMError, make_llm, preflight
 from tribunal.models import Claim, Finding, Severity, SignedReceipt, Submission, SubmissionStatus
 from tribunal.receipts import ReceiptSigner
 from tribunal.sandbox import SandboxPolicy, SandboxRunner, WorkspaceError, resolve_sha, workspace
@@ -174,11 +174,11 @@ class Pipeline:
 class _DeferredLLM:
     def __init__(self, settings: Settings) -> None:
         self._settings = settings
-        self._client: AnthropicClient | None = None
+        self._client: LLMClient | None = None
 
     def complete(self, system: str, user: str, *, max_tokens: int | None = None) -> str:
         if self._client is None:
-            self._client = AnthropicClient.from_settings(self._settings)
+            self._client = make_llm(self._settings)
         return self._client.complete(system, user, max_tokens=max_tokens)
 
 
@@ -199,10 +199,10 @@ def build_pipeline(
         runner = sandbox
 
     def prepare() -> None:
+        if llm is None:
+            preflight(settings)
         if sandbox is not None:
             sandbox.ensure_image()
-        if llm is None and not settings.anthropic_api_key:
-            raise LLMError("ANTHROPIC_API_KEY is not set")
 
     return Pipeline(
         store,
