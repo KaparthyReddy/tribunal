@@ -107,5 +107,7 @@ def generate_mutants(
             continue
         if mutated == original:
             continue
-        mutants.append(Mutant(file=file, line=lineno, description=description, source=mutated + "\n"))
+        mutants.append(
+            Mutant(file=file, line=lineno, description=description, source=mutated + "\n")
+        )
     return mutants

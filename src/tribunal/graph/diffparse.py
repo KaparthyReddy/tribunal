@@ -50,7 +50,9 @@ def parse_unified_diff_ranges(text: str) -> dict[str, list[tuple[int, int]]]:
     return ranges
 
 
-def changed_ranges(repo_path: Path, base_sha: str, head_sha: str) -> dict[str, list[tuple[int, int]]]:
+def changed_ranges(
+    repo_path: Path, base_sha: str, head_sha: str
+) -> dict[str, list[tuple[int, int]]]:
     result = subprocess.run(
         [
             "git",

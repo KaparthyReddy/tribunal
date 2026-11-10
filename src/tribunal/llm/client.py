@@ -33,9 +33,7 @@ def extract_json(text: str) -> Any:
     raise LLMError("no JSON found in model output")
 
 
-def complete_json(
-    llm: LLMClient, system: str, user: str, *, max_tokens: int | None = None
-) -> Any:
+def complete_json(llm: LLMClient, system: str, user: str, *, max_tokens: int | None = None) -> Any:
     return extract_json(llm.complete(system, user, max_tokens=max_tokens))
 
 

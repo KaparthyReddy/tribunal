@@ -8,9 +8,7 @@ from tribunal.models import ClaimKind, Submission
 
 
 def _submission(**kwargs: str) -> Submission:
-    return Submission(
-        repo="o/r", repo_path=".", base_sha="a" * 40, head_sha="b" * 40, **kwargs
-    )
+    return Submission(repo="o/r", repo_path=".", base_sha="a" * 40, head_sha="b" * 40, **kwargs)
 
 
 def test_extracts_dedupes_and_normalizes_kind() -> None:

@@ -63,9 +63,7 @@ def test_fix_with_failing_head_refuted(tmp_path: Path, make_runner) -> None:
 
 def test_fix_supported_with_targeted_check(tmp_path: Path, make_runner) -> None:
     runner = make_runner(lambda workdir, argv: (0, "1\n", ""))
-    llm = ScriptedLLM(
-        [_plan(_check(["python", "-c", "print(1)"])), _verdict("supported", [0])]
-    )
+    llm = ScriptedLLM([_plan(_check(["python", "-c", "print(1)"])), _verdict("supported", [0])])
     ctx = _ctx(tmp_path)
     result = Auditor(llm, runner).audit(ctx, [_claim(ClaimKind.FIXES)])
 

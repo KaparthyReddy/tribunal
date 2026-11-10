@@ -144,7 +144,11 @@ def test_custom_policy(tmp_path: Path, submission: Submission) -> None:
 
 
 def test_issue_signs_and_sorts_findings(judge: Judge, submission: Submission) -> None:
-    findings = [_finding(Severity.LOW, "l"), _finding(Severity.HIGH, "h"), _finding(Severity.INFO, "i")]
+    findings = [
+        _finding(Severity.LOW, "l"),
+        _finding(Severity.HIGH, "h"),
+        _finding(Severity.INFO, "i"),
+    ]
     receipt = judge.issue(submission, [], [], findings, [_command()])
     assert verify_receipt(receipt)
     assert receipt.body.verdict is Verdict.FAIL

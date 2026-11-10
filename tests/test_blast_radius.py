@@ -19,9 +19,7 @@ def test_uncovered_function_is_flagged(tmp_path: Path) -> None:
     _write(
         tmp_path,
         {
-            "lib.py": (
-                "def covered():\n    return 1\n\n\ndef uncovered():\n    return 2\n"
-            ),
+            "lib.py": ("def covered():\n    return 1\n\n\ndef uncovered():\n    return 2\n"),
             "test_lib.py": (
                 "from lib import covered\n\n\ndef test_covered():\n    assert covered() == 1\n"
             ),

@@ -276,9 +276,11 @@ class Auditor:
         explanation = str(data.get("explanation", ""))[:1000]
         allowed = set(indexes)
         cited_raw = data.get("evidence", [])
-        cited = [i for i in cited_raw if isinstance(i, int) and i in allowed] if isinstance(
-            cited_raw, list
-        ) else []
+        cited = (
+            [i for i in cited_raw if isinstance(i, int) and i in allowed]
+            if isinstance(cited_raw, list)
+            else []
+        )
         return status, explanation, cited
 
     def _record(
