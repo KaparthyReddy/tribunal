@@ -29,6 +29,13 @@ class Settings(BaseSettings):
         validation_alias=AliasChoices("TRIBUNAL_ANTHROPIC_API_KEY", "ANTHROPIC_API_KEY"),
     )
 
+    ledger_enabled: bool = True
+    allowed_repo_roots: list[Path] = Field(default_factory=list)
+
+    api_token: str | None = None
+    api_host: str = "127.0.0.1"
+    api_port: int = 8000
+
     @property
     def db_path(self) -> Path:
         return self.data_dir / "tribunal.sqlite3"
