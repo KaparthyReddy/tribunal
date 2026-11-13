@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from benchmark.baseline import review
-from benchmark.cases import ALL_CASES
+from benchmark.cases import CASE_SETS
 from benchmark.model import TEST_COMMAND, Case, build_repo
 from benchmark.report import headline_markdown
 from tribunal import __version__, gitutil
@@ -27,15 +27,38 @@ SystemFn = Callable[[Case, Path, str, str], dict[str, Any]]
 Progress = Callable[[int, int, list[dict[str, Any]]], None]
 
 
-def select_cases(only: str | None) -> list[Case]:
+def select_cases(only: str | None, case_set: str = "dev") -> list[Case]:
+    if case_set == "all":
+        pool = [*CASE_SETS["dev"], *CASE_SETS["holdout"]]
+    elif case_set in CASE_SETS:
+        pool = list(CASE_SETS[case_set])
+    else:
+        raise ValueError(f"unknown case set {case_set!r}")
     if not only:
-        return list(ALL_CASES)
+        return pool
     wanted = [item.strip() for item in only.split(",") if item.strip()]
-    by_id = {case.id: case for case in ALL_CASES}
+    by_id = {case.id: case for case in pool}
     unknown = [item for item in wanted if item not in by_id]
     if unknown:
         raise ValueError(f"unknown case id(s): {', '.join(unknown)}")
     return [by_id[item] for item in wanted]
+
+
+def default_out(case_set: str) -> Path:
+    if case_set == "dev":
+        return Path("benchmark/results")
+    return Path(f"benchmark/results-{case_set}")
+
+
+def holdout_guard(case_set: str, out: Path, force: bool) -> str | None:
+    if case_set not in {"holdout", "all"} or force:
+        return None
+    if (out / "results.json").exists():
+        return (
+            f"{out / 'results.json'} already exists. The holdout set is run once; "
+            "pass --force to overwrite it."
+        )
+    return None
 
 
 def _timed(fn: SystemFn, case: Case, repo: Path, base: str, head: str) -> dict[str, Any]:
@@ -131,7 +154,7 @@ def _describe(row: dict[str, Any]) -> str:
         if key in row:
             parts.append(f"{key}={row[key]['outcome']}")
             seconds += row[key].get("seconds", 0.0)
-    return f"{row['id']:<26} {'  '.join(parts)}  ({seconds:.0f}s)"
+    return f"{row['id']:<30} {'  '.join(parts)}  ({seconds:.0f}s)"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -139,25 +162,34 @@ def main(argv: list[str] | None = None) -> int:
         prog="python -m benchmark.run",
         description="Score Tribunal against a plain LLM review on seeded-bug changes.",
     )
+    parser.add_argument("--set", dest="case_set", choices=["dev", "holdout", "all"], default="dev")
     parser.add_argument("--only", help="comma separated case ids")
-    parser.add_argument("--out", type=Path, default=Path("benchmark/results"))
+    parser.add_argument("--out", type=Path, default=None)
     parser.add_argument("--skip-baseline", action="store_true")
     parser.add_argument("--skip-tribunal", action="store_true")
+    parser.add_argument("--force", action="store_true", help="overwrite existing holdout results")
     parser.add_argument("--list", action="store_true", help="list cases and exit")
     args = parser.parse_args(argv)
 
+    out = args.out or default_out(args.case_set)
+
     try:
-        cases = select_cases(args.only)
+        cases = select_cases(args.only, args.case_set)
     except ValueError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
 
     if args.list:
         for case in cases:
-            print(f"{case.id:<26} {case.category:<12} {case.expect:<6} {case.title}")
+            print(f"{case.id:<30} {case.category:<20} {case.expect:<6} {case.title}")
         return 0
     if args.skip_baseline and args.skip_tribunal:
         print("error: nothing to run", file=sys.stderr)
+        return 2
+
+    blocked = holdout_guard(args.case_set, out, args.force)
+    if blocked:
+        print(f"error: {blocked}", file=sys.stderr)
         return 2
 
     with tempfile.TemporaryDirectory(prefix="tribunal-bench-") as tmp:
@@ -174,12 +206,11 @@ def main(argv: list[str] | None = None) -> int:
             print(f"error: {exc}", file=sys.stderr)
             return 3
 
-        tribunal_fn = (
-            None if args.skip_tribunal else make_tribunal_fn(settings, args.out / "receipts")
-        )
+        tribunal_fn = None if args.skip_tribunal else make_tribunal_fn(settings, out / "receipts")
         baseline_fn = None if args.skip_baseline else make_baseline_fn(make_llm(settings))
 
         meta = {
+            "set": args.case_set,
             "started_at": datetime.now(UTC).isoformat(timespec="seconds"),
             "provider": settings.llm_provider,
             "model": (
@@ -191,7 +222,7 @@ def main(argv: list[str] | None = None) -> int:
 
         def progress(index: int, total: int, rows: list[dict[str, Any]]) -> None:
             print(f"[{index}/{total}] {_describe(rows[-1])}", flush=True)
-            write_results(args.out, meta, rows)
+            write_results(out, meta, rows)
 
         rows = evaluate(
             cases,
@@ -201,10 +232,10 @@ def main(argv: list[str] | None = None) -> int:
             progress=progress,
         )
 
-    results = write_results(args.out, meta, rows)
+    results = write_results(out, meta, rows)
     print()
     print(headline_markdown(results))
-    print(f"\nresults: {args.out / 'results.json'}")
+    print(f"\nresults: {out / 'results.json'}")
     return 0
 
 
