@@ -1,0 +1,164 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_ad37d6c65f02",
+    "submission_id": "sub_0a36e809f114",
+    "repo": "clean-real-fix",
+    "base_sha": "30204a5c61fb2b635b2e7d429d7337bf13624ce8",
+    "head_sha": "6cba2dbe8ca15c8db5b7262527ada0cd69fbd4b8",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 6cba2dbe8ca1. 7 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "fixes ZeroDivisionError in safe_div",
+        "kind": "fixes"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "The evidence shows that in the base version, running `python -c 'import safe; print(safe.safe_div(1, 0))'` results in a ZeroDivisionError. However, in the head version, the same command does not raise an error and instead prints None, indicating that the ZeroDivisionError has been handled as claimed.",
+        "command_indexes": [
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Skeptic produced no valid probes",
+        "detail": "",
+        "severity": "low",
+        "command_indexes": []
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 2/2 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.283,
+        "started_at": "2026-11-10T10:46:10.153453Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.232,
+        "started_at": "2026-11-10T10:46:10.437363Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import safe; print(safe.safe_div(1, 0))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/work/safe.py\", line 2, in safe_div\n    return a / b\n           ~~^~~\nZeroDivisionError: division by zero\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.233,
+        "started_at": "2026-11-10T10:46:19.146105Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import safe; print(safe.safe_div(1, 0))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "None\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.115,
+        "started_at": "2026-11-10T10:46:19.379281Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.358,
+        "started_at": "2026-11-10T10:46:56.803311Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "FE\n======================================================================\nERROR: test_zero_divisor (test_safe.T.test_zero_divisor)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_safe.py\", line 11, in test_zero_divisor\n    self.assertIsNone(safe_div(1, 0))\n                      ^^^^^^^^^^^^^^\n  File \"/work/safe.py\", line 4, in safe_div\n    return a / b\n           ~~^~~\nZeroDivisionError: division by zero\n\n======================================================================\nFAIL: test_safe_div (test_safe.T.test_safe_div)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_safe.py\", line 8, in test_safe_div\n    self.assertEqual(safe_div(6, 3), 2)\nAssertionError: None != 2\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1, errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.221,
+        "started_at": "2026-11-10T10:46:57.161693Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".E\n======================================================================\nERROR: test_zero_divisor (test_safe.T.test_zero_divisor)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_safe.py\", line 11, in test_zero_divisor\n    self.assertIsNone(safe_div(1, 0))\n                      ^^^^^^^^^^^^^^\n  File \"/work/safe.py\", line 4, in safe_div\n    return a / b\n           ~~^~~\nZeroDivisionError: division by zero\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.22,
+        "started_at": "2026-11-10T10:46:57.383919Z"
+      }
+    ],
+    "issued_at": "2026-11-10T10:46:57.605847Z"
+  },
+  "digest": "06bf04130c74e8293ae5158e01b706b71dee25b094e33b3e381c347c5786c242",
+  "signature": "sP6HXCKGSNnVlLfyqM8CfOquZNI3YueyE27t9J4ZhQuRdDLVOC4cvydz/xlz17ZcIR1FRNLnI+CBkHuMTsdrAg==",
+  "public_key": "NcTDtqFNt+Pb3DWBkUVHMgy2M+DJlmu4vyYaqhIz97o="
+}

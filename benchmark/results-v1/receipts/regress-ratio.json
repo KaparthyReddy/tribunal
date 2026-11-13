@@ -1,0 +1,369 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_468c834d4880",
+    "submission_id": "sub_dbfd9fdb5b3e",
+    "repo": "regress-ratio",
+    "base_sha": "c6f65a17e7caeab4810a3adaf563fc71056a0c76",
+    "head_sha": "450760a8358f1a9ff161642368e7b2d091693a31",
+    "verdict": "fail",
+    "rationale": "4 blocking issue(s):\n- Regression: test command passes on base but fails on head\n- Claim refuted: No behavior change.\n- Probe broke the change: Test with floats\n- Probe broke the change: Test with negative values",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "Normalizes operand order in ratio.",
+        "kind": "other"
+      },
+      {
+        "id": "c2",
+        "text": "No behavior change.",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The evidence does not directly demonstrate that the code change normalizes operand order in ratio, as the failing tests and output do not provide information about how operands are being ordered or if the issue was related to operand order.",
+        "command_indexes": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "claim_id": "c2",
+        "status": "refuted",
+        "explanation": "The test command passes on base but fails on head, so behavior changed.",
+        "command_indexes": [
+          0,
+          1
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Regression: test command passes on base but fails on head",
+        "detail": "`python -m unittest` exits 0 on the base commit and non-zero on head.",
+        "severity": "high",
+        "command_indexes": [
+          0,
+          1
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim refuted: No behavior change.",
+        "detail": "The test command passes on base but fails on head, so behavior changed.",
+        "severity": "high",
+        "command_indexes": [
+          0,
+          1
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe broke the change: Test with floats",
+        "detail": "Passes on base, fails on head.\nF\n======================================================================\nFAIL: test_floats (tribunal_probes.probe_2.TestRatio.test_floats)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_floats\n    self.assertEqual(ratio(10.5, 2.1), 5)\nAssertionError: 0.2 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "high",
+        "command_indexes": [
+          7,
+          8
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe broke the change: Test with negative values",
+        "detail": "Passes on base, fails on head.\nF\n======================================================================\nFAIL: test_negative (tribunal_probes.probe_4.TestRatio.test_negative)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 5, in test_negative\n    self.assertEqual(ratio(-10, 5), -2)\nAssertionError: -0.5 != -2\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "high",
+        "command_indexes": [
+          11,
+          12
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim not verified: Normalizes operand order in ratio.",
+        "detail": "The evidence does not directly demonstrate that the code change normalizes operand order in ratio, as the failing tests and output do not provide information about how operands are being ordered or if the issue was related to operand order.",
+        "severity": "low",
+        "command_indexes": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Test with integers",
+        "detail": "F\n======================================================================\nFAIL: test_integers (tribunal_probes.probe_1.TestRatio.test_integers)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 5, in test_integers\n    self.assertEqual(ratio(10, 5), 5)\nAssertionError: 0.5 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          5,
+          6
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Test with zero",
+        "detail": "F\n======================================================================\nFAIL: test_zero (tribunal_probes.probe_3.TestRatio.test_zero)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 5, in test_zero\n    self.assertEqual(ratio(10, 0), float('inf'))\nAssertionError: 0.0 != inf\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          9,
+          10
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation testing skipped: test command does not pass on head",
+        "detail": "",
+        "severity": "low",
+        "command_indexes": [
+          13
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.26,
+        "started_at": "2026-11-10T10:38:51.299419Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_ratio (test_ratio.T.test_ratio)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_ratio.py\", line 8, in test_ratio\n    self.assertEqual(ratio(4, 2), 2)\nAssertionError: 0.5 != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.219,
+        "started_at": "2026-11-10T10:38:51.559516Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import ratio; print(ratio.ratio(3, 6))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "2.0\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.169,
+        "started_at": "2026-11-10T10:38:57.619280Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_ratio.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.214,
+        "started_at": "2026-11-10T10:38:57.788207Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_ratio.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_ratio (test_ratio.T.test_ratio)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_ratio.py\", line 8, in test_ratio\n    self.assertEqual(ratio(4, 2), 2)\nAssertionError: 0.5 != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.212,
+        "started_at": "2026-11-10T10:38:58.002264Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_integers (tribunal_probes.probe_1.TestRatio.test_integers)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 5, in test_integers\n    self.assertEqual(ratio(10, 5), 5)\nAssertionError: 0.5 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.362,
+        "started_at": "2026-11-10T10:39:32.512865Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_integers (tribunal_probes.probe_1.TestRatio.test_integers)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 5, in test_integers\n    self.assertEqual(ratio(10, 5), 5)\nAssertionError: 2.0 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.225,
+        "started_at": "2026-11-10T10:39:32.875220Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_floats (tribunal_probes.probe_2.TestRatio.test_floats)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_floats\n    self.assertEqual(ratio(10.5, 2.1), 5)\nAssertionError: 0.2 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.208,
+        "started_at": "2026-11-10T10:39:33.100599Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.223,
+        "started_at": "2026-11-10T10:39:33.308927Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_zero (tribunal_probes.probe_3.TestRatio.test_zero)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 5, in test_zero\n    self.assertEqual(ratio(10, 0), float('inf'))\nAssertionError: 0.0 != inf\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.229,
+        "started_at": "2026-11-10T10:39:33.532323Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_zero (tribunal_probes.probe_3.TestRatio.test_zero)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 5, in test_zero\n    self.assertEqual(ratio(10, 0), float('inf'))\n                     ^^^^^^^^^^^^\n  File \"/work/ratio.py\", line 2, in ratio\n    return a / b\n           ~~^~~\nZeroDivisionError: division by zero\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.227,
+        "started_at": "2026-11-10T10:39:33.762120Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_negative (tribunal_probes.probe_4.TestRatio.test_negative)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 5, in test_negative\n    self.assertEqual(ratio(-10, 5), -2)\nAssertionError: -0.5 != -2\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.24,
+        "started_at": "2026-11-10T10:39:33.989232Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.211,
+        "started_at": "2026-11-10T10:39:34.229508Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_ratio (test_ratio.T.test_ratio)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_ratio.py\", line 8, in test_ratio\n    self.assertEqual(ratio(4, 2), 2)\nAssertionError: 0.5 != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.219,
+        "started_at": "2026-11-10T10:39:34.442155Z"
+      }
+    ],
+    "issued_at": "2026-11-10T10:39:34.662302Z"
+  },
+  "digest": "48a65a4c0056bc16c411f62b48bd1872454502485c053550aba6945e09889470",
+  "signature": "f9/9AOreWR1ih3Ka5rkZ2xBmlIX7kVDZQ1/8DC8YVScdWh5xw85WNAeLgDIP5QXJoaBHl9TRWpV3qgVutj/rDQ==",
+  "public_key": "NcTDtqFNt+Pb3DWBkUVHMgy2M+DJlmu4vyYaqhIz97o="
+}

@@ -1,0 +1,183 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_1773c92cd1a2",
+    "submission_id": "sub_f53062a4d97a",
+    "repo": "regress-is-adult",
+    "base_sha": "90564389e6a3092fe9821cc2f06c1a1691df01af",
+    "head_sha": "2d871810bde606317f016b9796c7e93cecb416a0",
+    "verdict": "fail",
+    "rationale": "2 blocking issue(s):\n- Regression: test command passes on base but fails on head\n- Claim refuted: no_behavior_change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no_behavior_change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "The test command passes on base but fails on head, so behavior changed.",
+        "command_indexes": [
+          0,
+          1
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Regression: test command passes on base but fails on head",
+        "detail": "`python -m unittest` exits 0 on the base commit and non-zero on head.",
+        "severity": "high",
+        "command_indexes": [
+          0,
+          1
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim refuted: no_behavior_change",
+        "detail": "The test command passes on base but fails on head, so behavior changed.",
+        "severity": "high",
+        "command_indexes": [
+          0,
+          1
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation testing skipped: test command does not pass on head",
+        "detail": "",
+        "severity": "low",
+        "command_indexes": [
+          6
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.259,
+        "started_at": "2026-11-10T10:34:19.539009Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_is_adult (test_age.T.test_is_adult)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_age.py\", line 10, in test_is_adult\n    self.assertTrue(is_adult(18))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.206,
+        "started_at": "2026-11-10T10:34:19.797995Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.261,
+        "started_at": "2026-11-10T10:34:36.411870Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.216,
+        "started_at": "2026-11-10T10:34:36.672864Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.216,
+        "started_at": "2026-11-10T10:34:36.889672Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.003s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.224,
+        "started_at": "2026-11-10T10:34:37.106427Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_is_adult (test_age.T.test_is_adult)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_age.py\", line 10, in test_is_adult\n    self.assertTrue(is_adult(18))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.207,
+        "started_at": "2026-11-10T10:34:37.333705Z"
+      }
+    ],
+    "issued_at": "2026-11-10T10:34:37.542340Z"
+  },
+  "digest": "be55637ef6cd773054d464e45a911e3f097e1f252b8d98c902fdf45236a9a1eb",
+  "signature": "AhzSb8TlTg56UOOJIgj8c6n4wv40d9Vxh8qb3CE0hD9abAjdjpi8UdM+SVF6xiYztJ5rgmhf2HZTzdCb0sAtCg==",
+  "public_key": "NcTDtqFNt+Pb3DWBkUVHMgy2M+DJlmu4vyYaqhIz97o="
+}

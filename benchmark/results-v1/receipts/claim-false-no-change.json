@@ -1,0 +1,226 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_614529638c6c",
+    "submission_id": "sub_aeb727823013",
+    "repo": "claim-false-no-change",
+    "base_sha": "daccf0d4e2e6df088bd5b9e70aed0957e6c465c9",
+    "head_sha": "5f7a1fe8bb650ca43660f0f393e0fe2e93df811d",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 5f7a1fe8bb65. 10 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "The evidence shows that both the base and head versions of the code produce identical test results, with the same number of tests run and no failures or errors reported.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Test with empty name",
+        "detail": "F\n======================================================================\nFAIL: test_empty_name (tribunal_probes.probe_2.TestGreet.test_empty_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_empty_name\n    self.assertEqual(greet(''), '')\nAssertionError: 'Hello, .' != ''\n- Hello, .\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          5,
+          6
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Test with None name",
+        "detail": "E\n======================================================================\nERROR: test_none_name (tribunal_probes.probe_3.TestGreet.test_none_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 5, in test_none_name\n    self.assertEqual(greet(None), 'Hello, None.')\n                     ^^^^^^^^^^^\n  File \"/work/greet.py\", line 2, in greet\n    return \"Hello, \" + name + punct\n           ~~~~~~~~~~^~~~~~\nTypeError: can only concatenate str (not \"NoneType\") to str\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          7,
+          8
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.25,
+        "started_at": "2026-11-10T10:44:17.400331Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.222,
+        "started_at": "2026-11-10T10:44:17.650612Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.259,
+        "started_at": "2026-11-10T10:44:21.361493Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.205,
+        "started_at": "2026-11-10T10:44:21.620565Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.336,
+        "started_at": "2026-11-10T10:44:44.916341Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_empty_name (tribunal_probes.probe_2.TestGreet.test_empty_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_empty_name\n    self.assertEqual(greet(''), '')\nAssertionError: 'Hello, .' != ''\n- Hello, .\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.208,
+        "started_at": "2026-11-10T10:44:45.252665Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_empty_name (tribunal_probes.probe_2.TestGreet.test_empty_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_empty_name\n    self.assertEqual(greet(''), '')\nAssertionError: 'Hello, !' != ''\n- Hello, !\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.217,
+        "started_at": "2026-11-10T10:44:45.460814Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_none_name (tribunal_probes.probe_3.TestGreet.test_none_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 5, in test_none_name\n    self.assertEqual(greet(None), 'Hello, None.')\n                     ^^^^^^^^^^^\n  File \"/work/greet.py\", line 2, in greet\n    return \"Hello, \" + name + punct\n           ~~~~~~~~~~^~~~~~\nTypeError: can only concatenate str (not \"NoneType\") to str\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.212,
+        "started_at": "2026-11-10T10:44:45.678657Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_none_name (tribunal_probes.probe_3.TestGreet.test_none_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 5, in test_none_name\n    self.assertEqual(greet(None), 'Hello, None.')\n                     ^^^^^^^^^^^\n  File \"/work/greet.py\", line 2, in greet\n    return \"Hello, \" + name + punct\n           ~~~~~~~~~~^~~~~~\nTypeError: can only concatenate str (not \"NoneType\") to str\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.228,
+        "started_at": "2026-11-10T10:44:45.891325Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.23,
+        "started_at": "2026-11-10T10:44:46.119927Z"
+      }
+    ],
+    "issued_at": "2026-11-10T10:44:46.351888Z"
+  },
+  "digest": "dbc123f01edadb3822e99497d4e5240737bb7a6ea09bc3fe25d4bfa4fcade8a4",
+  "signature": "Tl3geKtwDfmLrlpxxPp9eomD75Q564AWx4kFlPPQlizgcjzkF2SgI56MbF2lQZGn+cVV+pWXmHFcyE6V8YAnCw==",
+  "public_key": "NcTDtqFNt+Pb3DWBkUVHMgy2M+DJlmu4vyYaqhIz97o="
+}

@@ -1,0 +1,256 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_d503de6e908d",
+    "submission_id": "sub_e376ec48172b",
+    "repo": "untested-first-word",
+    "base_sha": "38ee898071b4808151130fa18fcb4c1cff17b863",
+    "head_sha": "fcfedac5e48c964c826c822a2282645362d64752",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Probe broke the change: empty string",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "The evidence shows that both the base and head versions of the code produce identical test results, indicating no behavior change.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Probe broke the change: empty string",
+        "detail": "Passes on base, fails on head.\nE\n======================================================================\nERROR: test_empty_string (tribunal_probes.probe_1.TestFirstWord.test_empty_string)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 4, in test_empty_string\n    self.assertEqual(first_word(''), '')\n                     ^^^^^^^^^^^^^^\n  File \"/work/words.py\", line 2, in first_word\n    return s.split()[0]\n           ~~~~~~~~~^^^\nIndexError: list index out of range\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "high",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 2/2 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.357,
+        "started_at": "2026-11-10T10:39:38.793659Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.319,
+        "started_at": "2026-11-10T10:39:39.151142Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_words.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.386,
+        "started_at": "2026-11-10T10:39:44.107578Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_words.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.264,
+        "started_at": "2026-11-10T10:39:44.494269Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_empty_string (tribunal_probes.probe_1.TestFirstWord.test_empty_string)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 4, in test_empty_string\n    self.assertEqual(first_word(''), '')\n                     ^^^^^^^^^^^^^^\n  File \"/work/words.py\", line 2, in first_word\n    return s.split()[0]\n           ~~~~~~~~~^^^\nIndexError: list index out of range\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.487,
+        "started_at": "2026-11-10T10:40:10.988365Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.294,
+        "started_at": "2026-11-10T10:40:11.475825Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.272,
+        "started_at": "2026-11-10T10:40:11.770690Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.264,
+        "started_at": "2026-11-10T10:40:12.043008Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.259,
+        "started_at": "2026-11-10T10:40:12.307045Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.249,
+        "started_at": "2026-11-10T10:40:12.568015Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_first_word (test_words.T.test_first_word)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_words.py\", line 8, in test_first_word\n    self.assertEqual(first_word(\"hello world\"), \"hello\")\nAssertionError: None != 'hello'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.245,
+        "started_at": "2026-11-10T10:40:12.817386Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_first_word (test_words.T.test_first_word)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_words.py\", line 8, in test_first_word\n    self.assertEqual(first_word(\"hello world\"), \"hello\")\nAssertionError: 'world' != 'hello'\n- world\n+ hello\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.231,
+        "started_at": "2026-11-10T10:40:13.063260Z"
+      }
+    ],
+    "issued_at": "2026-11-10T10:40:13.295671Z"
+  },
+  "digest": "8b7ace1d79a78383874bd2ada7876f40160291dd10d335a4fc68dbc9028b1e5f",
+  "signature": "aX7kJlRxKPvLrjyG3V9CK2/hAPp17dz4eyxtGLBTqZEjX3JL26Hw34WR7SX5i2W2sn5NN+70egccfjunLHrsAg==",
+  "public_key": "NcTDtqFNt+Pb3DWBkUVHMgy2M+DJlmu4vyYaqhIz97o="
+}

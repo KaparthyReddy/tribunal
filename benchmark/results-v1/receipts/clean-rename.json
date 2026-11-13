@@ -1,0 +1,184 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_65352d830d63",
+    "submission_id": "sub_b8024d224d00",
+    "repo": "clean-rename",
+    "base_sha": "2e52346e31dc0141e16aa5bb8e4fd53922403810",
+    "head_sha": "0ce47dc9d91cd9eb8d19890c0029d871c5dc2bab",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 0ce47dc9d91c. 8 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "The evidence shows that both the base and head versions of the code produce identical test results, with all tests passing without any behavior changes.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Probe generation failed",
+        "detail": "probes must be a list",
+        "severity": "low",
+        "command_indexes": []
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 3/3 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.261,
+        "started_at": "2026-11-10T10:44:49.782375Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.214,
+        "started_at": "2026-11-10T10:44:50.043816Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_calc.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.304,
+        "started_at": "2026-11-10T10:44:54.116156Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_calc.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.211,
+        "started_at": "2026-11-10T10:44:54.420643Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.33,
+        "started_at": "2026-11-10T10:45:16.592351Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_total (test_calc.T.test_total)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_calc.py\", line 8, in test_total\n    self.assertEqual(total([1, 2, 3]), 6)\nAssertionError: None != 6\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.225,
+        "started_at": "2026-11-10T10:45:16.922670Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_total (test_calc.T.test_total)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_calc.py\", line 8, in test_total\n    self.assertEqual(total([1, 2, 3]), 6)\nAssertionError: 7 != 6\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.218,
+        "started_at": "2026-11-10T10:45:17.148860Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_total (test_calc.T.test_total)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_calc.py\", line 8, in test_total\n    self.assertEqual(total([1, 2, 3]), 6)\nAssertionError: -6 != 6\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.226,
+        "started_at": "2026-11-10T10:45:17.367840Z"
+      }
+    ],
+    "issued_at": "2026-11-10T10:45:17.595290Z"
+  },
+  "digest": "e065206896adf3a5744e11092e62dce36d9d3925e5ffed755aaaa4db4bae886c",
+  "signature": "cAVJcS+XUPewLIW1Vjku6h7VClFPCVXr+jXEoKSp5GXLt/M8o2JGRll8tYAlNDoLfgPOZveXqFstG4z4xV26BA==",
+  "public_key": "NcTDtqFNt+Pb3DWBkUVHMgy2M+DJlmu4vyYaqhIz97o="
+}

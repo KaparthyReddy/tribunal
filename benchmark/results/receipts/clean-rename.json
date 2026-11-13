@@ -1,0 +1,242 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_8da76440628f",
+    "submission_id": "sub_35894e570744",
+    "repo": "clean-rename",
+    "base_sha": "b59f0fe6d0c63a9a0cb9f9e6650490bddfa67f78",
+    "head_sha": "f66f7a0d6c7e18376de3fa4e6f1d3c465910b887",
+    "verdict": "pass",
+    "rationale": "No blocking issues at f66f7a0d6c7e. 11 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "The evidence shows that both the base and head versions of the code produce identical test results, with all tests passing without any behavior changes.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Probe generation failed",
+        "detail": "probes must be a list",
+        "severity": "low",
+        "command_indexes": []
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 15 input(s) compared, 0 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 3/3 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.348,
+        "started_at": "2026-11-13T04:48:11.054554Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.28,
+        "started_at": "2026-11-13T04:48:11.402787Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_calc.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.263,
+        "started_at": "2026-11-13T04:48:16.184691Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_calc.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.239,
+        "started_at": "2026-11-13T04:48:16.448511Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"6\"}\n{\"i\": 1, \"ok\": true, \"value\": \"-6\"}\n{\"i\": 2, \"ok\": true, \"value\": \"0\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"total() missing 1 required positional argument: 'xs'\"}\n{\"i\": 4, \"ok\": true, \"value\": \"15\"}\n{\"i\": 5, \"ok\": true, \"value\": \"-60\"}\n{\"i\": 6, \"ok\": true, \"value\": \"7.5\"}\n{\"i\": 7, \"ok\": true, \"value\": \"-7.5\"}\n{\"i\": 8, \"ok\": true, \"value\": \"0.0\"}\n{\"i\": 9, \"ok\": true, \"value\": \"0\"}\n{\"i\": 10, \"ok\": true, \"value\": \"7\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"unsupported operand type(s) for +=: 'int' and 'str'\"}\n{\"i\": 12, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"unsupported operand type(s) for +=: 'int' and 'str'\"}\n{\"i\": 13, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"unsupported operand type(s) for +=: 'int' and 'str'\"}\n{\"i\": 14, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"total() got an unexpected keyword argument 'claim'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.288,
+        "started_at": "2026-11-13T04:48:56.683862Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"6\"}\n{\"i\": 1, \"ok\": true, \"value\": \"-6\"}\n{\"i\": 2, \"ok\": true, \"value\": \"0\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"total() missing 1 required positional argument: 'xs'\"}\n{\"i\": 4, \"ok\": true, \"value\": \"15\"}\n{\"i\": 5, \"ok\": true, \"value\": \"-60\"}\n{\"i\": 6, \"ok\": true, \"value\": \"7.5\"}\n{\"i\": 7, \"ok\": true, \"value\": \"-7.5\"}\n{\"i\": 8, \"ok\": true, \"value\": \"0.0\"}\n{\"i\": 9, \"ok\": true, \"value\": \"0\"}\n{\"i\": 10, \"ok\": true, \"value\": \"7\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"unsupported operand type(s) for +=: 'int' and 'str'\"}\n{\"i\": 12, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"unsupported operand type(s) for +=: 'int' and 'str'\"}\n{\"i\": 13, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"unsupported operand type(s) for +=: 'int' and 'str'\"}\n{\"i\": 14, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"total() got an unexpected keyword argument 'claim'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.155,
+        "started_at": "2026-11-13T04:48:56.972487Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"6\"}\n{\"i\": 1, \"ok\": true, \"value\": \"-6\"}\n{\"i\": 2, \"ok\": true, \"value\": \"0\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"total() missing 1 required positional argument: 'xs'\"}\n{\"i\": 4, \"ok\": true, \"value\": \"15\"}\n{\"i\": 5, \"ok\": true, \"value\": \"-60\"}\n{\"i\": 6, \"ok\": true, \"value\": \"7.5\"}\n{\"i\": 7, \"ok\": true, \"value\": \"-7.5\"}\n{\"i\": 8, \"ok\": true, \"value\": \"0.0\"}\n{\"i\": 9, \"ok\": true, \"value\": \"0\"}\n{\"i\": 10, \"ok\": true, \"value\": \"7\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"unsupported operand type(s) for +=: 'int' and 'str'\"}\n{\"i\": 12, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"unsupported operand type(s) for +=: 'int' and 'str'\"}\n{\"i\": 13, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"unsupported operand type(s) for +=: 'int' and 'str'\"}\n{\"i\": 14, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"total() got an unexpected keyword argument 'claim'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.161,
+        "started_at": "2026-11-13T04:48:57.127562Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.323,
+        "started_at": "2026-11-13T04:49:18.378744Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_total (test_calc.T.test_total)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_calc.py\", line 8, in test_total\n    self.assertEqual(total([1, 2, 3]), 6)\nAssertionError: None != 6\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.222,
+        "started_at": "2026-11-13T04:49:18.702693Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_total (test_calc.T.test_total)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_calc.py\", line 8, in test_total\n    self.assertEqual(total([1, 2, 3]), 6)\nAssertionError: 7 != 6\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.23,
+        "started_at": "2026-11-13T04:49:18.925622Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_total (test_calc.T.test_total)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_calc.py\", line 8, in test_total\n    self.assertEqual(total([1, 2, 3]), 6)\nAssertionError: -6 != 6\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.244,
+        "started_at": "2026-11-13T04:49:19.156298Z"
+      }
+    ],
+    "issued_at": "2026-11-13T04:49:19.402806Z"
+  },
+  "digest": "2a6e231e1b56bc8e1f46ff6beb904afd6988517a3501ccd870de121e7605ac9c",
+  "signature": "lLYANHltQnRxuhtFLSV7sSE7pn7iHmpLqyfPygUs3H8RivjRZbaVyzWtpLmzbxGRcCK0E2CXclRqKT56j5uDDg==",
+  "public_key": "y9fm/n+1IPoc5X4iisxWrFMN/HsE7gsR5IjYCdv6ceo="
+}

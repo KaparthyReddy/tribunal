@@ -1,0 +1,180 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_ec6c4535ee5a",
+    "submission_id": "sub_5fba659ab9eb",
+    "repo": "regress-clamp",
+    "base_sha": "1445d7965a61523ecec5b64658708e4c77252d13",
+    "head_sha": "b51b3392eb8713be6669ac51219c736a348c10b8",
+    "verdict": "fail",
+    "rationale": "2 blocking issue(s):\n- Regression: test command passes on base but fails on head\n- Claim refuted: no behavior change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "The test command passes on base but fails on head, so behavior changed.",
+        "command_indexes": [
+          0,
+          1
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Regression: test command passes on base but fails on head",
+        "detail": "`python -m unittest` exits 0 on the base commit and non-zero on head.",
+        "severity": "high",
+        "command_indexes": [
+          0,
+          1
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim refuted: no behavior change",
+        "detail": "The test command passes on base but fails on head, so behavior changed.",
+        "severity": "high",
+        "command_indexes": [
+          0,
+          1
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe generation failed",
+        "detail": "probes must be a list",
+        "severity": "low",
+        "command_indexes": []
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation testing skipped: test command does not pass on head",
+        "detail": "",
+        "severity": "low",
+        "command_indexes": [
+          5
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 10 input(s) compared, 7 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          2,
+          3
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.302,
+        "started_at": "2026-11-13T04:21:41.670970Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_clamp (test_bounds.T.test_clamp)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_bounds.py\", line 8, in test_clamp\n    self.assertEqual(clamp(5), 5)\nAssertionError: 0 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.249,
+        "started_at": "2026-11-13T04:21:41.973100Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"5\"}\n{\"i\": 1, \"ok\": true, \"value\": \"0\"}\n{\"i\": 2, \"ok\": true, \"value\": \"10\"}\n{\"i\": 3, \"ok\": true, \"value\": \"0\"}\n{\"i\": 4, \"ok\": true, \"value\": \"10\"}\n{\"i\": 5, \"ok\": true, \"value\": \"7.5\"}\n{\"i\": 6, \"ok\": true, \"value\": \"-2\"}\n{\"i\": 7, \"ok\": true, \"value\": \"5\"}\n{\"i\": 8, \"ok\": true, \"value\": \"3\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"clamp() missing 1 required positional argument: 'x'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.281,
+        "started_at": "2026-11-13T04:21:58.625660Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"0\"}\n{\"i\": 1, \"ok\": true, \"value\": \"0\"}\n{\"i\": 2, \"ok\": true, \"value\": \"0\"}\n{\"i\": 3, \"ok\": true, \"value\": \"0\"}\n{\"i\": 4, \"ok\": true, \"value\": \"0\"}\n{\"i\": 5, \"ok\": true, \"value\": \"0\"}\n{\"i\": 6, \"ok\": true, \"value\": \"-5\"}\n{\"i\": 7, \"ok\": true, \"value\": \"0\"}\n{\"i\": 8, \"ok\": true, \"value\": \"2\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"clamp() missing 1 required positional argument: 'x'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.145,
+        "started_at": "2026-11-13T04:21:58.906977Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"0\"}\n{\"i\": 1, \"ok\": true, \"value\": \"0\"}\n{\"i\": 2, \"ok\": true, \"value\": \"0\"}\n{\"i\": 3, \"ok\": true, \"value\": \"0\"}\n{\"i\": 4, \"ok\": true, \"value\": \"0\"}\n{\"i\": 5, \"ok\": true, \"value\": \"0\"}\n{\"i\": 6, \"ok\": true, \"value\": \"-5\"}\n{\"i\": 7, \"ok\": true, \"value\": \"0\"}\n{\"i\": 8, \"ok\": true, \"value\": \"2\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"clamp() missing 1 required positional argument: 'x'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.16,
+        "started_at": "2026-11-13T04:21:59.052021Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_clamp (test_bounds.T.test_clamp)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_bounds.py\", line 8, in test_clamp\n    self.assertEqual(clamp(5), 5)\nAssertionError: 0 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.391,
+        "started_at": "2026-11-13T04:39:00.904721Z"
+      }
+    ],
+    "issued_at": "2026-11-13T04:39:01.298559Z"
+  },
+  "digest": "accfd87006ff1b7dc473689d1fb42a49854f180f00b1bd6aeedfd90f0fb65004",
+  "signature": "3udnVYZKxPwIGaaZadCO9/fnwIpXXQtg2YoF21jhglcSwuiL/JivUGi8JolzaEbRws3cUIPzKQlCkrIch90fCQ==",
+  "public_key": "y9fm/n+1IPoc5X4iisxWrFMN/HsE7gsR5IjYCdv6ceo="
+}

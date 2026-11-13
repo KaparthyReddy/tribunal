@@ -48,9 +48,7 @@ def test_false_no_change_claim_fails_the_pipeline(
     assert not any(title.startswith("Claim not verified") for title in titles)
 
 
-def test_differential_can_be_disabled(
-    scenario, make_runner, make_pipeline, probes_json
-) -> None:
+def test_differential_can_be_disabled(scenario, make_runner, make_pipeline, probes_json) -> None:
     repo, shas = scenario
     llm = ScriptedLLM(
         [
@@ -59,9 +57,7 @@ def test_differential_can_be_disabled(
             probes_json,
         ]
     )
-    pipe = make_pipeline(
-        make_runner(lambda workdir, argv: (0, "ok", "")), llm, differential=False
-    )
+    pipe = make_pipeline(make_runner(lambda workdir, argv: (0, "ok", "")), llm, differential=False)
     submission = pipe.submit(
         repo_path=str(repo),
         base=shas[0],

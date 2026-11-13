@@ -1,0 +1,241 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_43f9e9d3b0e2",
+    "submission_id": "sub_85107a7219c8",
+    "repo": "regress-is-adult",
+    "base_sha": "57795573f4d1c67db61868c7e195f05f45d0875b",
+    "head_sha": "36905bcaee919d5105a35a353088b896070e64a6",
+    "verdict": "fail",
+    "rationale": "2 blocking issue(s):\n- Regression: test command passes on base but fails on head\n- Claim refuted: no_behavior_change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no_behavior_change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "The test command passes on base but fails on head, so behavior changed.",
+        "command_indexes": [
+          0,
+          1
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Regression: test command passes on base but fails on head",
+        "detail": "`python -m unittest` exits 0 on the base commit and non-zero on head.",
+        "severity": "high",
+        "command_indexes": [
+          0,
+          1
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim refuted: no_behavior_change",
+        "detail": "The test command passes on base but fails on head, so behavior changed.",
+        "severity": "high",
+        "command_indexes": [
+          0,
+          1
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation testing skipped: test command does not pass on head",
+        "detail": "",
+        "severity": "low",
+        "command_indexes": [
+          9
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 4 input(s) compared, 1 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          2,
+          3
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.26,
+        "started_at": "2026-11-13T04:20:41.065476Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_is_adult (test_age.T.test_is_adult)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_age.py\", line 10, in test_is_adult\n    self.assertTrue(is_adult(18))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.219,
+        "started_at": "2026-11-13T04:20:41.325391Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"False\"}\n{\"i\": 1, \"ok\": true, \"value\": \"True\"}\n{\"i\": 2, \"ok\": true, \"value\": \"True\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"is_adult() missing 1 required positional argument: 'age'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.196,
+        "started_at": "2026-11-13T04:20:48.049866Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"False\"}\n{\"i\": 1, \"ok\": true, \"value\": \"False\"}\n{\"i\": 2, \"ok\": true, \"value\": \"True\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"is_adult() missing 1 required positional argument: 'age'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.15,
+        "started_at": "2026-11-13T04:20:48.246226Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"False\"}\n{\"i\": 1, \"ok\": true, \"value\": \"False\"}\n{\"i\": 2, \"ok\": true, \"value\": \"True\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"is_adult() missing 1 required positional argument: 'age'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.168,
+        "started_at": "2026-11-13T04:20:48.396451Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.287,
+        "started_at": "2026-11-13T04:21:05.054272Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.303,
+        "started_at": "2026-11-13T04:21:05.341463Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.273,
+        "started_at": "2026-11-13T04:21:05.645137Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.003s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.245,
+        "started_at": "2026-11-13T04:21:05.918608Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_is_adult (test_age.T.test_is_adult)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_age.py\", line 10, in test_is_adult\n    self.assertTrue(is_adult(18))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.23,
+        "started_at": "2026-11-13T04:21:06.165639Z"
+      }
+    ],
+    "issued_at": "2026-11-13T04:21:06.397081Z"
+  },
+  "digest": "77c7b5becd5b954e731346f6a54acd9ad41c5833b21b9d64cf656cd13435fa01",
+  "signature": "XkQA/2IYZGNqFzKq7twnwm6Cxqsg1R8FO+vjLCFVscsrwVeT315xmIqwd5hNlF2A3dkzyfPN9Bkzfha2irI9Cw==",
+  "public_key": "y9fm/n+1IPoc5X4iisxWrFMN/HsE7gsR5IjYCdv6ceo="
+}

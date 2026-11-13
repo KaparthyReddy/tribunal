@@ -1,0 +1,222 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_775c848b67f8",
+    "submission_id": "sub_25dce3d8d88c",
+    "repo": "clean-real-fix",
+    "base_sha": "37c2eac361dcb0896d583223be372504b273085c",
+    "head_sha": "eb1520716bbe732f5c1dfe9473dc2d94e1080507",
+    "verdict": "pass",
+    "rationale": "No blocking issues at eb1520716bbe. 10 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "fixes ZeroDivisionError in safe_div",
+        "kind": "fixes"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "The evidence shows that in the base version, running `python -c 'import safe; print(safe.safe_div(1, 0))'` results in a ZeroDivisionError. However, in the head version, the same command does not raise an error and instead prints None, indicating that the ZeroDivisionError has been handled as claimed.",
+        "command_indexes": [
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Skeptic produced no valid probes",
+        "detail": "",
+        "severity": "low",
+        "command_indexes": []
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 2 input(s) compared, 1 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 2/2 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.264,
+        "started_at": "2026-11-13T04:50:38.641596Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.225,
+        "started_at": "2026-11-13T04:50:38.905528Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import safe; print(safe.safe_div(1, 0))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/work/safe.py\", line 2, in safe_div\n    return a / b\n           ~~^~~\nZeroDivisionError: division by zero\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.195,
+        "started_at": "2026-11-13T04:50:48.517578Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import safe; print(safe.safe_div(1, 0))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "None\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.12,
+        "started_at": "2026-11-13T04:50:48.712876Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"2.0\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"ZeroDivisionError\", \"msg\": \"division by zero\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.25,
+        "started_at": "2026-11-13T04:51:03.154143Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"2.0\"}\n{\"i\": 1, \"ok\": true, \"value\": \"None\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.157,
+        "started_at": "2026-11-13T04:51:03.404146Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"2.0\"}\n{\"i\": 1, \"ok\": true, \"value\": \"None\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.16,
+        "started_at": "2026-11-13T04:51:03.561705Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.38,
+        "started_at": "2026-11-13T04:51:39.072355Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "FE\n======================================================================\nERROR: test_zero_divisor (test_safe.T.test_zero_divisor)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_safe.py\", line 11, in test_zero_divisor\n    self.assertIsNone(safe_div(1, 0))\n                      ^^^^^^^^^^^^^^\n  File \"/work/safe.py\", line 4, in safe_div\n    return a / b\n           ~~^~~\nZeroDivisionError: division by zero\n\n======================================================================\nFAIL: test_safe_div (test_safe.T.test_safe_div)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_safe.py\", line 8, in test_safe_div\n    self.assertEqual(safe_div(6, 3), 2)\nAssertionError: None != 2\n\n----------------------------------------------------------------------\nRan 2 tests in 0.001s\n\nFAILED (failures=1, errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.216,
+        "started_at": "2026-11-13T04:51:39.453171Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".E\n======================================================================\nERROR: test_zero_divisor (test_safe.T.test_zero_divisor)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_safe.py\", line 11, in test_zero_divisor\n    self.assertIsNone(safe_div(1, 0))\n                      ^^^^^^^^^^^^^^\n  File \"/work/safe.py\", line 4, in safe_div\n    return a / b\n           ~~^~~\nZeroDivisionError: division by zero\n\n----------------------------------------------------------------------\nRan 2 tests in 0.001s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.235,
+        "started_at": "2026-11-13T04:51:39.670411Z"
+      }
+    ],
+    "issued_at": "2026-11-13T04:51:39.907557Z"
+  },
+  "digest": "58a9f58b8b71aabf7d12dc7da290a2c2372e8a71eb559364b21bcdb380419a58",
+  "signature": "3rseD7PNMyBFrjvDJ/cGl1ODgRW1mRi3ZzggqE+2n0SmaK+AV5/mWdX8ZL7sy82Xlz0mbWJqx4ofERRG/WtyBw==",
+  "public_key": "y9fm/n+1IPoc5X4iisxWrFMN/HsE7gsR5IjYCdv6ceo="
+}

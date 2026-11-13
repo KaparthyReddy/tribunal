@@ -1,0 +1,494 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_0a5fefe083ef",
+    "submission_id": "sub_610483e4c089",
+    "repo": "clean-early-return",
+    "base_sha": "026bda9c343f95ee23bf62771707bb5242153807",
+    "head_sha": "36ba1ac0ddb74e78971f605c980202bbefc04371",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 36ba1ac0ddb7. 25 sandboxed command(s) run, 1 of 2 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "uses early returns in sign",
+        "kind": "other"
+      },
+      {
+        "id": "c2",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The evidence only shows that the `sign` function behaves as expected in both the base and head versions, but it does not provide any information about whether early returns are used in the implementation.",
+        "command_indexes": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      {
+        "claim_id": "c2",
+        "status": "supported",
+        "explanation": "The evidence shows that both the base and head versions of the code produce identical test results, indicating no behavior change.",
+        "command_indexes": [
+          0,
+          1,
+          8,
+          9
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Claim not verified: uses early returns in sign",
+        "detail": "The evidence only shows that the `sign` function behaves as expected in both the base and head versions, but it does not provide any information about whether early returns are used in the implementation.",
+        "severity": "low",
+        "command_indexes": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 6 input(s) compared, 0 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          10,
+          11
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 8/8 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.284,
+        "started_at": "2026-11-13T04:55:06.063801Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.221,
+        "started_at": "2026-11-13T04:55:06.348286Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import sign; print(sign.sign(-1))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "-1\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.169,
+        "started_at": "2026-11-13T04:55:14.070000Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import sign; print(sign.sign(-1))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "-1\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.128,
+        "started_at": "2026-11-13T04:55:14.239868Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import sign; print(sign.sign(0))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "0\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.139,
+        "started_at": "2026-11-13T04:55:14.368460Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import sign; print(sign.sign(0))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "0\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.138,
+        "started_at": "2026-11-13T04:55:14.508050Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import sign; print(sign.sign(1))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "1\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.133,
+        "started_at": "2026-11-13T04:55:14.645859Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import sign; print(sign.sign(1))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "1\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.12,
+        "started_at": "2026-11-13T04:55:14.778847Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_sign.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.372,
+        "started_at": "2026-11-13T04:55:23.645678Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_sign.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.283,
+        "started_at": "2026-11-13T04:55:24.018430Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"1\"}\n{\"i\": 1, \"ok\": true, \"value\": \"-1\"}\n{\"i\": 2, \"ok\": true, \"value\": \"0\"}\n{\"i\": 3, \"ok\": true, \"value\": \"1\"}\n{\"i\": 4, \"ok\": true, \"value\": \"-1\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sign() missing 1 required positional argument: 'x'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.217,
+        "started_at": "2026-11-13T04:55:37.453957Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"1\"}\n{\"i\": 1, \"ok\": true, \"value\": \"-1\"}\n{\"i\": 2, \"ok\": true, \"value\": \"0\"}\n{\"i\": 3, \"ok\": true, \"value\": \"1\"}\n{\"i\": 4, \"ok\": true, \"value\": \"-1\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sign() missing 1 required positional argument: 'x'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.15,
+        "started_at": "2026-11-13T04:55:37.671483Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"1\"}\n{\"i\": 1, \"ok\": true, \"value\": \"-1\"}\n{\"i\": 2, \"ok\": true, \"value\": \"0\"}\n{\"i\": 3, \"ok\": true, \"value\": \"1\"}\n{\"i\": 4, \"ok\": true, \"value\": \"-1\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sign() missing 1 required positional argument: 'x'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.158,
+        "started_at": "2026-11-13T04:55:37.822360Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.349,
+        "started_at": "2026-11-13T04:55:51.559881Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.214,
+        "started_at": "2026-11-13T04:55:51.909586Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.218,
+        "started_at": "2026-11-13T04:55:52.124383Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.222,
+        "started_at": "2026-11-13T04:55:52.345240Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_sign (test_sign.T.test_sign)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_sign.py\", line 12, in test_sign\n    self.assertEqual(sign(0), 0)\nAssertionError: None != 0\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.226,
+        "started_at": "2026-11-13T04:55:52.568103Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_sign (test_sign.T.test_sign)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_sign.py\", line 8, in test_sign\n    self.assertEqual(sign(5), 1)\nAssertionError: None != 1\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.229,
+        "started_at": "2026-11-13T04:55:52.794545Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_sign (test_sign.T.test_sign)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_sign.py\", line 10, in test_sign\n    self.assertEqual(sign(-3), -1)\nAssertionError: 0 != -1\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.224,
+        "started_at": "2026-11-13T04:55:53.024745Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_sign (test_sign.T.test_sign)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_sign.py\", line 10, in test_sign\n    self.assertEqual(sign(-3), -1)\nAssertionError: None != -1\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.237,
+        "started_at": "2026-11-13T04:55:53.250234Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_sign (test_sign.T.test_sign)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_sign.py\", line 12, in test_sign\n    self.assertEqual(sign(0), 0)\nAssertionError: 1 != 0\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.223,
+        "started_at": "2026-11-13T04:55:53.488019Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_sign (test_sign.T.test_sign)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_sign.py\", line 8, in test_sign\n    self.assertEqual(sign(5), 1)\nAssertionError: 2 != 1\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.233,
+        "started_at": "2026-11-13T04:55:53.712148Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_sign (test_sign.T.test_sign)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_sign.py\", line 12, in test_sign\n    self.assertEqual(sign(0), 0)\nAssertionError: -1 != 0\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.227,
+        "started_at": "2026-11-13T04:55:53.946161Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_sign (test_sign.T.test_sign)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_sign.py\", line 10, in test_sign\n    self.assertEqual(sign(-3), -1)\nAssertionError: -2 != -1\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.225,
+        "started_at": "2026-11-13T04:55:54.174095Z"
+      }
+    ],
+    "issued_at": "2026-11-13T04:55:54.401428Z"
+  },
+  "digest": "cb4f3d6b6674c33f4507b37f4298976c87adbf7c9d4a6f02857aa70f427b1525",
+  "signature": "7Up+dky9WdvGtQd63ivKlfiHHilp+gj2oOC9mlgllg+edXSx3EifV+jgp5pVlFAo77KV1Zn7NHJsgLNCWBCECQ==",
+  "public_key": "y9fm/n+1IPoc5X4iisxWrFMN/HsE7gsR5IjYCdv6ceo="
+}

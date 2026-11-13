@@ -1,0 +1,240 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_59098a99a06e",
+    "submission_id": "sub_32ff0f457968",
+    "repo": "untested-dedupe",
+    "base_sha": "5d6a5a46122d21ee6bb8267a9094ce394808ba9a",
+    "head_sha": "02f5d22f22679dc27e88058c2f834efc25eb69d6",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 02f5d22f2267. 11 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "The evidence shows that both the base and head versions of the code produce identical test results, with the same number of tests run and no failures or errors reported.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: fuzzing",
+        "detail": "F\n======================================================================\nFAIL: test_fuzz (tribunal_probes.probe_4.TestDedupe.test_fuzz)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 7, in test_fuzz\n    self.assertEqual(dedupe(items), sorted(set(items)))\nAssertionError: Lists differ: [16, -490, -489, 30, -989, -985, 40, -971,[492 chars], -4] != [-989, -985, -971, -968, -965, -961, -945,[492 chars] 976]\n\nFirst differing element 0:\n16\n-989\n\nDiff is 1343 characters long. Set self.maxDiff to None to see it.\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          7,
+          8
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.268,
+        "started_at": "2026-11-10T10:40:54.612198Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.215,
+        "started_at": "2026-11-10T10:40:54.880672Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_dedupe.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.297,
+        "started_at": "2026-11-10T10:40:59.258928Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_dedupe.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.251,
+        "started_at": "2026-11-10T10:40:59.556303Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.354,
+        "started_at": "2026-11-10T10:41:26.485686Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.252,
+        "started_at": "2026-11-10T10:41:26.840255Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.23,
+        "started_at": "2026-11-10T10:41:27.092292Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_fuzz (tribunal_probes.probe_4.TestDedupe.test_fuzz)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 7, in test_fuzz\n    self.assertEqual(dedupe(items), sorted(set(items)))\nAssertionError: Lists differ: [16, -490, -489, 30, -989, -985, 40, -971,[492 chars], -4] != [-989, -985, -971, -968, -965, -961, -945,[492 chars] 976]\n\nFirst differing element 0:\n16\n-989\n\nDiff is 1343 characters long. Set self.maxDiff to None to see it.\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.248,
+        "started_at": "2026-11-10T10:41:27.323152Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_fuzz (tribunal_probes.probe_4.TestDedupe.test_fuzz)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 7, in test_fuzz\n    self.assertEqual(dedupe(items), sorted(set(items)))\nAssertionError: Lists differ: [-98, -761, -985, -815, 865, 930, 923, 652, 1[489 chars]-375] != [-989, -985, -971, -968, -965, -961, -945, -9[489 chars] 976]\n\nFirst differing element 0:\n-98\n-989\n\nDiff is 1670 characters long. Set self.maxDiff to None to see it.\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.234,
+        "started_at": "2026-11-10T10:41:27.571913Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.221,
+        "started_at": "2026-11-10T10:41:27.807452Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_dedupe (test_dedupe.T.test_dedupe)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_dedupe.py\", line 8, in test_dedupe\n    self.assertEqual(dedupe([1, 1, 2]), [1, 2])\nAssertionError: None != [1, 2]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.218,
+        "started_at": "2026-11-10T10:41:28.029757Z"
+      }
+    ],
+    "issued_at": "2026-11-10T10:41:28.248436Z"
+  },
+  "digest": "5dec8f8163a62413edb9fa67975830d6f7f627ffdc3d21f27755f6356c6c276c",
+  "signature": "jloHdOXwBFnFsA+Uu3rvs/OBxPlbO0/UfghC2DOM2fA7kz89Gefc9N+0xMjQGH76SIBLn4NGvRvtjUHpKU6mBw==",
+  "public_key": "NcTDtqFNt+Pb3DWBkUVHMgy2M+DJlmu4vyYaqhIz97o="
+}

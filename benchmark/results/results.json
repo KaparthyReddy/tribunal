@@ -1,0 +1,728 @@
+{
+  "meta": {
+    "started_at": "2026-11-13T04:19:51+00:00",
+    "provider": "ollama",
+    "model": "qwen2.5:7b-instruct",
+    "sandbox_image": "python:3.12-slim",
+    "tribunal_version": "0.1.0",
+    "cases_total": 20
+  },
+  "cases": [
+    {
+      "id": "regress-last-n",
+      "category": "regression",
+      "expect": "buggy",
+      "title": "Tidy up last_n",
+      "note": "Start index shifted by one. Existing tests fail.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_238fc8145b2b",
+        "rationale": "2 blocking issue(s):\n- Regression: test command passes on base but fails on head\n- Claim refuted: no behavior change",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Regression: test command passes on base but fails on head"
+          },
+          {
+            "severity": "high",
+            "title": "Claim refuted: no behavior change"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: n larger than list"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: fuzzing"
+          },
+          {
+            "severity": "low",
+            "title": "Mutation testing skipped: test command does not pass on head"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 12 input(s) compared, 4 differ"
+          }
+        ],
+        "seconds": 45.64
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "The change alters the behavior by including an extra element in the result.",
+        "seconds": 1.92
+      }
+    },
+    {
+      "id": "regress-is-adult",
+      "category": "regression",
+      "expect": "buggy",
+      "title": "Cleanup in is_adult",
+      "note": "Boundary changed from >= to >. Existing tests fail at 18.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_43f9e9d3b0e2",
+        "rationale": "2 blocking issue(s):\n- Regression: test command passes on base but fails on head\n- Claim refuted: no_behavior_change",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Regression: test command passes on base but fails on head"
+          },
+          {
+            "severity": "high",
+            "title": "Claim refuted: no_behavior_change"
+          },
+          {
+            "severity": "low",
+            "title": "Mutation testing skipped: test command does not pass on head"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 4 input(s) compared, 1 differ"
+          }
+        ],
+        "seconds": 26.68
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "Changes behavior by excluding 18-year-olds",
+        "seconds": 1.69
+      }
+    },
+    {
+      "id": "regress-normalize",
+      "category": "regression",
+      "expect": "buggy",
+      "title": "Speed up normalize",
+      "note": "strip() removed. Existing tests fail on padded input.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_d6d9c83cea14",
+        "rationale": "1 blocking issue(s):\n- Regression: test command passes on base but fails on head",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Regression: test command passes on base but fails on head"
+          },
+          {
+            "severity": "low",
+            "title": "Claim not verified: speeds up normalize"
+          },
+          {
+            "severity": "low",
+            "title": "Probe generation failed"
+          },
+          {
+            "severity": "low",
+            "title": "Mutation testing skipped: test command does not pass on head"
+          }
+        ],
+        "seconds": 30.23
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "The change does not skip a redundant step as described.",
+        "seconds": 1.72
+      }
+    },
+    {
+      "id": "regress-clamp",
+      "category": "regression",
+      "expect": "buggy",
+      "title": "Reorder clamp expression",
+      "note": "min and max swapped. Existing tests fail.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_ec6c4535ee5a",
+        "rationale": "2 blocking issue(s):\n- Regression: test command passes on base but fails on head\n- Claim refuted: no behavior change",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Regression: test command passes on base but fails on head"
+          },
+          {
+            "severity": "high",
+            "title": "Claim refuted: no behavior change"
+          },
+          {
+            "severity": "low",
+            "title": "Probe generation failed"
+          },
+          {
+            "severity": "low",
+            "title": "Mutation testing skipped: test command does not pass on head"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 10 input(s) compared, 7 differ"
+          }
+        ],
+        "seconds": 236.76
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "Changes the behavior of the function",
+        "seconds": 1.66
+      }
+    },
+    {
+      "id": "regress-ratio",
+      "category": "regression",
+      "expect": "buggy",
+      "title": "Normalize operand order in ratio",
+      "note": "Operands swapped. Existing tests fail.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_a69e9f36bbf0",
+        "rationale": "4 blocking issue(s):\n- Regression: test command passes on base but fails on head\n- Claim refuted: No behavior change.\n- Probe broke the change: Test with floats\n- Probe broke the change: Test with negative values",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Regression: test command passes on base but fails on head"
+          },
+          {
+            "severity": "high",
+            "title": "Claim refuted: No behavior change."
+          },
+          {
+            "severity": "high",
+            "title": "Probe broke the change: Test with floats"
+          },
+          {
+            "severity": "high",
+            "title": "Probe broke the change: Test with negative values"
+          },
+          {
+            "severity": "low",
+            "title": "Claim not verified: Normalizes operand order in ratio."
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Test with integers"
+          }
+        ],
+        "seconds": 54.09
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "Changes behavior as it inverts the operands in the division.",
+        "seconds": 1.9
+      }
+    },
+    {
+      "id": "untested-first-word",
+      "category": "untested",
+      "expect": "buggy",
+      "title": "Simplify first_word",
+      "note": "Empty-string guard removed. Raises IndexError on empty input. Tests miss it.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_32a3104e6ac9",
+        "rationale": "1 blocking issue(s):\n- Probe broke the change: empty string",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Probe broke the change: empty string"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 2 input(s) compared, 0 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 2/2 mutants killed"
+          }
+        ],
+        "seconds": 35.25
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "Simplification is correct and there is no behavior change.",
+        "seconds": 1.94
+      }
+    },
+    {
+      "id": "untested-chunk",
+      "category": "untested",
+      "expect": "buggy",
+      "title": "Rewrite chunk as an explicit loop",
+      "note": "Drops the final partial chunk. Tests only use exact multiples.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_4c7fe74dcc15",
+        "rationale": "2 blocking issue(s):\n- Claim refuted: no behavior change\n- Probe broke the change: size larger than list 1 additional item(s) need review.",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: no behavior change"
+          },
+          {
+            "severity": "high",
+            "title": "Probe broke the change: size larger than list"
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at chunks.py:3 (1 -> 2)"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 7 input(s) compared, 3 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 5/6 mutants killed"
+          }
+        ],
+        "seconds": 52.27
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change is correct and matches the description.",
+        "seconds": 2.04
+      }
+    },
+    {
+      "id": "untested-dedupe",
+      "category": "untested",
+      "expect": "buggy",
+      "title": "Simplify dedupe",
+      "note": "list(set(...)) loses first-seen order. Tests use already sorted input.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_713f59c3a0ce",
+        "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: No behavior change"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: fuzzing"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 10 input(s) compared, 3 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 1/1 mutants killed"
+          }
+        ],
+        "seconds": 58.89
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "Introduces a bug by removing order preservation",
+        "seconds": 2.14
+      }
+    },
+    {
+      "id": "untested-percent",
+      "category": "untested",
+      "expect": "buggy",
+      "title": "Simplify percent",
+      "note": "Zero-division guard removed. Tests never pass a zero denominator.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_f67bf2eb394e",
+        "rationale": "2 blocking issue(s):\n- Claim refuted: no behavior change\n- Probe broke the change: Zero division",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: no behavior change"
+          },
+          {
+            "severity": "high",
+            "title": "Probe broke the change: Zero division"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Empty inputs"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Large values"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 10 input(s) compared, 1 differ"
+          }
+        ],
+        "seconds": 59.99
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "Introducing a potential division by zero error without handling it",
+        "seconds": 2.09
+      }
+    },
+    {
+      "id": "untested-parse-bool",
+      "category": "untested",
+      "expect": "buggy",
+      "title": "Drop redundant strip in parse_bool",
+      "note": "Whitespace is no longer ignored. Tests never pass padded input.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_b5d71bcbbb8d",
+        "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: No behavior change"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: None input"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 23 input(s) compared, 0 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 2/2 mutants killed"
+          }
+        ],
+        "seconds": 90.52
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "No behavior change and redundant strip removed.",
+        "seconds": 1.98
+      }
+    },
+    {
+      "id": "untested-title-case",
+      "category": "untested",
+      "expect": "buggy",
+      "title": "Use str.title in title_case",
+      "note": "str.title mangles apostrophes (Don'T). Tests use plain words only.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_fbdd0bfc1266",
+        "rationale": "1 blocking issue(s):\n- Claim refuted: no behavior change",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: no behavior change"
+          },
+          {
+            "severity": "low",
+            "title": "Claim not verified: uses str.title in title_case"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 14 input(s) compared, 4 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 1/1 mutants killed"
+          }
+        ],
+        "seconds": 78.57
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change uses str.title as described and there is no behavior change.",
+        "seconds": 2.47
+      }
+    },
+    {
+      "id": "claim-false-fix",
+      "category": "false-claim",
+      "expect": "buggy",
+      "title": "Fix crash on empty list in maximum",
+      "note": "Only variables were renamed. maximum([]) still raises IndexError.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_d56e7f2c34bd",
+        "rationale": "1 blocking issue(s):\n- Claim refuted: fixes the crash when maximum() is called with an empty list 1 additional item(s) need review.",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: fixes the crash when maximum() is called with an empty list"
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at agg.py:2 (0 -> 1)"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: empty list"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 1 input(s) compared, 0 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 1/2 mutants killed"
+          }
+        ],
+        "seconds": 46.57
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "The function name was changed to 'maximum' from 'xs', which might not match the caller's expectations.",
+        "seconds": 3.07
+      }
+    },
+    {
+      "id": "claim-false-no-change",
+      "category": "false-claim",
+      "expect": "buggy",
+      "title": "Reformat greet",
+      "note": "Default punctuation changed from ! to . while tests pass it explicitly.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_7b5a84dffc45",
+        "rationale": "1 blocking issue(s):\n- Claim refuted: no behavior change",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: no behavior change"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Test with empty name"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Test with None name"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 6 input(s) compared, 3 differ"
+          }
+        ],
+        "seconds": 49.12
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "Changed default punctuation to a period instead of an exclamation mark",
+        "seconds": 2.32
+      }
+    },
+    {
+      "id": "clean-rename",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Rename locals in total",
+      "note": "Correct change.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_8da76440628f",
+        "rationale": "No blocking issues at f66f7a0d6c7e. 11 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "low",
+            "title": "Probe generation failed"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 15 input(s) compared, 0 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 3/3 mutants killed"
+          }
+        ],
+        "seconds": 69.88
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "Renaming locals for clarity without changing behavior is correct.",
+        "seconds": 2.71
+      }
+    },
+    {
+      "id": "clean-comprehension",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Use a comprehension in squares",
+      "note": "Correct change.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_b797288dc1a4",
+        "rationale": "No blocking issues at 50e5ee374cff. 18 sandboxed command(s) run, 1 of 2 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "low",
+            "title": "Claim not verified: uses a list comprehension in squares"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: empty input"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: single element"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: negative numbers"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 8 input(s) compared, 0 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 1/1 mutants killed"
+          }
+        ],
+        "seconds": 72.03
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change uses a list comprehension and does not alter the function's behavior.",
+        "seconds": 2.52
+      }
+    },
+    {
+      "id": "clean-real-fix",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Fix ZeroDivisionError in safe_div",
+      "note": "Correct fix with a new test.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_775c848b67f8",
+        "rationale": "No blocking issues at eb1520716bbe. 10 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "low",
+            "title": "Skeptic produced no valid probes"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 2 input(s) compared, 1 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 2/2 mutants killed"
+          }
+        ],
+        "seconds": 63.05
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change correctly handles division by zero and the test case passes as expected.",
+        "seconds": 3.56
+      }
+    },
+    {
+      "id": "clean-docstring",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Add a docstring to area",
+      "note": "Documentation only.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_32a9207abd1a",
+        "rationale": "No blocking issues at b213992d11e0. 7 sandboxed command(s) run, 0 of 1 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "low",
+            "title": "Claim not verified: adds tests for docstring"
+          }
+        ],
+        "seconds": 34.27
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "Docstring added as described.",
+        "seconds": 2.6
+      }
+    },
+    {
+      "id": "clean-new-function",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Add triple",
+      "note": "New function with its own test.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_e030d9db7b2e",
+        "rationale": "No blocking issues at 65366b35d981. 12 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "info",
+            "title": "Mutation score: 2/2 mutants killed"
+          }
+        ],
+        "seconds": 43.93
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change adds a new function as described and includes a corresponding test.",
+        "seconds": 2.53
+      }
+    },
+    {
+      "id": "clean-constant",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Extract the tax rate",
+      "note": "Correct change.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_767f538d11ef",
+        "rationale": "No blocking issues at ce62345a569c. 12 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Test empty input"
+          },
+          {
+            "severity": "info",
+            "title": "Module-level changes are not coverage-checked"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 1/1 mutants killed"
+          }
+        ],
+        "seconds": 28.41
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change correctly extracts the tax rate into a constant and updates the function accordingly.",
+        "seconds": 2.05
+      }
+    },
+    {
+      "id": "clean-early-return",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Use early returns in sign",
+      "note": "Correct change.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_0a5fefe083ef",
+        "rationale": "No blocking issues at 36ba1ac0ddb7. 25 sandboxed command(s) run, 1 of 2 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "low",
+            "title": "Claim not verified: uses early returns in sign"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 6 input(s) compared, 0 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 8/8 mutants killed"
+          }
+        ],
+        "seconds": 50.41
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "The early return for x == 0 is missing, changing the behavior.",
+        "seconds": 2.35
+      }
+    }
+  ]
+}

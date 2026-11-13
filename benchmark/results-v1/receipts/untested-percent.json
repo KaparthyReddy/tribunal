@@ -1,0 +1,238 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_a13cca7409a5",
+    "submission_id": "sub_50de21e7b36b",
+    "repo": "untested-percent",
+    "base_sha": "4eb54857c2ffe4ee7cedf8a8ca90878e567b0042",
+    "head_sha": "2fd9da6ca54d485d166d219c25289e3f04ffc598",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Probe broke the change: Zero division",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "The evidence shows that both the base and head versions of the code produce identical test results, indicating no behavior change.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Probe broke the change: Zero division",
+        "detail": "Passes on base, fails on head.\nE\n======================================================================\nERROR: test_zero_division (tribunal_probes.probe_1.TestPercent.test_zero_division)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 4, in test_zero_division\n    self.assertEqual(percent(5, 0), 0)\n                     ^^^^^^^^^^^^^\n  File \"/work/stats.py\", line 2, in percent\n    return part / whole * 100\n           ~~~~~^~~~~~~\nZeroDivisionError: division by zero\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "high",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Empty inputs",
+        "detail": "E\n======================================================================\nERROR: test_empty_inputs (tribunal_probes.probe_2.TestPercent.test_empty_inputs)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 4, in test_empty_inputs\n    self.assertIsNone(percent(None, None))\n                      ^^^^^^^^^^^^^^^^^^^\n  File \"/work/stats.py\", line 2, in percent\n    return part / whole * 100\n           ~~~~~^~~~~~~\nTypeError: unsupported operand type(s) for /: 'NoneType' and 'NoneType'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          6,
+          7
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Large values",
+        "detail": "F\n======================================================================\nFAIL: test_large_values (tribunal_probes.probe_3.TestPercent.test_large_values)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 4, in test_large_values\n    self.assertAlmostEqual(percent(123456789, 987654321), 12.53102171)\nAssertionError: 12.49999988609375 != 12.53102171 within 7 places (0.03102182390624897 difference)\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          8,
+          9
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.274,
+        "started_at": "2026-11-10T10:41:31.821569Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.211,
+        "started_at": "2026-11-10T10:41:32.095596Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_stats.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.277,
+        "started_at": "2026-11-10T10:41:36.108774Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_stats.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.212,
+        "started_at": "2026-11-10T10:41:36.385928Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_zero_division (tribunal_probes.probe_1.TestPercent.test_zero_division)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 4, in test_zero_division\n    self.assertEqual(percent(5, 0), 0)\n                     ^^^^^^^^^^^^^\n  File \"/work/stats.py\", line 2, in percent\n    return part / whole * 100\n           ~~~~~^~~~~~~\nZeroDivisionError: division by zero\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.396,
+        "started_at": "2026-11-10T10:42:07.836819Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.218,
+        "started_at": "2026-11-10T10:42:08.233501Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_empty_inputs (tribunal_probes.probe_2.TestPercent.test_empty_inputs)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 4, in test_empty_inputs\n    self.assertIsNone(percent(None, None))\n                      ^^^^^^^^^^^^^^^^^^^\n  File \"/work/stats.py\", line 2, in percent\n    return part / whole * 100\n           ~~~~~^~~~~~~\nTypeError: unsupported operand type(s) for /: 'NoneType' and 'NoneType'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.218,
+        "started_at": "2026-11-10T10:42:08.451459Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_empty_inputs (tribunal_probes.probe_2.TestPercent.test_empty_inputs)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 4, in test_empty_inputs\n    self.assertIsNone(percent(None, None))\n                      ^^^^^^^^^^^^^^^^^^^\n  File \"/work/stats.py\", line 4, in percent\n    return part / whole * 100\n           ~~~~~^~~~~~~\nTypeError: unsupported operand type(s) for /: 'NoneType' and 'NoneType'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.214,
+        "started_at": "2026-11-10T10:42:08.669558Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_large_values (tribunal_probes.probe_3.TestPercent.test_large_values)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 4, in test_large_values\n    self.assertAlmostEqual(percent(123456789, 987654321), 12.53102171)\nAssertionError: 12.49999988609375 != 12.53102171 within 7 places (0.03102182390624897 difference)\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.22,
+        "started_at": "2026-11-10T10:42:08.883842Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_large_values (tribunal_probes.probe_3.TestPercent.test_large_values)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 4, in test_large_values\n    self.assertAlmostEqual(percent(123456789, 987654321), 12.53102171)\nAssertionError: 12.49999988609375 != 12.53102171 within 7 places (0.03102182390624897 difference)\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.226,
+        "started_at": "2026-11-10T10:42:09.103847Z"
+      }
+    ],
+    "issued_at": "2026-11-10T10:42:09.331338Z"
+  },
+  "digest": "41bc471dabb688c5dfb737afb71da4d3422e24d513e5b979b7d97e803f380c2d",
+  "signature": "8DdSkIMM9Mlfxn29jz9rzKmu5J0VUEsnuhMj7yCFhiVryATV5xQJY9mZ/vBKQYlPtKiIMlLTh8OL5sUjyc5tAQ==",
+  "public_key": "NcTDtqFNt+Pb3DWBkUVHMgy2M+DJlmu4vyYaqhIz97o="
+}

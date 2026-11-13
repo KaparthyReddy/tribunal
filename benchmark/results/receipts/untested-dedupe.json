@@ -1,0 +1,310 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_713f59c3a0ce",
+    "submission_id": "sub_8fe52aaf5228",
+    "repo": "untested-dedupe",
+    "base_sha": "bfcc4f17b74b12627f35f65c17387cb349f381b6",
+    "head_sha": "30a6735776fc18364ef9c8243957ce81da93f259",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "Behavior differs: dedupe([-1, -2, -3]) returned [-1, -2, -3] on base but returned [-3, -1, -2] on head; dedupe([-1, 0, 1]) returned [-1, 0, 1] on base but returned [0, 1, -1] on head; dedupe(['a', 'b', 'c', 'd']) returned ['a', 'b', 'c', 'd'] on base but returned ['d', 'c', 'a', 'b'] on head",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: No behavior change",
+        "detail": "Behavior differs: dedupe([-1, -2, -3]) returned [-1, -2, -3] on base but returned [-3, -1, -2] on head; dedupe([-1, 0, 1]) returned [-1, 0, 1] on base but returned [0, 1, -1] on head; dedupe(['a', 'b', 'c', 'd']) returned ['a', 'b', 'c', 'd'] on base but returned ['d', 'c', 'a', 'b'] on head",
+        "severity": "high",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: fuzzing",
+        "detail": "F\n======================================================================\nFAIL: test_fuzz (tribunal_probes.probe_4.TestDedupe.test_fuzz)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 7, in test_fuzz\n    self.assertEqual(dedupe(items), sorted(set(items)))\nAssertionError: Lists differ: [16, -490, -489, 30, -989, -985, 40, -971,[492 chars], -4] != [-989, -985, -971, -968, -965, -961, -945,[492 chars] 976]\n\nFirst differing element 0:\n16\n-989\n\nDiff is 1343 characters long. Set self.maxDiff to None to see it.\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          10,
+          11
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 10 input(s) compared, 3 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.273,
+        "started_at": "2026-11-13T04:41:32.570443Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.214,
+        "started_at": "2026-11-13T04:41:32.844129Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_dedupe.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.269,
+        "started_at": "2026-11-13T04:41:37.374371Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_dedupe.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.209,
+        "started_at": "2026-11-13T04:41:37.643306Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[1, 2, 3, 4]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"dedupe() takes 1 positional argument but 2 were given\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"[-1, -2, -3]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"[0]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"[-1, 0, 1]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"['a', 'b', 'c', 'd']\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"dedupe() got an unexpected keyword argument 'preserve_order'\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"dedupe() got an unexpected keyword argument 'preserve_order'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.209,
+        "started_at": "2026-11-13T04:42:05.728225Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[1, 2, 3, 4]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"dedupe() takes 1 positional argument but 2 were given\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"[-3, -1, -2]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"[0]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"[0, 1, -1]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"['d', 'c', 'a', 'b']\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"dedupe() got an unexpected keyword argument 'preserve_order'\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"dedupe() got an unexpected keyword argument 'preserve_order'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.152,
+        "started_at": "2026-11-13T04:42:05.937649Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[1, 2, 3, 4]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"dedupe() takes 1 positional argument but 2 were given\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"[-3, -1, -2]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"[0]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"[0, 1, -1]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"['d', 'c', 'a', 'b']\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"dedupe() got an unexpected keyword argument 'preserve_order'\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"dedupe() got an unexpected keyword argument 'preserve_order'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.169,
+        "started_at": "2026-11-13T04:42:06.090190Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.327,
+        "started_at": "2026-11-13T04:42:28.261520Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.204,
+        "started_at": "2026-11-13T04:42:28.588716Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.231,
+        "started_at": "2026-11-13T04:42:28.793303Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_fuzz (tribunal_probes.probe_4.TestDedupe.test_fuzz)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 7, in test_fuzz\n    self.assertEqual(dedupe(items), sorted(set(items)))\nAssertionError: Lists differ: [16, -490, -489, 30, -989, -985, 40, -971,[492 chars], -4] != [-989, -985, -971, -968, -965, -961, -945,[492 chars] 976]\n\nFirst differing element 0:\n16\n-989\n\nDiff is 1343 characters long. Set self.maxDiff to None to see it.\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.232,
+        "started_at": "2026-11-13T04:42:29.024606Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_fuzz (tribunal_probes.probe_4.TestDedupe.test_fuzz)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 7, in test_fuzz\n    self.assertEqual(dedupe(items), sorted(set(items)))\nAssertionError: Lists differ: [-98, -761, -985, -815, 865, 930, 923, 652, 1[489 chars]-375] != [-989, -985, -971, -968, -965, -961, -945, -9[489 chars] 976]\n\nFirst differing element 0:\n-98\n-989\n\nDiff is 1670 characters long. Set self.maxDiff to None to see it.\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.229,
+        "started_at": "2026-11-13T04:42:29.256768Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.228,
+        "started_at": "2026-11-13T04:42:29.487997Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_dedupe (test_dedupe.T.test_dedupe)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_dedupe.py\", line 8, in test_dedupe\n    self.assertEqual(dedupe([1, 1, 2]), [1, 2])\nAssertionError: None != [1, 2]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.243,
+        "started_at": "2026-11-13T04:42:29.716395Z"
+      }
+    ],
+    "issued_at": "2026-11-13T04:42:29.961529Z"
+  },
+  "digest": "be8f5c110ef1b182ea03dfa08da34252ea7e483a9af9897cbb8e94ed5d346411",
+  "signature": "U1QhxTQ8sAn2NAH/kTV1Jl45WKyyE2vT0J9CYOiHp92ykbK1eQB8/h6Wk8gAEgmPYzcx0x2e1dnnEadWr/w2AA==",
+  "public_key": "y9fm/n+1IPoc5X4iisxWrFMN/HsE7gsR5IjYCdv6ceo="
+}

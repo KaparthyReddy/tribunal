@@ -126,7 +126,13 @@ def test_parse_calls_filters() -> None:
             _call("a"),
             {"module": "greet", "function": "other", "args": []},
             {"module": "greet", "function": "greet", "args": "bad"},
-            {"module": "greet", "function": "greet", "args": [], "kwargs": {"p": "?"}, "claim": "c9"},
+            {
+                "module": "greet",
+                "function": "greet",
+                "args": [],
+                "kwargs": {"p": "?"},
+                "claim": "c9",
+            },
             "junk",
         ]
     }
@@ -263,15 +269,23 @@ def test_import_failures_are_not_evidence(tmp_path: Path, make_runner) -> None:
 
 def test_merge_replaces_result_and_drops_stale_finding() -> None:
     audit = AgentResult(
-        findings=[Finding(source="auditor", title="Claim not verified: no change", severity=Severity.LOW)],
+        findings=[
+            Finding(source="auditor", title="Claim not verified: no change", severity=Severity.LOW)
+        ],
         claim_results=[
             ClaimResult(claim_id="c1", status=ClaimStatus.UNVERIFIABLE, command_indexes=[0])
         ],
     )
     char = AgentResult(
         findings=[
-            Finding(source="characterize", title="Claim refuted: no change", severity=Severity.HIGH),
-            Finding(source="characterize", title="Differential check: 1 input(s) compared, 1 differ", severity=Severity.INFO),
+            Finding(
+                source="characterize", title="Claim refuted: no change", severity=Severity.HIGH
+            ),
+            Finding(
+                source="characterize",
+                title="Differential check: 1 input(s) compared, 1 differ",
+                severity=Severity.INFO,
+            ),
         ],
         claim_results=[
             ClaimResult(claim_id="c1", status=ClaimStatus.REFUTED, command_indexes=[5, 6])
@@ -289,13 +303,17 @@ def test_merge_replaces_result_and_drops_stale_finding() -> None:
 
 def test_merge_keeps_existing_refutation_without_duplicates() -> None:
     audit = AgentResult(
-        findings=[Finding(source="auditor", title="Claim refuted: no change", severity=Severity.HIGH)],
+        findings=[
+            Finding(source="auditor", title="Claim refuted: no change", severity=Severity.HIGH)
+        ],
         claim_results=[
             ClaimResult(claim_id="c1", status=ClaimStatus.REFUTED, command_indexes=[0, 1])
         ],
     )
     char = AgentResult(
-        findings=[Finding(source="characterize", title="Claim refuted: no change", severity=Severity.HIGH)],
+        findings=[
+            Finding(source="characterize", title="Claim refuted: no change", severity=Severity.HIGH)
+        ],
         claim_results=[
             ClaimResult(claim_id="c1", status=ClaimStatus.REFUTED, command_indexes=[7, 8])
         ],

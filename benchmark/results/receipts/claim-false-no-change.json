@@ -1,0 +1,296 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_7b5a84dffc45",
+    "submission_id": "sub_3bc9fb2ce3c7",
+    "repo": "claim-false-no-change",
+    "base_sha": "ab4997078293a1dc8e6ed236267dfd4fe66872ad",
+    "head_sha": "1700d8de00c47f01cdd619df44e44847a89659fb",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Claim refuted: no behavior change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "Behavior differs: greet('Alice') returned 'Hello, Alice!' on base but returned 'Hello, Alice.' on head; greet('Bob') returned 'Hello, Bob!' on base but returned 'Hello, Bob.' on head; greet('Charlie') returned 'Hello, Charlie!' on base but returned 'Hello, Charlie.' on head",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: no behavior change",
+        "detail": "Behavior differs: greet('Alice') returned 'Hello, Alice!' on base but returned 'Hello, Alice.' on head; greet('Bob') returned 'Hello, Bob!' on base but returned 'Hello, Bob.' on head; greet('Charlie') returned 'Hello, Charlie!' on base but returned 'Hello, Charlie.' on head",
+        "severity": "high",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Test with empty name",
+        "detail": "F\n======================================================================\nFAIL: test_empty_name (tribunal_probes.probe_2.TestGreet.test_empty_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_empty_name\n    self.assertEqual(greet(''), '')\nAssertionError: 'Hello, .' != ''\n- Hello, .\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          8,
+          9
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Test with None name",
+        "detail": "E\n======================================================================\nERROR: test_none_name (tribunal_probes.probe_3.TestGreet.test_none_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 5, in test_none_name\n    self.assertEqual(greet(None), 'Hello, None.')\n                     ^^^^^^^^^^^\n  File \"/work/greet.py\", line 2, in greet\n    return \"Hello, \" + name + punct\n           ~~~~~~~~~~^~~~~~\nTypeError: can only concatenate str (not \"NoneType\") to str\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          10,
+          11
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 6 input(s) compared, 3 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          4,
+          5
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.308,
+        "started_at": "2026-11-13T04:47:19.605943Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.228,
+        "started_at": "2026-11-13T04:47:19.913990Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.259,
+        "started_at": "2026-11-13T04:47:24.238226Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.213,
+        "started_at": "2026-11-13T04:47:24.497411Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"'Hello, Alice!'\"}\n{\"i\": 1, \"ok\": true, \"value\": \"'Hello, Bob!'\"}\n{\"i\": 2, \"ok\": true, \"value\": \"'Hello, Charlie!'\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"can only concatenate str (not \\\"NoneType\\\") to str\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"greet() missing 1 required positional argument: 'name'\"}\n{\"i\": 5, \"ok\": true, \"value\": \"'Hello, Dave?'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.286,
+        "started_at": "2026-11-13T04:47:42.456900Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"'Hello, Alice.'\"}\n{\"i\": 1, \"ok\": true, \"value\": \"'Hello, Bob.'\"}\n{\"i\": 2, \"ok\": true, \"value\": \"'Hello, Charlie.'\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"can only concatenate str (not \\\"NoneType\\\") to str\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"greet() missing 1 required positional argument: 'name'\"}\n{\"i\": 5, \"ok\": true, \"value\": \"'Hello, Dave?'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.143,
+        "started_at": "2026-11-13T04:47:42.743483Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"'Hello, Alice.'\"}\n{\"i\": 1, \"ok\": true, \"value\": \"'Hello, Bob.'\"}\n{\"i\": 2, \"ok\": true, \"value\": \"'Hello, Charlie.'\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"can only concatenate str (not \\\"NoneType\\\") to str\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"greet() missing 1 required positional argument: 'name'\"}\n{\"i\": 5, \"ok\": true, \"value\": \"'Hello, Dave?'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.161,
+        "started_at": "2026-11-13T04:47:42.886938Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.347,
+        "started_at": "2026-11-13T04:48:05.512777Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_empty_name (tribunal_probes.probe_2.TestGreet.test_empty_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_empty_name\n    self.assertEqual(greet(''), '')\nAssertionError: 'Hello, .' != ''\n- Hello, .\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.231,
+        "started_at": "2026-11-13T04:48:05.860046Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_empty_name (tribunal_probes.probe_2.TestGreet.test_empty_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_empty_name\n    self.assertEqual(greet(''), '')\nAssertionError: 'Hello, !' != ''\n- Hello, !\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.228,
+        "started_at": "2026-11-13T04:48:06.091929Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_none_name (tribunal_probes.probe_3.TestGreet.test_none_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 5, in test_none_name\n    self.assertEqual(greet(None), 'Hello, None.')\n                     ^^^^^^^^^^^\n  File \"/work/greet.py\", line 2, in greet\n    return \"Hello, \" + name + punct\n           ~~~~~~~~~~^~~~~~\nTypeError: can only concatenate str (not \"NoneType\") to str\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.247,
+        "started_at": "2026-11-13T04:48:06.319900Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_none_name (tribunal_probes.probe_3.TestGreet.test_none_name)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 5, in test_none_name\n    self.assertEqual(greet(None), 'Hello, None.')\n                     ^^^^^^^^^^^\n  File \"/work/greet.py\", line 2, in greet\n    return \"Hello, \" + name + punct\n           ~~~~~~~~~~^~~~~~\nTypeError: can only concatenate str (not \"NoneType\") to str\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.259,
+        "started_at": "2026-11-13T04:48:06.567165Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.263,
+        "started_at": "2026-11-13T04:48:06.826342Z"
+      }
+    ],
+    "issued_at": "2026-11-13T04:48:07.092255Z"
+  },
+  "digest": "0f5fc88462ccb8f0b8c38371f38873fa103fbba7a2ce09e021759826238934f4",
+  "signature": "G0Z+I32xmcj7vbAw5L3fxwdxyveFeT/dJ9tm5UlDU5O5F+tgX+LqujTW9fOU63kPEzke5RyhsKK8eayxACeZBg==",
+  "public_key": "y9fm/n+1IPoc5X4iisxWrFMN/HsE7gsR5IjYCdv6ceo="
+}

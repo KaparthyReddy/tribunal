@@ -19,7 +19,7 @@ MAX_DIFF_CHARS = 8000
 MAX_CALL_CHARS = 2000
 IMPORT_ERRORS = frozenset({"ModuleNotFoundError", "ImportError"})
 
-DRIVER = '''\
+DRIVER = """\
 import contextlib
 import copy
 import importlib
@@ -67,7 +67,7 @@ def main():
 
 
 main()
-'''
+"""
 
 SYSTEM = """You design test inputs for comparing two versions of the same Python functions.
 A coding agent changed the functions below. Your calls will run on the old and the new version,
@@ -277,7 +277,11 @@ class Characterizer:
             calls = self._generate(ctx, relevant, targets)
         except LLMError as exc:
             result.findings.append(
-                self._finding("Differential check skipped: input generation failed", Severity.LOW, str(exc)[:500])
+                self._finding(
+                    "Differential check skipped: input generation failed",
+                    Severity.LOW,
+                    str(exc)[:500],
+                )
             )
             return result
         if not calls:
@@ -304,9 +308,8 @@ class Characterizer:
         head_res = parse_results(head_rec.stdout)
         again_res = parse_results(again_rec.stdout)
         records = (base_rec, head_rec, again_rec)
-        if (
-            not (base_res and head_res and again_res)
-            or any(is_infra_failure(record) for record in records)
+        if not (base_res and head_res and again_res) or any(
+            is_infra_failure(record) for record in records
         ):
             detail = (head_rec.stderr or base_rec.stderr)[-500:]
             result.findings.append(

@@ -191,7 +191,10 @@ def render_html(results: dict[str, Any]) -> str:
     return (
         '<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
-        "<title>Tribunal benchmark</title><style>" + CSS + "</style></head><body>" + body
+        "<title>Tribunal benchmark</title><style>"
+        + CSS
+        + "</style></head><body>"
+        + body
         + "</body></html>\n"
     )
 

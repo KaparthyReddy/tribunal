@@ -1,0 +1,160 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_d6d9c83cea14",
+    "submission_id": "sub_a3f43fc5eb57",
+    "repo": "regress-normalize",
+    "base_sha": "c5a8e3eb7a53de9f3df0b2b2ee844455b3568b42",
+    "head_sha": "0b8bf14d4fb2a9d11b5c801a75dee0eb4cf9903d",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Regression: test command passes on base but fails on head",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "speeds up normalize",
+        "kind": "performance"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The evidence does not provide a direct comparison of performance before and after the code change. The test suite only shows that one version failed, but it does not indicate whether this failure is due to a regression or an unrelated issue.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Regression: test command passes on base but fails on head",
+        "detail": "`python -m unittest` exits 0 on the base commit and non-zero on head.",
+        "severity": "high",
+        "command_indexes": [
+          0,
+          1
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim not verified: speeds up normalize",
+        "detail": "The evidence does not provide a direct comparison of performance before and after the code change. The test suite only shows that one version failed, but it does not indicate whether this failure is due to a regression or an unrelated issue.",
+        "severity": "low",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe generation failed",
+        "detail": "probes must be a list",
+        "severity": "low",
+        "command_indexes": []
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation testing skipped: test command does not pass on head",
+        "detail": "",
+        "severity": "low",
+        "command_indexes": [
+          4
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.279,
+        "started_at": "2026-11-13T04:21:09.469475Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_normalize (test_text.T.test_normalize)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_text.py\", line 8, in test_normalize\n    self.assertEqual(normalize(\"  Hi \"), \"hi\")\nAssertionError: '  hi ' != 'hi'\n-   hi \n+ hi\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.226,
+        "started_at": "2026-11-13T04:21:09.749118Z"
+      },
+      {
+        "argv": [
+          "time",
+          "python",
+          "-c",
+          "import text; text.normalize('   TEST  ')"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 127,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "docker: Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: exec: \"time\": executable file not found in $PATH\n\nRun 'docker run --help' for more information\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.147,
+        "started_at": "2026-11-13T04:21:13.495927Z"
+      },
+      {
+        "argv": [
+          "time",
+          "python",
+          "-c",
+          "import text; text.normalize('   TEST  ')"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 127,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "docker: Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: exec: \"time\": executable file not found in $PATH\n\nRun 'docker run --help' for more information\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.102,
+        "started_at": "2026-11-13T04:21:13.643475Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_normalize (test_text.T.test_normalize)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_text.py\", line 8, in test_normalize\n    self.assertEqual(normalize(\"  Hi \"), \"hi\")\nAssertionError: '  hi ' != 'hi'\n-   hi \n+ hi\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.427,
+        "started_at": "2026-11-13T04:21:37.987944Z"
+      }
+    ],
+    "issued_at": "2026-11-13T04:21:38.416379Z"
+  },
+  "digest": "81c3974c89869c42a08e5aa9c785830fee956465751844959311eda6a3a7aa10",
+  "signature": "79oloGeeI3GiwQlnTH0KOMb1HPy/7FDD5aKMl+Lv6R0drQDmler9n3upb+8ChkRZbJJQceXC5YT6BfDUtH9oCQ==",
+  "public_key": "y9fm/n+1IPoc5X4iisxWrFMN/HsE7gsR5IjYCdv6ceo="
+}

@@ -10,17 +10,17 @@ CASES = [
         note="Only variables were renamed. maximum([]) still raises IndexError.",
         base={
             "agg.py": code(
-                '''
+                """
                 def maximum(xs):
                     best = xs[0]
                     for x in xs:
                         if x > best:
                             best = x
                     return best
-                '''
+                """
             ),
             "test_agg.py": code(
-                '''
+                """
                 import unittest
 
                 from agg import maximum
@@ -29,19 +29,19 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_maximum(self):
                         self.assertEqual(maximum([1, 3, 2]), 3)
-                '''
+                """
             ),
         },
         head={
             "agg.py": code(
-                '''
+                """
                 def maximum(values):
                     best = values[0]
                     for v in values:
                         if v > best:
                             best = v
                     return best
-                '''
+                """
             ),
         },
     ),
@@ -54,13 +54,13 @@ CASES = [
         note="Default punctuation changed from ! to . while tests pass it explicitly.",
         base={
             "greet.py": code(
-                '''
+                """
                 def greet(name, punct="!"):
                     return "Hello, " + name + punct
-                '''
+                """
             ),
             "test_greet.py": code(
-                '''
+                """
                 import unittest
 
                 from greet import greet
@@ -69,15 +69,15 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_greet(self):
                         self.assertEqual(greet("Ann", "?"), "Hello, Ann?")
-                '''
+                """
             ),
         },
         head={
             "greet.py": code(
-                '''
+                """
                 def greet(name, punct="."):
                     return "Hello, " + name + punct
-                '''
+                """
             ),
         },
     ),

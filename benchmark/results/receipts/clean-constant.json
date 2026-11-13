@@ -1,0 +1,261 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_767f538d11ef",
+    "submission_id": "sub_84e7d03f2e2c",
+    "repo": "clean-constant",
+    "base_sha": "f799ee016d990946474d94b756f5c6cd6f1d2f5b",
+    "head_sha": "ce62345a569ce3ec2726ad2a3b73b7667160347d",
+    "verdict": "pass",
+    "rationale": "No blocking issues at ce62345a569c. 12 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "extracts the tax rate into a constant",
+        "kind": "other"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "The evidence shows that the `TAX_RATE` constant is present and accessible only after applying the code change (evidence [3] and [4]). This supports the claim that the tax rate was extracted into a constant.",
+        "command_indexes": [
+          2,
+          3,
+          4
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Test empty input",
+        "detail": "E\n======================================================================\nERROR: test_empty_input (tribunal_probes.probe_1.TestWithTax.test_empty_input)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 4, in test_empty_input\n    self.assertEqual(with_tax(None), None)\n                     ^^^^^^^^^^^^^^\n  File \"/work/pricing.py\", line 5, in with_tax\n    return price * TAX_RATE\n           ~~~~~~^~~~~~~~~~\nTypeError: unsupported operand type(s) for *: 'NoneType' and 'float'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          5,
+          6
+        ]
+      },
+      {
+        "source": "blast_radius",
+        "title": "Module-level changes are not coverage-checked",
+        "detail": "pricing.py",
+        "severity": "info",
+        "command_indexes": []
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.249,
+        "started_at": "2026-11-13T04:54:34.909580Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.217,
+        "started_at": "2026-11-13T04:54:35.158571Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import pricing; print(pricing.TAX_RATE)"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nAttributeError: module 'pricing' has no attribute 'TAX_RATE'\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.173,
+        "started_at": "2026-11-13T04:54:40.659840Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import pricing; print(pricing.TAX_RATE)"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "1.08\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.135,
+        "started_at": "2026-11-13T04:54:40.832942Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_pricing.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.216,
+        "started_at": "2026-11-13T04:54:40.968301Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_empty_input (tribunal_probes.probe_1.TestWithTax.test_empty_input)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 4, in test_empty_input\n    self.assertEqual(with_tax(None), None)\n                     ^^^^^^^^^^^^^^\n  File \"/work/pricing.py\", line 5, in with_tax\n    return price * TAX_RATE\n           ~~~~~~^~~~~~~~~~\nTypeError: unsupported operand type(s) for *: 'NoneType' and 'float'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.289,
+        "started_at": "2026-11-13T04:55:00.128808Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_empty_input (tribunal_probes.probe_1.TestWithTax.test_empty_input)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 4, in test_empty_input\n    self.assertEqual(with_tax(None), None)\n                     ^^^^^^^^^^^^^^\n  File \"/work/pricing.py\", line 2, in with_tax\n    return price * 1.08\n           ~~~~~~^~~~~~\nTypeError: unsupported operand type(s) for *: 'NoneType' and 'float'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.252,
+        "started_at": "2026-11-13T04:55:00.418286Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.252,
+        "started_at": "2026-11-13T04:55:00.670502Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.231,
+        "started_at": "2026-11-13T04:55:00.922545Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.238,
+        "started_at": "2026-11-13T04:55:01.154064Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.224,
+        "started_at": "2026-11-13T04:55:01.393724Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_with_tax (test_pricing.T.test_with_tax)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_pricing.py\", line 8, in test_with_tax\n    self.assertAlmostEqual(with_tax(100), 108.0)\n  File \"/usr/local/lib/python3.12/unittest/case.py\", line 916, in assertAlmostEqual\n    diff = abs(first - second)\n               ~~~~~~^~~~~~~~\nTypeError: unsupported operand type(s) for -: 'NoneType' and 'float'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.229,
+        "started_at": "2026-11-13T04:55:01.618626Z"
+      }
+    ],
+    "issued_at": "2026-11-13T04:55:01.848779Z"
+  },
+  "digest": "036c0409053119e2bd0cb7ad891c2022bbaaafacb0299a3c2a5d6bc4e4694e71",
+  "signature": "M2EgZw4mXlkJC8Il2K3RDJCxeNYh1WcGVE4glljjW5+E0xAcdvB/dSwddLdR0vQXNx64S5oXcOSUbmZrdREGCg==",
+  "public_key": "y9fm/n+1IPoc5X4iisxWrFMN/HsE7gsR5IjYCdv6ceo="
+}

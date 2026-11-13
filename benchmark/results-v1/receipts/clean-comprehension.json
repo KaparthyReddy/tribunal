@@ -1,0 +1,350 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_8b69908260cf",
+    "submission_id": "sub_cf5a942a35e5",
+    "repo": "clean-comprehension",
+    "base_sha": "71d9c514c658b025e12c4617764ebcb86e2f8506",
+    "head_sha": "6a7bbb6abe2d0f466d80925e59bf70c63b2c89ab",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 6a7bbb6abe2d. 15 sandboxed command(s) run, 1 of 2 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "uses a list comprehension in squares",
+        "kind": "other"
+      },
+      {
+        "id": "c2",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The evidence does not provide any code or output that directly shows the use of a list comprehension in the `squares` function.",
+        "command_indexes": [
+          2,
+          3
+        ]
+      },
+      {
+        "claim_id": "c2",
+        "status": "supported",
+        "explanation": "The evidence shows that both the base and head versions of the code produce identical test results, indicating no behavior change.",
+        "command_indexes": [
+          0,
+          1,
+          5,
+          6
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Claim not verified: uses a list comprehension in squares",
+        "detail": "The evidence does not provide any code or output that directly shows the use of a list comprehension in the `squares` function.",
+        "severity": "low",
+        "command_indexes": [
+          2,
+          3
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: empty input",
+        "detail": "E\n======================================================================\nERROR: probe_1 (unittest.loader._FailedTest.probe_1)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_1\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_1.py\", line 1, in <module>\n    import unittest; from pkg.squares import squares\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          7,
+          8
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: single element",
+        "detail": "E\n======================================================================\nERROR: probe_2 (unittest.loader._FailedTest.probe_2)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_2\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_2.py\", line 1, in <module>\n    import unittest; from pkg.squares import squares\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          9,
+          10
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: negative numbers",
+        "detail": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 1, in <module>\n    import unittest; from pkg.squares import squares\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          11,
+          12
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.274,
+        "started_at": "2026-11-10T10:45:22.222525Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.218,
+        "started_at": "2026-11-10T10:45:22.497101Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "from squares import squares; print(squares([1, 2, 3]))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "[1, 4, 9]\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.171,
+        "started_at": "2026-11-10T10:45:30.037071Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "from squares import squares; print(squares([1, 2, 3]))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "[1, 4, 9]\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.123,
+        "started_at": "2026-11-10T10:45:30.208686Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_squares.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.217,
+        "started_at": "2026-11-10T10:45:30.332087Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_squares.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.259,
+        "started_at": "2026-11-10T10:45:39.023080Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_squares.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.21,
+        "started_at": "2026-11-10T10:45:39.282692Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_1 (unittest.loader._FailedTest.probe_1)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_1\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_1.py\", line 1, in <module>\n    import unittest; from pkg.squares import squares\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.404,
+        "started_at": "2026-11-10T10:46:04.096092Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_1 (unittest.loader._FailedTest.probe_1)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_1\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_1.py\", line 1, in <module>\n    import unittest; from pkg.squares import squares\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.227,
+        "started_at": "2026-11-10T10:46:04.500064Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_2 (unittest.loader._FailedTest.probe_2)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_2\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_2.py\", line 1, in <module>\n    import unittest; from pkg.squares import squares\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.221,
+        "started_at": "2026-11-10T10:46:04.727902Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_2 (unittest.loader._FailedTest.probe_2)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_2\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_2.py\", line 1, in <module>\n    import unittest; from pkg.squares import squares\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.218,
+        "started_at": "2026-11-10T10:46:04.949329Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 1, in <module>\n    import unittest; from pkg.squares import squares\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.244,
+        "started_at": "2026-11-10T10:46:05.168111Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 1, in <module>\n    import unittest; from pkg.squares import squares\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.227,
+        "started_at": "2026-11-10T10:46:05.412130Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.226,
+        "started_at": "2026-11-10T10:46:05.641603Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_squares (test_squares.T.test_squares)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_squares.py\", line 8, in test_squares\n    self.assertEqual(squares([1, 2, 3]), [1, 4, 9])\nAssertionError: None != [1, 4, 9]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.221,
+        "started_at": "2026-11-10T10:46:05.868327Z"
+      }
+    ],
+    "issued_at": "2026-11-10T10:46:06.091409Z"
+  },
+  "digest": "b9b221c0aa343458d7effacc41c15da83bf76a2b32480546639fb97b4c257ac2",
+  "signature": "lMYdktPAfn0kiQ+EJwsrCC4uopm+FjgaKKIGlkAfkNh3xcvQAQOuWajn0AaQiXa5bE2Q2wHzQku09dsNhxg1Dw==",
+  "public_key": "NcTDtqFNt+Pb3DWBkUVHMgy2M+DJlmu4vyYaqhIz97o="
+}

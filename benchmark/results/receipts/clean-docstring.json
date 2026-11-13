@@ -1,0 +1,167 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_32a9207abd1a",
+    "submission_id": "sub_a8c9a63dc1c0",
+    "repo": "clean-docstring",
+    "base_sha": "01a3b4c9ec0a8dea6476e6dccacbd70663178748",
+    "head_sha": "b213992d11e09a8c26b3ec43a1ee25b8fe09f1b1",
+    "verdict": "pass",
+    "rationale": "No blocking issues at b213992d11e0. 7 sandboxed command(s) run, 0 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "adds tests for docstring",
+        "kind": "adds_tests"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The evidence only shows that the tests are running, but it does not provide information on whether new tests for docstring have been added.",
+        "command_indexes": [
+          0,
+          1,
+          2
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Claim not verified: adds tests for docstring",
+        "detail": "The evidence only shows that the tests are running, but it does not provide information on whether new tests for docstring have been added.",
+        "severity": "low",
+        "command_indexes": [
+          0,
+          1,
+          2
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.264,
+        "started_at": "2026-11-13T04:51:45.225371Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.218,
+        "started_at": "2026-11-13T04:51:45.489597Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_area.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.277,
+        "started_at": "2026-11-13T04:51:50.279085Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.352,
+        "started_at": "2026-11-13T04:52:16.798645Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.213,
+        "started_at": "2026-11-13T04:52:17.151382Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.241,
+        "started_at": "2026-11-13T04:52:17.365111Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.233,
+        "started_at": "2026-11-13T04:52:17.606047Z"
+      }
+    ],
+    "issued_at": "2026-11-13T04:52:17.842244Z"
+  },
+  "digest": "62d6b194cec8b8c56d5c785d42e093856267267f42dfdd6f639a0c42ffdc053e",
+  "signature": "LyxiLvs5jjPc+BQAJqwO8HzRXLhLaDmxGfh5hwMqil1IbV8fvUl5gWkw+A984qXwgAWlfhREKq65k9M9SF7MDQ==",
+  "public_key": "y9fm/n+1IPoc5X4iisxWrFMN/HsE7gsR5IjYCdv6ceo="
+}

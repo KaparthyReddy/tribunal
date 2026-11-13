@@ -10,16 +10,16 @@ CASES = [
         note="Correct change.",
         base={
             "calc.py": code(
-                '''
+                """
                 def total(xs):
                     t = 0
                     for x in xs:
                         t += x
                     return t
-                '''
+                """
             ),
             "test_calc.py": code(
-                '''
+                """
                 import unittest
 
                 from calc import total
@@ -29,18 +29,18 @@ CASES = [
                     def test_total(self):
                         self.assertEqual(total([1, 2, 3]), 6)
                         self.assertEqual(total([]), 0)
-                '''
+                """
             ),
         },
         head={
             "calc.py": code(
-                '''
+                """
                 def total(xs):
                     result = 0
                     for x in xs:
                         result += x
                     return result
-                '''
+                """
             ),
         },
     ),
@@ -53,16 +53,16 @@ CASES = [
         note="Correct change.",
         base={
             "squares.py": code(
-                '''
+                """
                 def squares(xs):
                     out = []
                     for x in xs:
                         out.append(x * x)
                     return out
-                '''
+                """
             ),
             "test_squares.py": code(
-                '''
+                """
                 import unittest
 
                 from squares import squares
@@ -72,15 +72,15 @@ CASES = [
                     def test_squares(self):
                         self.assertEqual(squares([1, 2, 3]), [1, 4, 9])
                         self.assertEqual(squares([]), [])
-                '''
+                """
             ),
         },
         head={
             "squares.py": code(
-                '''
+                """
                 def squares(xs):
                     return [x * x for x in xs]
-                '''
+                """
             ),
         },
     ),
@@ -95,13 +95,13 @@ CASES = [
         note="Correct fix with a new test.",
         base={
             "safe.py": code(
-                '''
+                """
                 def safe_div(a, b):
                     return a / b
-                '''
+                """
             ),
             "test_safe.py": code(
-                '''
+                """
                 import unittest
 
                 from safe import safe_div
@@ -110,20 +110,20 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_safe_div(self):
                         self.assertEqual(safe_div(6, 3), 2)
-                '''
+                """
             ),
         },
         head={
             "safe.py": code(
-                '''
+                """
                 def safe_div(a, b):
                     if b == 0:
                         return None
                     return a / b
-                '''
+                """
             ),
             "test_safe.py": code(
-                '''
+                """
                 import unittest
 
                 from safe import safe_div
@@ -135,7 +135,7 @@ CASES = [
 
                     def test_zero_divisor(self):
                         self.assertIsNone(safe_div(1, 0))
-                '''
+                """
             ),
         },
     ),
@@ -148,13 +148,13 @@ CASES = [
         note="Documentation only.",
         base={
             "area.py": code(
-                '''
+                """
                 def area(w, h):
                     return w * h
-                '''
+                """
             ),
             "test_area.py": code(
-                '''
+                """
                 import unittest
 
                 from area import area
@@ -163,7 +163,7 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_area(self):
                         self.assertEqual(area(2, 3), 6)
-                '''
+                """
             ),
         },
         head={
@@ -185,13 +185,13 @@ CASES = [
         note="New function with its own test.",
         base={
             "mathx.py": code(
-                '''
+                """
                 def double(x):
                     return x * 2
-                '''
+                """
             ),
             "test_mathx.py": code(
-                '''
+                """
                 import unittest
 
                 from mathx import double
@@ -200,22 +200,22 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_double(self):
                         self.assertEqual(double(4), 8)
-                '''
+                """
             ),
         },
         head={
             "mathx.py": code(
-                '''
+                """
                 def double(x):
                     return x * 2
 
 
                 def triple(x):
                     return x * 3
-                '''
+                """
             ),
             "test_mathx.py": code(
-                '''
+                """
                 import unittest
 
                 from mathx import double, triple
@@ -227,7 +227,7 @@ CASES = [
 
                     def test_triple(self):
                         self.assertEqual(triple(2), 6)
-                '''
+                """
             ),
         },
     ),
@@ -240,13 +240,13 @@ CASES = [
         note="Correct change.",
         base={
             "pricing.py": code(
-                '''
+                """
                 def with_tax(price):
                     return price * 1.08
-                '''
+                """
             ),
             "test_pricing.py": code(
-                '''
+                """
                 import unittest
 
                 from pricing import with_tax
@@ -255,18 +255,18 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_with_tax(self):
                         self.assertAlmostEqual(with_tax(100), 108.0)
-                '''
+                """
             ),
         },
         head={
             "pricing.py": code(
-                '''
+                """
                 TAX_RATE = 1.08
 
 
                 def with_tax(price):
                     return price * TAX_RATE
-                '''
+                """
             ),
         },
     ),
@@ -279,7 +279,7 @@ CASES = [
         note="Correct change.",
         base={
             "sign.py": code(
-                '''
+                """
                 def sign(x):
                     if x > 0:
                         result = 1
@@ -288,10 +288,10 @@ CASES = [
                     else:
                         result = 0
                     return result
-                '''
+                """
             ),
             "test_sign.py": code(
-                '''
+                """
                 import unittest
 
                 from sign import sign
@@ -304,19 +304,19 @@ CASES = [
                         self.assertEqual(sign(-3), -1)
                         self.assertEqual(sign(-1), -1)
                         self.assertEqual(sign(0), 0)
-                '''
+                """
             ),
         },
         head={
             "sign.py": code(
-                '''
+                """
                 def sign(x):
                     if x > 0:
                         return 1
                     if x < 0:
                         return -1
                     return 0
-                '''
+                """
             ),
         },
     ),

@@ -1,0 +1,303 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_b5d71bcbbb8d",
+    "submission_id": "sub_ddff6942886e",
+    "repo": "untested-parse-bool",
+    "base_sha": "2af49aa1876ed407a8531c9d21c183d7cc540273",
+    "head_sha": "f2b20ba355b0292544cea2aa9c3f427ba140b310",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "The evidence shows that the behavior of `flags.parse_bool('yes')` has changed from True in the base version to False in the head version, which contradicts the claim of no behavior change.",
+        "command_indexes": [
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Claim refuted: No behavior change",
+        "detail": "The evidence shows that the behavior of `flags.parse_bool('yes')` has changed from True in the base version to False in the head version, which contradicts the claim of no behavior change.",
+        "severity": "high",
+        "command_indexes": [
+          2,
+          3
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: None input",
+        "detail": "E\n======================================================================\nERROR: test_none_input (tribunal_probes.probe_2.TestParseBool.test_none_input)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_none_input\n    parse_bool(None)\n  File \"/work/flags.py\", line 2, in parse_bool\n    return s.lower() in {\"1\", \"true\", \"yes\"}\n           ^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'lower'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          8,
+          9
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 23 input(s) compared, 0 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 2/2 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.258,
+        "started_at": "2026-11-13T04:43:35.975031Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.222,
+        "started_at": "2026-11-13T04:43:36.233786Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import flags; print(flags.parse_bool(' yes '))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "True\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.158,
+        "started_at": "2026-11-13T04:43:40.668373Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import flags; print(flags.parse_bool(' yes '))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "False\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.127,
+        "started_at": "2026-11-13T04:43:40.827378Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 10, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 12, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 13, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 14, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 15, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 16, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 17, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 18, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 19, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 20, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 21, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 22, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.289,
+        "started_at": "2026-11-13T04:44:29.156664Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 10, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 12, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 13, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 14, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 15, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 16, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 17, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 18, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 19, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 20, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 21, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 22, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.151,
+        "started_at": "2026-11-13T04:44:29.446403Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 10, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 12, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 13, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 14, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 15, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 16, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 17, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 18, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 19, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 20, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 21, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n{\"i\": 22, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"parse_bool() takes 1 positional argument but 2 were given\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.17,
+        "started_at": "2026-11-13T04:44:29.598161Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.329,
+        "started_at": "2026-11-13T04:45:03.243093Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_none_input (tribunal_probes.probe_2.TestParseBool.test_none_input)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_none_input\n    parse_bool(None)\n  File \"/work/flags.py\", line 2, in parse_bool\n    return s.lower() in {\"1\", \"true\", \"yes\"}\n           ^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'lower'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.223,
+        "started_at": "2026-11-13T04:45:03.572669Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_none_input (tribunal_probes.probe_2.TestParseBool.test_none_input)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_none_input\n    parse_bool(None)\n  File \"/work/flags.py\", line 2, in parse_bool\n    return s.strip().lower() in {\"1\", \"true\", \"yes\"}\n           ^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'strip'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.224,
+        "started_at": "2026-11-13T04:45:03.796307Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.245,
+        "started_at": "2026-11-13T04:45:04.021076Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.234,
+        "started_at": "2026-11-13T04:45:04.268460Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_parse_bool (test_flags.T.test_parse_bool)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_flags.py\", line 8, in test_parse_bool\n    self.assertTrue(parse_bool(\"TRUE\"))\nAssertionError: None is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.232,
+        "started_at": "2026-11-13T04:45:04.502951Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_parse_bool (test_flags.T.test_parse_bool)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_flags.py\", line 8, in test_parse_bool\n    self.assertTrue(parse_bool(\"TRUE\"))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.232,
+        "started_at": "2026-11-13T04:45:04.735789Z"
+      }
+    ],
+    "issued_at": "2026-11-13T04:45:04.969216Z"
+  },
+  "digest": "22ba498aac099bc00bdf795de81a8432d8dc5a158b84eb2fd7708a8773094d75",
+  "signature": "bE5cJwXgYzGlBA4bKWpREbZN3VUyGRuBkB9CJOCBivKTIU9VOe2QXmLy6xmCzd52XbfOknwAU705GgLWt8WJBg==",
+  "public_key": "y9fm/n+1IPoc5X4iisxWrFMN/HsE7gsR5IjYCdv6ceo="
+}

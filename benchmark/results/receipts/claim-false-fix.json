@@ -1,0 +1,331 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_d56e7f2c34bd",
+    "submission_id": "sub_4e2931dee306",
+    "repo": "claim-false-fix",
+    "base_sha": "c9fffec7c211fd90edd6f2e49ce55596464ed281",
+    "head_sha": "37da2b96602a3a77364e8d5b51d033315214a655",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Claim refuted: fixes the crash when maximum() is called with an empty list 1 additional item(s) need review.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "fixes the crash when maximum() is called with an empty list",
+        "kind": "fixes"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "The input described by the claim still fails: maximum([], {}, {}) raised TypeError on both versions",
+        "command_indexes": [
+          0,
+          1,
+          4,
+          5
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: fixes the crash when maximum() is called with an empty list",
+        "detail": "The input described by the claim still fails: maximum([], {}, {}) raised TypeError on both versions",
+        "severity": "high",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at agg.py:2 (0 -> 1)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          13
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: empty list",
+        "detail": "E\n======================================================================\nERROR: test_empty_list (tribunal_probes.probe_1.TestMaximum.test_empty_list)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 4, in test_empty_list\n    self.assertIsNone(maximum([]))\n                      ^^^^^^^^^^^\n  File \"/work/agg.py\", line 2, in maximum\n    best = values[0]\n           ~~~~~~^^^\nIndexError: list index out of range\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          7,
+          8
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 1 input(s) compared, 0 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/2 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.27,
+        "started_at": "2026-11-13T04:46:30.307894Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.24,
+        "started_at": "2026-11-13T04:46:30.578378Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "from agg import maximum; print(maximum([]))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/work/agg.py\", line 2, in maximum\n    best = xs[0]\n           ~~^^^\nIndexError: list index out of range\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.178,
+        "started_at": "2026-11-13T04:46:38.405053Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "from agg import maximum; print(maximum([]))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/work/agg.py\", line 2, in maximum\n    best = values[0]\n           ~~~~~~^^^\nIndexError: list index out of range\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.121,
+        "started_at": "2026-11-13T04:46:38.583116Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"maximum() takes 1 positional argument but 3 were given\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.195,
+        "started_at": "2026-11-13T04:46:48.938878Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"maximum() takes 1 positional argument but 3 were given\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.16,
+        "started_at": "2026-11-13T04:46:49.134203Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"maximum() takes 1 positional argument but 3 were given\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.155,
+        "started_at": "2026-11-13T04:46:49.294672Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_empty_list (tribunal_probes.probe_1.TestMaximum.test_empty_list)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 4, in test_empty_list\n    self.assertIsNone(maximum([]))\n                      ^^^^^^^^^^^\n  File \"/work/agg.py\", line 2, in maximum\n    best = values[0]\n           ~~~~~~^^^\nIndexError: list index out of range\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.364,
+        "started_at": "2026-11-13T04:47:12.731883Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_empty_list (tribunal_probes.probe_1.TestMaximum.test_empty_list)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 4, in test_empty_list\n    self.assertIsNone(maximum([]))\n                      ^^^^^^^^^^^\n  File \"/work/agg.py\", line 2, in maximum\n    best = xs[0]\n           ~~^^^\nIndexError: list index out of range\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.215,
+        "started_at": "2026-11-13T04:47:13.095958Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.226,
+        "started_at": "2026-11-13T04:47:13.311596Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.248,
+        "started_at": "2026-11-13T04:47:13.537528Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.007s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.262,
+        "started_at": "2026-11-13T04:47:13.785574Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.245,
+        "started_at": "2026-11-13T04:47:14.049866Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.26,
+        "started_at": "2026-11-13T04:47:14.295688Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_maximum (test_agg.T.test_maximum)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_agg.py\", line 8, in test_maximum\n    self.assertEqual(maximum([1, 3, 2]), 3)\nAssertionError: 1 != 3\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.252,
+        "started_at": "2026-11-13T04:47:14.556751Z"
+      }
+    ],
+    "issued_at": "2026-11-13T04:47:14.810252Z"
+  },
+  "digest": "94492105fe37430f180a59333c1711993e76d32dc9845997e6f889ca6dad255c",
+  "signature": "jknLZJTxFkaQAIYtrnSYwQDxMcbZFEM0lnaQ7Cf+uOGMY7rHN+Z5h44UKqVuEdr2yIL1mG2xbFlBiSHguFr1Dw==",
+  "public_key": "y9fm/n+1IPoc5X4iisxWrFMN/HsE7gsR5IjYCdv6ceo="
+}

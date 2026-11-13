@@ -1,0 +1,245 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_698bf4e24dd6",
+    "submission_id": "sub_22f8c2144b43",
+    "repo": "untested-parse-bool",
+    "base_sha": "c633cfd06c937081decd1fcc402106bff9dd6c15",
+    "head_sha": "c653fd41ca7fed95d80af175d598dfecaa7016ff",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "The evidence shows that the behavior of `flags.parse_bool('yes')` has changed from True in the base version to False in the head version, which contradicts the claim of no behavior change.",
+        "command_indexes": [
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Claim refuted: No behavior change",
+        "detail": "The evidence shows that the behavior of `flags.parse_bool('yes')` has changed from True in the base version to False in the head version, which contradicts the claim of no behavior change.",
+        "severity": "high",
+        "command_indexes": [
+          2,
+          3
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: None input",
+        "detail": "E\n======================================================================\nERROR: test_none_input (tribunal_probes.probe_2.TestParseBool.test_none_input)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_none_input\n    parse_bool(None)\n  File \"/work/flags.py\", line 2, in parse_bool\n    return s.lower() in {\"1\", \"true\", \"yes\"}\n           ^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'lower'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          5,
+          6
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 2/2 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.261,
+        "started_at": "2026-11-10T10:42:12.897708Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.221,
+        "started_at": "2026-11-10T10:42:13.158910Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import flags; print(flags.parse_bool(' yes '))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "True\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.168,
+        "started_at": "2026-11-10T10:42:17.310706Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import flags; print(flags.parse_bool(' yes '))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "False\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.117,
+        "started_at": "2026-11-10T10:42:17.479078Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.331,
+        "started_at": "2026-11-10T10:42:52.367164Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_none_input (tribunal_probes.probe_2.TestParseBool.test_none_input)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_none_input\n    parse_bool(None)\n  File \"/work/flags.py\", line 2, in parse_bool\n    return s.lower() in {\"1\", \"true\", \"yes\"}\n           ^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'lower'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.231,
+        "started_at": "2026-11-10T10:42:52.698568Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_none_input (tribunal_probes.probe_2.TestParseBool.test_none_input)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_none_input\n    parse_bool(None)\n  File \"/work/flags.py\", line 2, in parse_bool\n    return s.strip().lower() in {\"1\", \"true\", \"yes\"}\n           ^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'strip'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.207,
+        "started_at": "2026-11-10T10:42:52.929480Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.222,
+        "started_at": "2026-11-10T10:42:53.136444Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.228,
+        "started_at": "2026-11-10T10:42:53.360215Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_parse_bool (test_flags.T.test_parse_bool)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_flags.py\", line 8, in test_parse_bool\n    self.assertTrue(parse_bool(\"TRUE\"))\nAssertionError: None is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.22,
+        "started_at": "2026-11-10T10:42:53.589519Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_parse_bool (test_flags.T.test_parse_bool)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_flags.py\", line 8, in test_parse_bool\n    self.assertTrue(parse_bool(\"TRUE\"))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.216,
+        "started_at": "2026-11-10T10:42:53.810551Z"
+      }
+    ],
+    "issued_at": "2026-11-10T10:42:54.027441Z"
+  },
+  "digest": "26ae08066cd681858109453fdd467c1fee87208c20c15ab21059c1df426456ac",
+  "signature": "jFdgjrIodzCEaHX5OzkpYwtP7T/nKpc5PiWR1mCVC+sw76RdxMkf3WhQJMXGlTp3NnVb0/P5xsggq4slIZ98Aw==",
+  "public_key": "NcTDtqFNt+Pb3DWBkUVHMgy2M+DJlmu4vyYaqhIz97o="
+}

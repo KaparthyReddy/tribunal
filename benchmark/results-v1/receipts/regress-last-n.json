@@ -1,0 +1,237 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_1e1bea10bb73",
+    "submission_id": "sub_198ea7033c53",
+    "repo": "regress-last-n",
+    "base_sha": "61455c8ad2fa20e956c77c6e00168a02907d038c",
+    "head_sha": "66bf3b744dc10a0500c0a0ce7969a27e09c68756",
+    "verdict": "fail",
+    "rationale": "2 blocking issue(s):\n- Regression: test command passes on base but fails on head\n- Claim refuted: no behavior change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "The test command passes on base but fails on head, so behavior changed.",
+        "command_indexes": [
+          0,
+          1
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Regression: test command passes on base but fails on head",
+        "detail": "`python -m unittest` exits 0 on the base commit and non-zero on head.",
+        "severity": "high",
+        "command_indexes": [
+          0,
+          1
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim refuted: no behavior change",
+        "detail": "The test command passes on base but fails on head, so behavior changed.",
+        "severity": "high",
+        "command_indexes": [
+          0,
+          1
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: n larger than list",
+        "detail": "F\n======================================================================\nFAIL: test_n_larger_than_list (tribunal_probes.probe_3.TestLastN.test_n_larger_than_list)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 4, in test_n_larger_than_list\n    self.assertEqual(last_n([1, 2, 3], 5), [1, 2, 3])\nAssertionError: Lists differ: [3] != [1, 2, 3]\n\nFirst differing element 0:\n3\n1\n\nSecond list contains 2 additional elements.\nFirst extra element 1:\n2\n\n- [3]\n+ [1, 2, 3]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: fuzzing",
+        "detail": "...====================================================\nFAIL: test_fuzzing (tribunal_probes.probe_4.TestLastN.test_fuzzing)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 8, in test_fuzzing\n    self.assertEqual(last_n(items, n), items[-n:] if n <= len(items) else [])\nAssertionError: Lists differ: [70, -23, 81, 89, -32, 93, -49, 16, 35, 85[209 chars]3, 0] != [42, 70, -23, 81, 89, -32, 93, -49, 16, 35[213 chars]3, 0]\n\nFirst differing element 0:\n70\n42\n\nSecond list contains 1 additional elements.\nFirst extra element 59:\n0\n\n+ [42,\n- [70,\n? ^\n\n+  70,\n? ^\n\n   -23,\n   81,\n   89,\n   -32,\n   93,\n   -49,\n   16,\n   35,\n   85,\n   30,\n   -82,\n   97,\n   -15,\n   -64,\n   21,\n   -4,\n   -58,\n   -87,\n   -81,\n   27,\n   -59,\n   40,\n   -45,\n   45,\n   -94,\n   84,\n   -72,\n   51,\n   -22,\n   52,\n   -90,\n   6,\n   -65,\n   -16,\n   3,\n   -95,\n   83,\n   -66,\n   37,\n   78,\n   8,\n   20,\n   -1,\n   39,\n   -41,\n   80,\n   -28,\n   -51,\n   -3,\n   -56,\n   54,\n   -57,\n   -26,\n   4,\n   14,\n   88,\n   13,\n   0]\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          6,
+          7
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation testing skipped: test command does not pass on head",
+        "detail": "",
+        "severity": "low",
+        "command_indexes": [
+          8
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.316,
+        "started_at": "2026-11-10T10:33:55.698954Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_last_n (test_seq.T.test_last_n)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_seq.py\", line 8, in test_last_n\n    self.assertEqual(last_n([1, 2, 3, 4], 2), [3, 4])\nAssertionError: Lists differ: [4] != [3, 4]\n\nFirst differing element 0:\n4\n3\n\nSecond list contains 1 additional elements.\nFirst extra element 1:\n4\n\n- [4]\n+ [3, 4]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.223,
+        "started_at": "2026-11-10T10:33:56.015812Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.279,
+        "started_at": "2026-11-10T10:34:14.616637Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.226,
+        "started_at": "2026-11-10T10:34:14.896111Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_n_larger_than_list (tribunal_probes.probe_3.TestLastN.test_n_larger_than_list)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 4, in test_n_larger_than_list\n    self.assertEqual(last_n([1, 2, 3], 5), [1, 2, 3])\nAssertionError: Lists differ: [3] != [1, 2, 3]\n\nFirst differing element 0:\n3\n1\n\nSecond list contains 2 additional elements.\nFirst extra element 1:\n2\n\n- [3]\n+ [1, 2, 3]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.218,
+        "started_at": "2026-11-10T10:34:15.122845Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_n_larger_than_list (tribunal_probes.probe_3.TestLastN.test_n_larger_than_list)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 4, in test_n_larger_than_list\n    self.assertEqual(last_n([1, 2, 3], 5), [1, 2, 3])\nAssertionError: Lists differ: [2, 3] != [1, 2, 3]\n\nFirst differing element 0:\n2\n1\n\nSecond list contains 1 additional elements.\nFirst extra element 2:\n3\n\n- [2, 3]\n+ [1, 2, 3]\n?  +++\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.227,
+        "started_at": "2026-11-10T10:34:15.340944Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_fuzzing (tribunal_probes.probe_4.TestLastN.test_fuzzing)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 8, in test_fuzzing\n    self.assertEqual(last_n(items, n), items[-n:] if n <= len(items) else [])\nAssertionError: Lists differ: [70, -23, 81, 89, -32, 93, -49, 16, 35, 85[209 chars]3, 0] != [42, 70, -23, 81, 89, -32, 93, -49, 16, 35[213 chars]3, 0]\n\nFirst differing element 0:\n70\n42\n\nSecond list contains 1 additional elements.\nFirst extra element 59:\n0\n\n+ [42,\n- [70,\n? ^\n\n+  70,\n? ^\n\n   -23,\n   81,\n   89,\n   -32,\n   93,\n   -49,\n   16,\n   35,\n   85,\n   30,\n   -82,\n   97,\n   -15,\n   -64,\n   21,\n   -4,\n   -58,\n   -87,\n   -81,\n   27,\n   -59,\n   40,\n   -45,\n   45,\n   -94,\n   84,\n   -72,\n   51,\n   -22,\n   52,\n   -90,\n   6,\n   -65,\n   -16,\n   3,\n   -95,\n   83,\n   -66,\n   37,\n   78,\n   8,\n   20,\n   -1,\n   39,\n   -41,\n   80,\n   -28,\n   -51,\n   -3,\n   -56,\n   54,\n   -57,\n   -26,\n   4,\n   14,\n   88,\n   13,\n   0]\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.222,
+        "started_at": "2026-11-10T10:34:15.568775Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_fuzzing (tribunal_probes.probe_4.TestLastN.test_fuzzing)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 8, in test_fuzzing\n    self.assertEqual(last_n(items, n), items[-n:] if n <= len(items) else [])\nAssertionError: Lists differ: [] != [-57, 12, 87, 32, 98, -25, -30, -69, -53, [295 chars] -79]\n\nSecond list contains 76 additional elements.\nFirst extra element 0:\n-57\n\n- []\n+ [-57,\n+  12,\n+  87,\n+  32,\n+  98,\n+  -25,\n+  -30,\n+  -69,\n+  -53,\n+  6,\n+  11,\n+  -70,\n+  35,\n+  -74,\n+  24,\n+  -4,\n+  68,\n+  -35,\n+  64,\n+  -51,\n+  -12,\n+  -73,\n+  -60,\n+  48,\n+  -32,\n+  -61,\n+  -18,\n+  14,\n+  -82,\n+  -80,\n+  1,\n+  -46,\n+  -88,\n+  -27,\n+  -91,\n+  -44,\n+  29,\n+  -78,\n+  -19,\n+  -22,\n+  17,\n+  -84,\n+  49,\n+  82,\n+  71,\n+  9,\n+  -49,\n+  -75,\n+  69,\n+  80,\n+  59,\n+  28,\n+  -40,\n+  -8,\n+  -48,\n+  31,\n+  7,\n+  -56,\n+  45,\n+  -23,\n+  -85,\n+  -10,\n+  36,\n+  74,\n+  27,\n+  20,\n+  -15,\n+  -65,\n+  -67,\n+  67,\n+  -58,\n+  -63,\n+  -83,\n+  -9,\n+  -59,\n+  -79]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.215,
+        "started_at": "2026-11-10T10:34:15.791010Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_last_n (test_seq.T.test_last_n)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_seq.py\", line 8, in test_last_n\n    self.assertEqual(last_n([1, 2, 3, 4], 2), [3, 4])\nAssertionError: Lists differ: [4] != [3, 4]\n\nFirst differing element 0:\n4\n3\n\nSecond list contains 1 additional elements.\nFirst extra element 1:\n4\n\n- [4]\n+ [3, 4]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.212,
+        "started_at": "2026-11-10T10:34:16.016712Z"
+      }
+    ],
+    "issued_at": "2026-11-10T10:34:16.229581Z"
+  },
+  "digest": "9ba0826aab68326521e4e22e2d5aa16f8befd9b586e97e50c20ee688672502bc",
+  "signature": "yDEGylyNOSuhZuYAPI+x64yN3WbT2RKYVW+dRTnsxpDYF6QoOu4rOFM8ZStdBF8ZA8uN9ybfW1ACB7VXgPmpDw==",
+  "public_key": "NcTDtqFNt+Pb3DWBkUVHMgy2M+DJlmu4vyYaqhIz97o="
+}

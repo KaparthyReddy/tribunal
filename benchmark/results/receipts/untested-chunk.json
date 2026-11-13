@@ -1,0 +1,399 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_4c7fe74dcc15",
+    "submission_id": "sub_5c95ab607b21",
+    "repo": "untested-chunk",
+    "base_sha": "2e1c240461078ca3f2a885d1644d0ae5aac0e2a0",
+    "head_sha": "3336d8d2cb1bdd93069e99e22a7b83de5cd40ead",
+    "verdict": "fail",
+    "rationale": "2 blocking issue(s):\n- Claim refuted: no behavior change\n- Probe broke the change: size larger than list 1 additional item(s) need review.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "Behavior differs: chunk([1, 2, 3, 4, 5], 2) returned [[1, 2], [3, 4], [5]] on base but returned [[1, 2], [3, 4]] on head; chunk([1, 2, 3, 4, 5], 3) returned [[1, 2, 3], [4, 5]] on base but returned [[1, 2, 3]] on head; chunk([1, 2, 3, 4, 5], 6) returned [[1, 2, 3, 4, 5]] on base but returned [] on head",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: no behavior change",
+        "detail": "Behavior differs: chunk([1, 2, 3, 4, 5], 2) returned [[1, 2], [3, 4], [5]] on base but returned [[1, 2], [3, 4]] on head; chunk([1, 2, 3, 4, 5], 3) returned [[1, 2, 3], [4, 5]] on base but returned [[1, 2, 3]] on head; chunk([1, 2, 3, 4, 5], 6) returned [[1, 2, 3, 4, 5]] on base but returned [] on head",
+        "severity": "high",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe broke the change: size larger than list",
+        "detail": "Passes on base, fails on head.\nF\n======================================================================\nFAIL: test_size_larger_than_list (tribunal_probes.probe_3.TestChunk.test_size_larger_than_list)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 4, in test_size_larger_than_list\n    self.assertEqual(chunk([1, 2, 3], 4), [[1, 2, 3]])\nAssertionError: Lists differ: [] != [[1, 2, 3]]\n\nSecond list contains 1 additional elements.\nFirst extra element 0:\n[1, 2, 3]\n\n- []\n+ [[1, 2, 3]]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "high",
+        "command_indexes": [
+          9,
+          10
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at chunks.py:3 (1 -> 2)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          17
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 7 input(s) compared, 3 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 5/6 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.288,
+        "started_at": "2026-11-13T04:40:37.906935Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.241,
+        "started_at": "2026-11-13T04:40:38.194840Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_chunks"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.261,
+        "started_at": "2026-11-13T04:40:42.176541Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_chunks"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.225,
+        "started_at": "2026-11-13T04:40:42.437815Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[[1, 2], [3, 4], [5]]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"[[1, 2, 3], [4, 5]]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[[1, 2, 3, 4, 5]]\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"ValueError\", \"msg\": \"range() arg 3 must not be zero\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"object of type 'NoneType' has no len()\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"chunk() got an unexpected keyword argument 'claim'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.297,
+        "started_at": "2026-11-13T04:41:02.751397Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[[1, 2], [3, 4]]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"[[1, 2, 3]]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"ValueError\", \"msg\": \"range() arg 3 must not be zero\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"object of type 'NoneType' has no len()\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"chunk() got an unexpected keyword argument 'claim'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.152,
+        "started_at": "2026-11-13T04:41:03.048454Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[[1, 2], [3, 4]]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"[[1, 2, 3]]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"ValueError\", \"msg\": \"range() arg 3 must not be zero\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"object of type 'NoneType' has no len()\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"chunk() got an unexpected keyword argument 'claim'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.163,
+        "started_at": "2026-11-13T04:41:03.200656Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.378,
+        "started_at": "2026-11-13T04:41:25.749541Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.226,
+        "started_at": "2026-11-13T04:41:26.127956Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_size_larger_than_list (tribunal_probes.probe_3.TestChunk.test_size_larger_than_list)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 4, in test_size_larger_than_list\n    self.assertEqual(chunk([1, 2, 3], 4), [[1, 2, 3]])\nAssertionError: Lists differ: [] != [[1, 2, 3]]\n\nSecond list contains 1 additional elements.\nFirst extra element 0:\n[1, 2, 3]\n\n- []\n+ [[1, 2, 3]]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.254,
+        "started_at": "2026-11-13T04:41:26.354150Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.23,
+        "started_at": "2026-11-13T04:41:26.609031Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.008s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.257,
+        "started_at": "2026-11-13T04:41:26.839805Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.256,
+        "started_at": "2026-11-13T04:41:27.100729Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_chunk (test_chunks.T.test_chunk)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_chunks.py\", line 8, in test_chunk\n    self.assertEqual(chunk([1, 2, 3, 4], 2), [[1, 2], [3, 4]])\nAssertionError: None != [[1, 2], [3, 4]]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.255,
+        "started_at": "2026-11-13T04:41:27.357897Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_chunk (test_chunks.T.test_chunk)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_chunks.py\", line 8, in test_chunk\n    self.assertEqual(chunk([1, 2, 3, 4], 2), [[1, 2], [3, 4]])\nAssertionError: Lists differ: [[2, 3]] != [[1, 2], [3, 4]]\n\nFirst differing element 0:\n[2, 3]\n[1, 2]\n\nSecond list contains 1 additional elements.\nFirst extra element 1:\n[3, 4]\n\n- [[2, 3]]\n+ [[1, 2], [3, 4]]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.236,
+        "started_at": "2026-11-13T04:41:27.614150Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_chunk (test_chunks.T.test_chunk)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_chunks.py\", line 8, in test_chunk\n    self.assertEqual(chunk([1, 2, 3, 4], 2), [[1, 2], [3, 4]])\nAssertionError: Lists differ: [[1, 2]] != [[1, 2], [3, 4]]\n\nSecond list contains 1 additional elements.\nFirst extra element 1:\n[3, 4]\n\n- [[1, 2]]\n+ [[1, 2], [3, 4]]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.245,
+        "started_at": "2026-11-13T04:41:27.850671Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_chunk (test_chunks.T.test_chunk)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_chunks.py\", line 8, in test_chunk\n    self.assertEqual(chunk([1, 2, 3, 4], 2), [[1, 2], [3, 4]])\nAssertionError: Lists differ: [[1, 2], [3, 4], [], []] != [[1, 2], [3, 4]]\n\nFirst list contains 2 additional elements.\nFirst extra element 2:\n[]\n\n- [[1, 2], [3, 4], [], []]\n?                --- -----\n\n+ [[1, 2], [3, 4]]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.238,
+        "started_at": "2026-11-13T04:41:28.096954Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.243,
+        "started_at": "2026-11-13T04:41:28.336350Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_chunk (test_chunks.T.test_chunk)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_chunks.py\", line 8, in test_chunk\n    self.assertEqual(chunk([1, 2, 3, 4], 2), [[1, 2], [3, 4]])\nAssertionError: Lists differ: [[1, 2], []] != [[1, 2], [3, 4]]\n\nFirst differing element 1:\n[]\n[3, 4]\n\n- [[1, 2], []]\n+ [[1, 2], [3, 4]]\n?           ++++\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.225,
+        "started_at": "2026-11-13T04:41:28.580664Z"
+      }
+    ],
+    "issued_at": "2026-11-13T04:41:28.806776Z"
+  },
+  "digest": "883cbf14546e4c6f086aba93f6f5227d95aa53c80886d579103574e2f7f643cf",
+  "signature": "ivi/26C8/cAH5xMMjbLWwkEJGRDGNw579FXEMC4cxIFnzmTBrL896adnhUFMvB3HdY24YAW/vO5091GRx+yPBA==",
+  "public_key": "y9fm/n+1IPoc5X4iisxWrFMN/HsE7gsR5IjYCdv6ceo="
+}

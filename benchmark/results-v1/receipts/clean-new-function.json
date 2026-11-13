@@ -1,0 +1,245 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_496c5875ae66",
+    "submission_id": "sub_a49001cf76c1",
+    "repo": "clean-new-function",
+    "base_sha": "852a8d4cedd039774d2d18c0e0e113aa26b1d45a",
+    "head_sha": "81fddad2d60e8c1ea81050e8b387457f9b8c07ca",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 81fddad2d60e. 12 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "adds tests for triple()",
+        "kind": "adds_tests"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "The evidence shows that the number of tests increased from 1 to 2 after the change, and a test specifically for `triple` is present in both `test_mathx.py` and `mathx.py`. This supports the claim that tests were added for `triple()`.",
+        "command_indexes": [
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 2/2 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.263,
+        "started_at": "2026-11-10T10:47:34.118811Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.21,
+        "started_at": "2026-11-10T10:47:34.382173Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_mathx"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.284,
+        "started_at": "2026-11-10T10:47:43.706802Z"
+      },
+      {
+        "argv": [
+          "grep",
+          "-r",
+          "triple",
+          "test_mathx.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "from mathx import double, triple\n    def test_triple(self):\n        self.assertEqual(triple(2), 6)\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.115,
+        "started_at": "2026-11-10T10:47:43.991442Z"
+      },
+      {
+        "argv": [
+          "diff",
+          "--git",
+          "mathx.py",
+          "test_mathx.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 2,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "diff: unrecognized option '--git'\ndiff: Try 'diff --help' for more information.\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.107,
+        "started_at": "2026-11-10T10:47:44.106398Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.44,
+        "started_at": "2026-11-10T10:48:12.668743Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.22,
+        "started_at": "2026-11-10T10:48:13.109289Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.215,
+        "started_at": "2026-11-10T10:48:13.330085Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.224,
+        "started_at": "2026-11-10T10:48:13.545416Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.221,
+        "started_at": "2026-11-10T10:48:13.772474Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".F\n======================================================================\nFAIL: test_triple (test_mathx.T.test_triple)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_mathx.py\", line 11, in test_triple\n    self.assertEqual(triple(2), 6)\nAssertionError: None != 6\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.225,
+        "started_at": "2026-11-10T10:48:13.994061Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".F\n======================================================================\nFAIL: test_triple (test_mathx.T.test_triple)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_mathx.py\", line 11, in test_triple\n    self.assertEqual(triple(2), 6)\nAssertionError: 8 != 6\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.226,
+        "started_at": "2026-11-10T10:48:14.220216Z"
+      }
+    ],
+    "issued_at": "2026-11-10T10:48:14.447438Z"
+  },
+  "digest": "cb6a827af0b95aa0ceff640349c138b025ff1a520e9dd0b09f57c43367803287",
+  "signature": "EEYx5dDYqKGHqdC4ieHkaZ5I+p9KiUPA7JxpE5nFlmtUy4XXgeYIKZvAZBRfrJYBBThko+GW8iQ8/EYo9Gl0Cg==",
+  "public_key": "NcTDtqFNt+Pb3DWBkUVHMgy2M+DJlmu4vyYaqhIz97o="
+}
