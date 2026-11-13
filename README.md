@@ -3,7 +3,8 @@
 Adversarial verification for AI-written code.
 
 Coding agents produce diffs. Tribunal decides whether anyone should trust them.
-Agents attack a change at its exact commit, in a sandbox, and issue a signed, replayable verdict.
+Agents attack a change at its exact commit, in a sandbox, and issue a signed verdict with an
+evidence receipt.
 
 | Agent | Job |
 |-------|-----|
@@ -29,42 +30,63 @@ A human reads the verdict and the receipt, not the raw diff.
 - A verdict is bound to a head SHA; a new commit invalidates old evidence
 - Only the Judge decides the verdict, and it uses no LLM
 
+Receipts record every command and its output. They do not yet include the generated probe code
+and differential inputs, so they cannot be replayed. This is the next fix.
+
 ## Benchmark
 
-20 seeded changes, each a tiny git repository with a base and a head commit: 13 buggy, 7 clean.
-Both systems use the same local model (`ollama/qwen2.5:7b-instruct`). The baseline is a single
-prompt that sees the title, description and diff and answers approve or reject.
+Tribunal is compared with a plain LLM review on seeded changes. Each case is a tiny git
+repository with a base and a head commit. Both systems use the same local model
+(`ollama/qwen2.5:7b-instruct`). The baseline is a single prompt that sees the title, description
+and diff and answers approve or reject.
+
+### Dev set (20 cases, in-sample)
 
 | | Tribunal v1 | Tribunal v2 | LLM review |
 | --- | --- | --- | --- |
 | Buggy changes caught | 9/13 (69%) | 13/13 (100%) | 9/13 (69%) |
-| Buggy changes passed (false green) | 3/13 (23%) | 0/13 (0%) | 4/13 (31%) |
+| Buggy changes passed (false green) | 3/13 | 0/13 | 4/13 |
 | Clean changes passed | 7/7 | 7/7 | 6/7 |
 | Clean changes wrongly blocked | 0/7 | 0/7 | 1/7 |
 
-By category, Tribunal v2 caught 5/5 regressions the tests catch, 6/6 bugs the tests miss, and
-2/2 false claims. The baseline caught 5/5, 2/6 and 2/2.
+v2 added differential execution after v1 missed some of these exact cases, so this column
+measures how well the design fits these bugs, not how well it works in general.
 
-What the numbers mean:
+### Held-out set (14 cases, run once)
 
-- v2 adds differential execution, which runs the changed functions on both commits with
-  model-chosen inputs and compares the outputs. It was designed after v1 missed the cases above,
-  so the v2 column is an in-sample result. It shows the mechanism works on these bugs. It is not
-  an estimate of the catch rate on unseen changes.
-- 20 cases and one run is a small sample, and the bugs are small synthetic functions.
-- A counted catch is a `fail` verdict. The benchmark does not check that the cited reason is the
-  seeded bug, so spot-check receipts in `benchmark/results/receipts/`.
-- Tribunal runs several model calls and sandboxed commands per change and takes about a minute on a
-  7B local model. The baseline takes seconds.
+| | Tribunal | LLM review |
+| --- | --- | --- |
+| Buggy changes (9) blocked | 3 | 5 |
+| Buggy changes flagged for human review | 5 | 0 |
+| Buggy changes passed (false green) | 1 | 4 |
+| Clean changes (5) passed | 2 | 5 |
+| Clean changes flagged for human review | 3 | 0 |
+| Clean changes wrongly blocked | 0 | 0 |
 
-Reproduce it with the commands in [benchmark/README.md](benchmark/README.md). Raw results for both
-Tribunal versions are in `benchmark/results-v1/` and `benchmark/results/`.
+How to read it:
+
+- **The dev result did not generalize.** On unseen cases Tribunal blocked 3 of 9 and the baseline
+  5 of 9. The intervals overlap heavily, so the sample cannot say which blocks more.
+- **Tribunal passed fewer bugs.** It passed 1 of 9 buggy changes against 4 for the baseline, and
+  every change the baseline blocked, Tribunal blocked or flagged.
+- **That cost review time.** Tribunal flagged 3 of 5 clean changes and the baseline flagged none.
+  A gate that sends many clean changes to a human is not yet usable.
+- **The blocks came from running code.** All three came from differential execution, and the
+  baseline missed two of them. The baseline blocked four bugs that Tribunal only flagged.
+- **The one false green** happened because no differential check ran. The stage depends on the
+  model classifying a claim as "no behavior change".
+- Small samples, one run, a 7B model, and cases written by the tool's author. Predictions
+  and the full case table, misses included, are in [benchmark/HOLDOUT.md](benchmark/HOLDOUT.md).
+
+Raw results are in `benchmark/results-v1/`, `benchmark/results/`, `benchmark/results-holdout/`
+and `benchmark/results-holdout-combined/`. Reproduce with [benchmark/README.md](benchmark/README.md).
 
 ## Models
 
 Tribunal runs on a local model through Ollama by default. No API key is needed.
 Anthropic is supported by setting `TRIBUNAL_LLM_PROVIDER=anthropic` and `ANTHROPIC_API_KEY`.
-Weaker models produce weaker probes and more `inconclusive` verdicts, never a false `pass`.
+Weaker models produce weaker probes and more `inconclusive` verdicts. On the held-out set one
+buggy change still got a `pass`.
 
 ## Quick start
 
@@ -94,8 +116,9 @@ Exit codes: `0` pass, `1` fail, `2` inconclusive, `3` error.
 - [GitHub Action](docs/github-action.md)
 - [MCP clients](docs/mcp-clients.md)
 - [Benchmark](benchmark/README.md)
+- [Held-out evaluation](benchmark/HOLDOUT.md)
 
 ## Status
 
 Under active development. Python only. The sandbox has no network, so test dependencies must
-already be in the sandbox image.
+already be in the sandbox image. Differential execution covers top-level functions only.
