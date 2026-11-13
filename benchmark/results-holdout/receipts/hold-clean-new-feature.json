@@ -1,0 +1,246 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_c66073110e71",
+    "submission_id": "sub_901897cd96b9",
+    "repo": "hold-clean-new-feature",
+    "base_sha": "ecf6b5732f6aaac6ab2a7c1e0ef44fa32dc18de4",
+    "head_sha": "178074b432eab46827f9f3945fcc9478656de535",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 178074b432ea. 12 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "adds_tests",
+        "kind": "adds_tests"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "The evidence shows that the number of tests increased from 1 to 2 after applying 'adds_tests', and running a specific test file also indicates an increase in the number of tests run, supporting the claim.",
+        "command_indexes": [
+          0,
+          1,
+          2
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Skeptic produced no valid probes",
+        "detail": "",
+        "severity": "low",
+        "command_indexes": []
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 8/8 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.279,
+        "started_at": "2026-11-13T05:22:43.424648Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.213,
+        "started_at": "2026-11-13T05:22:43.704331Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_numstats"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.265,
+        "started_at": "2026-11-13T05:22:50.489041Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.305,
+        "started_at": "2026-11-13T05:23:32.134044Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".F\n======================================================================\nFAIL: test_median (test_numstats.T.test_median)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_numstats.py\", line 12, in test_median\n    self.assertEqual(median([1, 2, 3, 4]), 2.5)\nAssertionError: None != 2.5\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.212,
+        "started_at": "2026-11-13T05:23:32.439496Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".F\n======================================================================\nFAIL: test_median (test_numstats.T.test_median)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_numstats.py\", line 11, in test_median\n    self.assertEqual(median([3, 1, 2]), 2)\nAssertionError: None != 2\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.228,
+        "started_at": "2026-11-13T05:23:32.652660Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".F\n======================================================================\nFAIL: test_median (test_numstats.T.test_median)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_numstats.py\", line 12, in test_median\n    self.assertEqual(median([1, 2, 3, 4]), 2.5)\nAssertionError: 1.5 != 2.5\n\n----------------------------------------------------------------------\nRan 2 tests in 0.001s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.226,
+        "started_at": "2026-11-13T05:23:32.883202Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".F\n======================================================================\nFAIL: test_median (test_numstats.T.test_median)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_numstats.py\", line 11, in test_median\n    self.assertEqual(median([3, 1, 2]), 2)\nAssertionError: 1.5 != 2\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.249,
+        "started_at": "2026-11-13T05:23:33.110609Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".F\n======================================================================\nFAIL: test_median (test_numstats.T.test_median)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_numstats.py\", line 12, in test_median\n    self.assertEqual(median([1, 2, 3, 4]), 2.5)\nAssertionError: -0.5 != 2.5\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.265,
+        "started_at": "2026-11-13T05:23:33.360225Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".F\n======================================================================\nFAIL: test_median (test_numstats.T.test_median)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_numstats.py\", line 12, in test_median\n    self.assertEqual(median([1, 2, 3, 4]), 2.5)\nAssertionError: 1.6666666666666667 != 2.5\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.269,
+        "started_at": "2026-11-13T05:23:33.625822Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".F\n======================================================================\nFAIL: test_median (test_numstats.T.test_median)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_numstats.py\", line 12, in test_median\n    self.assertEqual(median([1, 2, 3, 4]), 2.5)\nAssertionError: 3.5 != 2.5\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.264,
+        "started_at": "2026-11-13T05:23:33.895310Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".F\n======================================================================\nFAIL: test_median (test_numstats.T.test_median)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_numstats.py\", line 12, in test_median\n    self.assertEqual(median([1, 2, 3, 4]), 2.5)\nAssertionError: 2.0 != 2.5\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.27,
+        "started_at": "2026-11-13T05:23:34.160474Z"
+      }
+    ],
+    "issued_at": "2026-11-13T05:23:34.431864Z"
+  },
+  "digest": "afdd77ccf8cf2cf5ab6fac9072933954471337a559359721e70e0c78ee8de149",
+  "signature": "TPQyHRuOgE5Aldf/ShlT0uBGyPdThps7CB8DO29bMsFq0L00SXKuPzyUPTtZ7DwKt97l+akHv++enWScieE8Bg==",
+  "public_key": "gJN8amx3tadMBNAUk/QEKGKErHdeJS84bUtEOsPXp1A="
+}

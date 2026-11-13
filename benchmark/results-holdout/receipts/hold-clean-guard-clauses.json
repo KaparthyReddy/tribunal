@@ -1,0 +1,446 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_56fd344c51c1",
+    "submission_id": "sub_752e685c0ef9",
+    "repo": "hold-clean-guard-clauses",
+    "base_sha": "9eaff3f8d1d88170504bd8c66d2d65e4e710d06a",
+    "head_sha": "870f343f0f3ee6420208c1603f06a674bb82efed",
+    "verdict": "inconclusive",
+    "rationale": "1 item(s) need human review:\n- Surviving mutant at shipping.py:2 (0 -> 1)",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "The evidence shows that the test suite runs successfully with both the base and head versions of the code, indicating no behavior change.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at shipping.py:2 (0 -> 1)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          17
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Test zero weight",
+        "detail": "F\n======================================================================\nFAIL: test_zero_weight (tribunal_probes.probe_1.TestShippingCost.test_zero_weight)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 5, in test_zero_weight\n    self.assertEqual(shipping_cost(0, True), 5)\nAssertionError: 0 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          7,
+          8
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Test negative weight",
+        "detail": "F\n======================================================================\nFAIL: test_negative_weight (tribunal_probes.probe_2.TestShippingCost.test_negative_weight)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_negative_weight\n    self.assertEqual(shipping_cost(-1, True), 5)\nAssertionError: 0 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          9,
+          10
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 6 input(s) compared, 0 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 7/8 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.257,
+        "started_at": "2026-11-13T05:19:48.072982Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.221,
+        "started_at": "2026-11-13T05:19:48.330623Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_shipping.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.252,
+        "started_at": "2026-11-13T05:19:54.379754Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_shipping.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.224,
+        "started_at": "2026-11-13T05:19:54.631879Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"0\"}\n{\"i\": 1, \"ok\": true, \"value\": \"2\"}\n{\"i\": 2, \"ok\": true, \"value\": \"11\"}\n{\"i\": 3, \"ok\": true, \"value\": \"6.5\"}\n{\"i\": 4, \"ok\": true, \"value\": \"0\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"'>' not supported between instances of 'str' and 'int'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.21,
+        "started_at": "2026-11-13T05:20:16.290782Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"0\"}\n{\"i\": 1, \"ok\": true, \"value\": \"2\"}\n{\"i\": 2, \"ok\": true, \"value\": \"11\"}\n{\"i\": 3, \"ok\": true, \"value\": \"6.5\"}\n{\"i\": 4, \"ok\": true, \"value\": \"0\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"'<=' not supported between instances of 'str' and 'int'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.146,
+        "started_at": "2026-11-13T05:20:16.501222Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"0\"}\n{\"i\": 1, \"ok\": true, \"value\": \"2\"}\n{\"i\": 2, \"ok\": true, \"value\": \"11\"}\n{\"i\": 3, \"ok\": true, \"value\": \"6.5\"}\n{\"i\": 4, \"ok\": true, \"value\": \"0\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"'<=' not supported between instances of 'str' and 'int'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.166,
+        "started_at": "2026-11-13T05:20:16.647974Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_zero_weight (tribunal_probes.probe_1.TestShippingCost.test_zero_weight)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 5, in test_zero_weight\n    self.assertEqual(shipping_cost(0, True), 5)\nAssertionError: 0 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.31,
+        "started_at": "2026-11-13T05:20:48.997152Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_zero_weight (tribunal_probes.probe_1.TestShippingCost.test_zero_weight)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 5, in test_zero_weight\n    self.assertEqual(shipping_cost(0, True), 5)\nAssertionError: 0 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.227,
+        "started_at": "2026-11-13T05:20:49.307581Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_negative_weight (tribunal_probes.probe_2.TestShippingCost.test_negative_weight)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_negative_weight\n    self.assertEqual(shipping_cost(-1, True), 5)\nAssertionError: 0 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.255,
+        "started_at": "2026-11-13T05:20:49.534785Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_negative_weight (tribunal_probes.probe_2.TestShippingCost.test_negative_weight)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_negative_weight\n    self.assertEqual(shipping_cost(-1, True), 5)\nAssertionError: 0 != 5\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.261,
+        "started_at": "2026-11-13T05:20:49.790542Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.276,
+        "started_at": "2026-11-13T05:20:50.051582Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.312,
+        "started_at": "2026-11-13T05:20:50.327514Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.272,
+        "started_at": "2026-11-13T05:20:50.642887Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_shipping_cost (test_shipping.T.test_shipping_cost)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_shipping.py\", line 8, in test_shipping_cost\n    self.assertEqual(shipping_cost(2, False), 4)\nAssertionError: None != 4\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.271,
+        "started_at": "2026-11-13T05:20:50.915595Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_shipping_cost (test_shipping.T.test_shipping_cost)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_shipping.py\", line 8, in test_shipping_cost\n    self.assertEqual(shipping_cost(2, False), 4)\nAssertionError: 0 != 4\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.268,
+        "started_at": "2026-11-13T05:20:51.187526Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_shipping_cost (test_shipping.T.test_shipping_cost)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_shipping.py\", line 9, in test_shipping_cost\n    self.assertEqual(shipping_cost(2, True), 11)\nAssertionError: None != 11\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.276,
+        "started_at": "2026-11-13T05:20:51.456656Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.263,
+        "started_at": "2026-11-13T05:20:51.734004Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_shipping_cost (test_shipping.T.test_shipping_cost)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_shipping.py\", line 9, in test_shipping_cost\n    self.assertEqual(shipping_cost(2, True), 11)\nAssertionError: 1 != 11\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.26,
+        "started_at": "2026-11-13T05:20:51.998375Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_shipping_cost (test_shipping.T.test_shipping_cost)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_shipping.py\", line 8, in test_shipping_cost\n    self.assertEqual(shipping_cost(2, False), 4)\nAssertionError: 6 != 4\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.245,
+        "started_at": "2026-11-13T05:20:52.259449Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_shipping_cost (test_shipping.T.test_shipping_cost)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_shipping.py\", line 9, in test_shipping_cost\n    self.assertEqual(shipping_cost(2, True), 11)\nAssertionError: 12 != 11\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.253,
+        "started_at": "2026-11-13T05:20:52.505451Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_shipping_cost (test_shipping.T.test_shipping_cost)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_shipping.py\", line 9, in test_shipping_cost\n    self.assertEqual(shipping_cost(2, True), 11)\nAssertionError: 13 != 11\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.24,
+        "started_at": "2026-11-13T05:20:52.760010Z"
+      }
+    ],
+    "issued_at": "2026-11-13T05:20:53.001819Z"
+  },
+  "digest": "9f059a6a07401c1fb212b260b3e67d8449545196b4f76587c04f233c4a884646",
+  "signature": "7nJUuEhfW3ePIfEfhKE6w8nL4kkjChj2pGx0B+Xi1T0A0w1LN6Bla3m+byMHX8EKvpuXKAP644virEM2b8IPDA==",
+  "public_key": "gJN8amx3tadMBNAUk/QEKGKErHdeJS84bUtEOsPXp1A="
+}

@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "set": "holdout",
+    "started_at": "2026-11-13T05:37:54+00:00",
+    "provider": "ollama",
+    "model": "qwen2.5:7b-instruct",
+    "sandbox_image": "python:3.12-slim",
+    "tribunal_version": "0.1.0",
+    "cases_total": 1
+  },
+  "cases": [
+    {
+      "id": "hold-clean-any-rewrite",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Use any() in has_negative",
+      "note": "Correct refactor.",
+      "tribunal": {
+        "outcome": "inconclusive",
+        "receipt_id": "rcp_2c5b73f4e8eb",
+        "rationale": "1 item(s) need human review:\n- Surviving mutant at neg.py:2 (0 -> 1)",
+        "findings": [
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at neg.py:2 (0 -> 1)"
+          },
+          {
+            "severity": "low",
+            "title": "Claim not verified: uses any() in has_negative"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: mixed list"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 8 input(s) compared, 0 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 2/3 mutants killed"
+          }
+        ],
+        "seconds": 133.06
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change uses any() correctly and there is no behavior change.",
+        "seconds": 4.92
+      }
+    }
+  ]
+}

@@ -1,0 +1,435 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_2c5b73f4e8eb",
+    "submission_id": "sub_b253412e6cdf",
+    "repo": "hold-clean-any-rewrite",
+    "base_sha": "640dc3a36e73d8ff9fc92b992a7eea92c2f6b151",
+    "head_sha": "8641caabc37aff86f8eb524c428a7a4dd00c6a7c",
+    "verdict": "inconclusive",
+    "rationale": "1 item(s) need human review:\n- Surviving mutant at neg.py:2 (0 -> 1)",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "uses any() in has_negative",
+        "kind": "other"
+      },
+      {
+        "id": "c2",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The evidence only shows that the test suite passes and specific assertions hold true for certain inputs. It does not provide any information about the use of `any()` in the `has_negative` function.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      {
+        "claim_id": "c2",
+        "status": "supported",
+        "explanation": "The evidence shows that both the base and head versions of the code produce identical test results, indicating no behavior change.",
+        "command_indexes": [
+          0,
+          1,
+          6,
+          7
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at neg.py:2 (0 -> 1)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          19
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim not verified: uses any() in has_negative",
+        "detail": "The evidence only shows that the test suite passes and specific assertions hold true for certain inputs. It does not provide any information about the use of `any()` in the `has_negative` function.",
+        "severity": "low",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: mixed list",
+        "detail": "F\n======================================================================\nFAIL: test_mixed_list (tribunal_probes.probe_4.TestHasNegative.test_mixed_list)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 8, in test_mixed_list\n    self.assertEqual(has_negative(mixed_list), -1 in mixed_list)\nAssertionError: True != False\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          14,
+          15
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 8 input(s) compared, 0 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          8,
+          9
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 2/3 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.838,
+        "started_at": "2026-11-13T05:38:11.340758Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.399,
+        "started_at": "2026-11-13T05:38:12.179646Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import neg; assert not neg.has_negative([1, 2, 3])"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.319,
+        "started_at": "2026-11-13T05:38:28.902010Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import neg; assert not neg.has_negative([1, 2, 3])"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.192,
+        "started_at": "2026-11-13T05:38:29.221726Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import neg; assert neg.has_negative([-1, 2, 3])"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.209,
+        "started_at": "2026-11-13T05:38:29.413821Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import neg; assert neg.has_negative([-1, 2, 3])"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.215,
+        "started_at": "2026-11-13T05:38:29.623697Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_neg.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.478,
+        "started_at": "2026-11-13T05:38:49.090213Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_neg.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.364,
+        "started_at": "2026-11-13T05:38:49.568594Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"False\"}\n{\"i\": 1, \"ok\": true, \"value\": \"True\"}\n{\"i\": 2, \"ok\": true, \"value\": \"False\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"has_negative() missing 1 required positional argument: 'xs'\"}\n{\"i\": 4, \"ok\": true, \"value\": \"True\"}\n{\"i\": 5, \"ok\": true, \"value\": \"True\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"has_negative() takes 1 positional argument but 2 were given\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"'NoneType' object is not iterable\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.473,
+        "started_at": "2026-11-13T05:39:26.573421Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"False\"}\n{\"i\": 1, \"ok\": true, \"value\": \"True\"}\n{\"i\": 2, \"ok\": true, \"value\": \"False\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"has_negative() missing 1 required positional argument: 'xs'\"}\n{\"i\": 4, \"ok\": true, \"value\": \"True\"}\n{\"i\": 5, \"ok\": true, \"value\": \"True\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"has_negative() takes 1 positional argument but 2 were given\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"'NoneType' object is not iterable\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.245,
+        "started_at": "2026-11-13T05:39:27.047191Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"False\"}\n{\"i\": 1, \"ok\": true, \"value\": \"True\"}\n{\"i\": 2, \"ok\": true, \"value\": \"False\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"has_negative() missing 1 required positional argument: 'xs'\"}\n{\"i\": 4, \"ok\": true, \"value\": \"True\"}\n{\"i\": 5, \"ok\": true, \"value\": \"True\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"has_negative() takes 1 positional argument but 2 were given\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"'NoneType' object is not iterable\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.257,
+        "started_at": "2026-11-13T05:39:27.292330Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.5,
+        "started_at": "2026-11-13T05:40:03.949950Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.385,
+        "started_at": "2026-11-13T05:40:04.450072Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.369,
+        "started_at": "2026-11-13T05:40:04.836091Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_mixed_list (tribunal_probes.probe_4.TestHasNegative.test_mixed_list)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 8, in test_mixed_list\n    self.assertEqual(has_negative(mixed_list), -1 in mixed_list)\nAssertionError: True != False\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.367,
+        "started_at": "2026-11-13T05:40:05.205423Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_mixed_list (tribunal_probes.probe_4.TestHasNegative.test_mixed_list)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 8, in test_mixed_list\n    self.assertEqual(has_negative(mixed_list), -1 in mixed_list)\nAssertionError: True != False\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.383,
+        "started_at": "2026-11-13T05:40:05.572843Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.364,
+        "started_at": "2026-11-13T05:40:05.963969Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_has_negative (test_neg.T.test_has_negative)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_neg.py\", line 8, in test_has_negative\n    self.assertTrue(has_negative([1, -1]))\nAssertionError: None is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.363,
+        "started_at": "2026-11-13T05:40:06.328839Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_has_negative (test_neg.T.test_has_negative)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_neg.py\", line 10, in test_has_negative\n    self.assertFalse(has_negative([1, 2]))\nAssertionError: True is not false\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.368,
+        "started_at": "2026-11-13T05:40:06.693204Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.382,
+        "started_at": "2026-11-13T05:40:07.062467Z"
+      }
+    ],
+    "issued_at": "2026-11-13T05:40:07.445624Z"
+  },
+  "digest": "b92f64d73608960d5bfe906b45a025438dff8c98ab152c2a27c52b228d0184bb",
+  "signature": "0FxZh4pi4ZagYOms+K6kwqT0e6s3Ck+SbpIyrXYBh7JAzS/bHEa4bYkio4Xqs6Si74qcZ+RVPBMz/i/u/a+RAA==",
+  "public_key": "XNP1w0mHoYw0COsyN8B/D+40kJiugTSoHN231yf2XyQ="
+}

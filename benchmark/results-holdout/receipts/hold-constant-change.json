@@ -1,0 +1,300 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_a459937dbbb3",
+    "submission_id": "sub_4e6ea99e2dd5",
+    "repo": "hold-constant-change",
+    "base_sha": "cc750a28d39b18802acf5605bcbc8957ef955977",
+    "head_sha": "df6426bf63258381c9877e96d57d35aa60ee43fd",
+    "verdict": "inconclusive",
+    "rationale": "2 item(s) need human review:\n- Surviving mutant at retry.py:1 (2 -> 3)\n- Critical claim not verified: no_behavior_change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no_behavior_change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The evidence only shows that the tests pass with both the base and head versions of the code, but it does not provide any information about the behavior or functionality of the application itself.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at retry.py:1 (2 -> 3)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          11
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim not verified: no_behavior_change",
+        "detail": "The evidence only shows that the tests pass with both the base and head versions of the code, but it does not provide any information about the behavior or functionality of the application itself.",
+        "severity": "low",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Test empty input",
+        "detail": "E\n======================================================================\nERROR: test_empty_input (tribunal_probes.probe_3.TestRetry.test_empty_input)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 6, in test_empty_input\n    self.assertFalse(should_retry(None))\n                     ^^^^^^^^^^^^^^^^^^\n  File \"/work/retry.py\", line 5, in should_retry\n    return attempt < MAX_RETRIES\n           ^^^^^^^^^^^^^^^^^^^^^\nTypeError: '<' not supported between instances of 'NoneType' and 'int'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          6,
+          7
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Test negative values",
+        "detail": "F\n======================================================================\nFAIL: test_negative_values (tribunal_probes.probe_4.TestRetry.test_negative_values)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 6, in test_negative_values\n    self.assertFalse(should_retry(-1))\nAssertionError: True is not false\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          8,
+          9
+        ]
+      },
+      {
+        "source": "blast_radius",
+        "title": "Module-level changes are not coverage-checked",
+        "detail": "retry.py",
+        "severity": "info",
+        "command_indexes": []
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check skipped: no changed top-level Python function found",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 0/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.258,
+        "started_at": "2026-11-13T05:18:55.578494Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.228,
+        "started_at": "2026-11-13T05:18:55.837011Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.254,
+        "started_at": "2026-11-13T05:19:01.119436Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.225,
+        "started_at": "2026-11-13T05:19:01.373909Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.323,
+        "started_at": "2026-11-13T05:19:41.602599Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.242,
+        "started_at": "2026-11-13T05:19:41.925883Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_empty_input (tribunal_probes.probe_3.TestRetry.test_empty_input)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 6, in test_empty_input\n    self.assertFalse(should_retry(None))\n                     ^^^^^^^^^^^^^^^^^^\n  File \"/work/retry.py\", line 5, in should_retry\n    return attempt < MAX_RETRIES\n           ^^^^^^^^^^^^^^^^^^^^^\nTypeError: '<' not supported between instances of 'NoneType' and 'int'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.243,
+        "started_at": "2026-11-13T05:19:42.168508Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_empty_input (tribunal_probes.probe_3.TestRetry.test_empty_input)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 6, in test_empty_input\n    self.assertFalse(should_retry(None))\n                     ^^^^^^^^^^^^^^^^^^\n  File \"/work/retry.py\", line 5, in should_retry\n    return attempt < MAX_RETRIES\n           ^^^^^^^^^^^^^^^^^^^^^\nTypeError: '<' not supported between instances of 'NoneType' and 'int'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.259,
+        "started_at": "2026-11-13T05:19:42.412352Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_negative_values (tribunal_probes.probe_4.TestRetry.test_negative_values)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 6, in test_negative_values\n    self.assertFalse(should_retry(-1))\nAssertionError: True is not false\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.279,
+        "started_at": "2026-11-13T05:19:42.671398Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_negative_values (tribunal_probes.probe_4.TestRetry.test_negative_values)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 6, in test_negative_values\n    self.assertFalse(should_retry(-1))\nAssertionError: True is not false\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.296,
+        "started_at": "2026-11-13T05:19:42.950588Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.287,
+        "started_at": "2026-11-13T05:19:43.249695Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.29,
+        "started_at": "2026-11-13T05:19:43.537042Z"
+      }
+    ],
+    "issued_at": "2026-11-13T05:19:43.828835Z"
+  },
+  "digest": "fcc343062259ced4c50c105e8570938e0449a87792ac3e4af1614474da2384d9",
+  "signature": "NUALIEZO4735/Sb6zDqIqQjMJamS4qF0V0W5Re/RQmz+IDkhMaYoI/n3UNFfz4VsqZFa80FTfLtbPcRk3QRUBw==",
+  "public_key": "gJN8amx3tadMBNAUk/QEKGKErHdeJS84bUtEOsPXp1A="
+}

@@ -1,0 +1,209 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_1c07b0870c1f",
+    "submission_id": "sub_0e18baa7eedf",
+    "repo": "hold-return-type",
+    "base_sha": "13642edaa0b6b64287b683b62f6acf88b4d9d050",
+    "head_sha": "7f92acb09f2463fe20275fb0063a6c50b9a50db4",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 7f92acb09f24. 10 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "changes the return type to be immutable",
+        "kind": "other"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "The evidence shows that in the head commit, the return type of `uniq.unique_sorted` is printed as `<class 'tuple'>`, whereas in the base commit, it is `<class 'list'>`. This indicates a change to an immutable return type.",
+        "command_indexes": [
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.253,
+        "started_at": "2026-11-13T05:14:50.711699Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.227,
+        "started_at": "2026-11-13T05:14:50.964927Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import uniq; xs = [1, 2, 2, 3]; print(type(uniq.unique_sorted(xs)))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "<class 'list'>\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.161,
+        "started_at": "2026-11-13T05:14:58.047279Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import uniq; xs = [1, 2, 2, 3]; print(type(uniq.unique_sorted(xs)))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "<class 'tuple'>\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.123,
+        "started_at": "2026-11-13T05:14:58.208627Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.352,
+        "started_at": "2026-11-13T05:15:32.514544Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.225,
+        "started_at": "2026-11-13T05:15:32.866441Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.234,
+        "started_at": "2026-11-13T05:15:33.091898Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.008s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.26,
+        "started_at": "2026-11-13T05:15:33.326296Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.273,
+        "started_at": "2026-11-13T05:15:33.588746Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_unique_sorted (test_uniq.T.test_unique_sorted)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_uniq.py\", line 8, in test_unique_sorted\n    self.assertEqual(list(unique_sorted([3, 1, 3])), [1, 3])\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'NoneType' object is not iterable\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.278,
+        "started_at": "2026-11-13T05:15:33.862087Z"
+      }
+    ],
+    "issued_at": "2026-11-13T05:15:34.141853Z"
+  },
+  "digest": "dd467f330c0d87be3c865b43e6f379efd810114c888fbf1618c3bcd4bb5616d8",
+  "signature": "tk365T9Kmowp49Bx9zYx+V9qGEglHimjfWASGLq3+5s4XaOxJLO5YpvA06DxmB5gS17+fj2t1m0vSXCCrVnDAw==",
+  "public_key": "gJN8amx3tadMBNAUk/QEKGKErHdeJS84bUtEOsPXp1A="
+}

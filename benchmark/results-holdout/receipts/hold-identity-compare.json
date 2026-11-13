@@ -1,0 +1,384 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_d8f8cdd118ab",
+    "submission_id": "sub_1b08a3bbaf41",
+    "repo": "hold-identity-compare",
+    "base_sha": "38b8e7ae47da694c7be8d373ed54007dfee6212e",
+    "head_sha": "c2df384b88ea6fd0960f2463f0cd495a49b49bcf",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Claim refuted: no behavior change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "use identity comparison in same_label for speed",
+        "kind": "performance"
+      },
+      {
+        "id": "c2",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The evidence only shows that the tests pass with and without the identity comparison change, but it does not provide any timing or performance metrics to support or refute the claim of speed improvement.",
+        "command_indexes": [
+          2,
+          3
+        ]
+      },
+      {
+        "claim_id": "c2",
+        "status": "refuted",
+        "explanation": "Behavior differs: same_label('test', 'test') returned True on base but returned False on head; same_label([], []) returned True on base but returned False on head; same_label({'key': 'value'}, {'key': 'value'}) returned True on base but returned False on head",
+        "command_indexes": [
+          0,
+          1,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: no behavior change",
+        "detail": "Behavior differs: same_label('test', 'test') returned True on base but returned False on head; same_label([], []) returned True on base but returned False on head; same_label({'key': 'value'}, {'key': 'value'}) returned True on base but returned False on head",
+        "severity": "high",
+        "command_indexes": [
+          6,
+          7
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim not verified: use identity comparison in same_label for speed",
+        "detail": "The evidence only shows that the tests pass with and without the identity comparison change, but it does not provide any timing or performance metrics to support or refute the claim of speed improvement.",
+        "severity": "low",
+        "command_indexes": [
+          2,
+          3
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Test identity comparison with identical objects",
+        "detail": "F\n======================================================================\nFAIL: test_identical_objects (tribunal_probes.probe_1.TestSameLabel.test_identical_objects)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 4, in test_identical_objects\n    self.assertTrue(same_label(object(), object()))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          9,
+          10
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 24 input(s) compared, 5 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          6,
+          7
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 2/2 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.272,
+        "started_at": "2026-11-13T05:11:18.783531Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.227,
+        "started_at": "2026-11-13T05:11:19.055762Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_labels.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.257,
+        "started_at": "2026-11-13T05:11:24.569205Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_labels.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.255,
+        "started_at": "2026-11-13T05:11:24.827067Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_labels.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.265,
+        "started_at": "2026-11-13T05:11:36.267015Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_labels.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.22,
+        "started_at": "2026-11-13T05:11:36.532191Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"True\"}\n{\"i\": 1, \"ok\": true, \"value\": \"True\"}\n{\"i\": 2, \"ok\": true, \"value\": \"True\"}\n{\"i\": 3, \"ok\": true, \"value\": \"True\"}\n{\"i\": 4, \"ok\": true, \"value\": \"True\"}\n{\"i\": 5, \"ok\": true, \"value\": \"True\"}\n{\"i\": 6, \"ok\": true, \"value\": \"False\"}\n{\"i\": 7, \"ok\": true, \"value\": \"True\"}\n{\"i\": 8, \"ok\": true, \"value\": \"True\"}\n{\"i\": 9, \"ok\": true, \"value\": \"False\"}\n{\"i\": 10, \"ok\": true, \"value\": \"True\"}\n{\"i\": 11, \"ok\": true, \"value\": \"False\"}\n{\"i\": 12, \"ok\": true, \"value\": \"False\"}\n{\"i\": 13, \"ok\": true, \"value\": \"False\"}\n{\"i\": 14, \"ok\": true, \"value\": \"False\"}\n{\"i\": 15, \"ok\": true, \"value\": \"False\"}\n{\"i\": 16, \"ok\": true, \"value\": \"False\"}\n{\"i\": 17, \"ok\": true, \"value\": \"False\"}\n{\"i\": 18, \"ok\": true, \"value\": \"False\"}\n{\"i\": 19, \"ok\": true, \"value\": \"True\"}\n{\"i\": 20, \"ok\": true, \"value\": \"False\"}\n{\"i\": 21, \"ok\": true, \"value\": \"False\"}\n{\"i\": 22, \"ok\": true, \"value\": \"False\"}\n{\"i\": 23, \"ok\": true, \"value\": \"False\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.244,
+        "started_at": "2026-11-13T05:12:47.069739Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"True\"}\n{\"i\": 1, \"ok\": true, \"value\": \"True\"}\n{\"i\": 2, \"ok\": true, \"value\": \"False\"}\n{\"i\": 3, \"ok\": true, \"value\": \"True\"}\n{\"i\": 4, \"ok\": true, \"value\": \"True\"}\n{\"i\": 5, \"ok\": true, \"value\": \"True\"}\n{\"i\": 6, \"ok\": true, \"value\": \"False\"}\n{\"i\": 7, \"ok\": true, \"value\": \"False\"}\n{\"i\": 8, \"ok\": true, \"value\": \"False\"}\n{\"i\": 9, \"ok\": true, \"value\": \"False\"}\n{\"i\": 10, \"ok\": true, \"value\": \"False\"}\n{\"i\": 11, \"ok\": true, \"value\": \"False\"}\n{\"i\": 12, \"ok\": true, \"value\": \"False\"}\n{\"i\": 13, \"ok\": true, \"value\": \"False\"}\n{\"i\": 14, \"ok\": true, \"value\": \"False\"}\n{\"i\": 15, \"ok\": true, \"value\": \"False\"}\n{\"i\": 16, \"ok\": true, \"value\": \"False\"}\n{\"i\": 17, \"ok\": true, \"value\": \"False\"}\n{\"i\": 18, \"ok\": true, \"value\": \"False\"}\n{\"i\": 19, \"ok\": true, \"value\": \"False\"}\n{\"i\": 20, \"ok\": true, \"value\": \"False\"}\n{\"i\": 21, \"ok\": true, \"value\": \"False\"}\n{\"i\": 22, \"ok\": true, \"value\": \"False\"}\n{\"i\": 23, \"ok\": true, \"value\": \"False\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.154,
+        "started_at": "2026-11-13T05:12:47.314130Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"True\"}\n{\"i\": 1, \"ok\": true, \"value\": \"True\"}\n{\"i\": 2, \"ok\": true, \"value\": \"False\"}\n{\"i\": 3, \"ok\": true, \"value\": \"True\"}\n{\"i\": 4, \"ok\": true, \"value\": \"True\"}\n{\"i\": 5, \"ok\": true, \"value\": \"True\"}\n{\"i\": 6, \"ok\": true, \"value\": \"False\"}\n{\"i\": 7, \"ok\": true, \"value\": \"False\"}\n{\"i\": 8, \"ok\": true, \"value\": \"False\"}\n{\"i\": 9, \"ok\": true, \"value\": \"False\"}\n{\"i\": 10, \"ok\": true, \"value\": \"False\"}\n{\"i\": 11, \"ok\": true, \"value\": \"False\"}\n{\"i\": 12, \"ok\": true, \"value\": \"False\"}\n{\"i\": 13, \"ok\": true, \"value\": \"False\"}\n{\"i\": 14, \"ok\": true, \"value\": \"False\"}\n{\"i\": 15, \"ok\": true, \"value\": \"False\"}\n{\"i\": 16, \"ok\": true, \"value\": \"False\"}\n{\"i\": 17, \"ok\": true, \"value\": \"False\"}\n{\"i\": 18, \"ok\": true, \"value\": \"False\"}\n{\"i\": 19, \"ok\": true, \"value\": \"False\"}\n{\"i\": 20, \"ok\": true, \"value\": \"False\"}\n{\"i\": 21, \"ok\": true, \"value\": \"False\"}\n{\"i\": 22, \"ok\": true, \"value\": \"False\"}\n{\"i\": 23, \"ok\": true, \"value\": \"False\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.171,
+        "started_at": "2026-11-13T05:12:47.469034Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_identical_objects (tribunal_probes.probe_1.TestSameLabel.test_identical_objects)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 4, in test_identical_objects\n    self.assertTrue(same_label(object(), object()))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.353,
+        "started_at": "2026-11-13T05:13:10.171581Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_identical_objects (tribunal_probes.probe_1.TestSameLabel.test_identical_objects)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 4, in test_identical_objects\n    self.assertTrue(same_label(object(), object()))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.233,
+        "started_at": "2026-11-13T05:13:10.524545Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.233,
+        "started_at": "2026-11-13T05:13:10.758352Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.252,
+        "started_at": "2026-11-13T05:13:10.992388Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.268,
+        "started_at": "2026-11-13T05:13:11.244813Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.29,
+        "started_at": "2026-11-13T05:13:11.514944Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_same_label (test_labels.T.test_same_label)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_labels.py\", line 8, in test_same_label\n    self.assertTrue(same_label(\"x\", \"x\"))\nAssertionError: None is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.299,
+        "started_at": "2026-11-13T05:13:11.805802Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_same_label (test_labels.T.test_same_label)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_labels.py\", line 8, in test_same_label\n    self.assertTrue(same_label(\"x\", \"x\"))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.295,
+        "started_at": "2026-11-13T05:13:12.105991Z"
+      }
+    ],
+    "issued_at": "2026-11-13T05:13:12.402864Z"
+  },
+  "digest": "0ddd0ea6a3aabd22994bf593ead3dd031005157fcfe4f1d4be79d67854dfb90c",
+  "signature": "1+uFIH1Z6l1iqjgqLlCG41Ji1U9SBZt/NCleonZP/M6PpTmU6VXnN8h/A0zhqP+fWKGZJMtMbmXp0vzqzwgkAw==",
+  "public_key": "gJN8amx3tadMBNAUk/QEKGKErHdeJS84bUtEOsPXp1A="
+}

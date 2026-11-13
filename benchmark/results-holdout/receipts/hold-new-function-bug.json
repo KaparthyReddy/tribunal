@@ -1,0 +1,443 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_9516523a3e1a",
+    "submission_id": "sub_fc3d9461b02b",
+    "repo": "hold-new-function-bug",
+    "base_sha": "0578ffae2db7ba3f4d00c56fd2ae9b96df1ba14b",
+    "head_sha": "735eb3e90efb2155584bc13b6da9217814dedc1e",
+    "verdict": "inconclusive",
+    "rationale": "6 item(s) need human review:\n- No test reaches changed code: is_leap_year (calendar_utils.py)\n- Surviving mutant at calendar_utils.py:6 (return value -> None)\n- Surviving mutant at calendar_utils.py:6 (And -> Or)\n- Surviving mutant at calendar_utils.py:6 (Eq -> NotEq)\n- Surviving mutant at calendar_utils.py:6 (NotEq -> Eq)\n- Surviving mutant at calendar_utils.py:6 (0 -> 1)",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "adds_tests_for_is_leap_year",
+        "kind": "adds_tests"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The evidence only shows that the tests are running successfully, but it does not specifically indicate whether new tests for `is_leap_year` have been added or if existing tests cover this function.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "blast_radius",
+        "title": "No test reaches changed code: is_leap_year (calendar_utils.py)",
+        "detail": "0 dependent function(s) within depth 4.",
+        "severity": "medium",
+        "command_indexes": []
+      },
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at calendar_utils.py:6 (return value -> None)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          11
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at calendar_utils.py:6 (And -> Or)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          12
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at calendar_utils.py:6 (Eq -> NotEq)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          13
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at calendar_utils.py:6 (NotEq -> Eq)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          14
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at calendar_utils.py:6 (0 -> 1)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          15
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim not verified: adds_tests_for_is_leap_year",
+        "detail": "The evidence only shows that the tests are running successfully, but it does not specifically indicate whether new tests for `is_leap_year` have been added or if existing tests cover this function.",
+        "severity": "low",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Century year divisible by 400",
+        "detail": "F\n======================================================================\nFAIL: test_divisible_by_400 (tribunal_probes.probe_3.TestIsLeapYear.test_divisible_by_400)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 5, in test_divisible_by_400\n    self.assertTrue(is_leap_year(2000))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          6,
+          7
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Fuzz testing with random years",
+        "detail": "F\n======================================================================\nFAIL: test_random_years (tribunal_probes.probe_4.TestIsLeapYear.test_random_years)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 8, in test_random_years\n    self.assertEqual(is_leap_year(year), (year % 4 == 0 and year % 100 != 0 or year % 400 == 0))\nAssertionError: False != True\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          8,
+          9
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 0/8 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.272,
+        "started_at": "2026-11-13T05:16:26.057559Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.221,
+        "started_at": "2026-11-13T05:16:26.329830Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_calendar_utils.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.258,
+        "started_at": "2026-11-13T05:16:35.646252Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_calendar_utils.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.227,
+        "started_at": "2026-11-13T05:16:35.904765Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.263,
+        "started_at": "2026-11-13T05:17:12.859407Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.223,
+        "started_at": "2026-11-13T05:17:13.122731Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_divisible_by_400 (tribunal_probes.probe_3.TestIsLeapYear.test_divisible_by_400)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 5, in test_divisible_by_400\n    self.assertTrue(is_leap_year(2000))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.232,
+        "started_at": "2026-11-13T05:17:13.345702Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 2, in <module>\n    from calendar_utils import is_leap_year\nImportError: cannot import name 'is_leap_year' from 'calendar_utils' (/work/calendar_utils.py)\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.257,
+        "started_at": "2026-11-13T05:17:13.577513Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_random_years (tribunal_probes.probe_4.TestIsLeapYear.test_random_years)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 8, in test_random_years\n    self.assertEqual(is_leap_year(year), (year % 4 == 0 and year % 100 != 0 or year % 400 == 0))\nAssertionError: False != True\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.272,
+        "started_at": "2026-11-13T05:17:13.835141Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_4 (unittest.loader._FailedTest.probe_4)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_4\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_4.py\", line 2, in <module>\n    from calendar_utils import is_leap_year\nImportError: cannot import name 'is_leap_year' from 'calendar_utils' (/work/calendar_utils.py)\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.297,
+        "started_at": "2026-11-13T05:17:14.107914Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.3,
+        "started_at": "2026-11-13T05:17:14.408784Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.299,
+        "started_at": "2026-11-13T05:17:14.709470Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.289,
+        "started_at": "2026-11-13T05:17:15.008987Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.294,
+        "started_at": "2026-11-13T05:17:15.299270Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.274,
+        "started_at": "2026-11-13T05:17:15.594991Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.266,
+        "started_at": "2026-11-13T05:17:15.870763Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.29,
+        "started_at": "2026-11-13T05:17:16.137820Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.265,
+        "started_at": "2026-11-13T05:17:16.428408Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.251,
+        "started_at": "2026-11-13T05:17:16.694640Z"
+      }
+    ],
+    "issued_at": "2026-11-13T05:17:16.947220Z"
+  },
+  "digest": "c3603c08a528b05c837c30135f678c1414da8ee4748317f9d9f529f23ab27740",
+  "signature": "XnzgeMXiMfMR5+R1oQYGT84SUluPPjmTFg3XYjQzZcDvmn7pyRuVN8eKzKYAiuBIr3gZB/apIbmQtQg4k2vVDg==",
+  "public_key": "gJN8amx3tadMBNAUk/QEKGKErHdeJS84bUtEOsPXp1A="
+}

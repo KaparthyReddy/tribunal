@@ -1,0 +1,269 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_d3fce571f7b8",
+    "submission_id": "sub_d2169076644d",
+    "repo": "hold-mutable-default",
+    "base_sha": "db6d814092ec5d9a699eb84faf9af91705a1f53a",
+    "head_sha": "7b3d17ee7e31304f54ae0951316dc343986a3268",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "Behavior differs: add_tag(tag='tag3') returned ['tag3'] on base but returned ['tag1', 'tag3'] on head; add_tag(tag='tag9') returned ['tag9'] on base but returned ['tag1', 'tag3', 'tag9'] on head; add_tag('tag12') returned ['tag12'] on base but returned ['tag1', 'tag3', 'tag9', 'tag12'] on head",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: No behavior change",
+        "detail": "Behavior differs: add_tag(tag='tag3') returned ['tag3'] on base but returned ['tag1', 'tag3'] on head; add_tag(tag='tag9') returned ['tag9'] on base but returned ['tag1', 'tag3', 'tag9'] on head; add_tag('tag12') returned ['tag12'] on base but returned ['tag1', 'tag3', 'tag9', 'tag12'] on head",
+        "severity": "high",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Fuzzing with random tags",
+        "detail": "F\n======================================================================\nFAIL: test_fuzzing (tribunal_probes.probe_4.TestAddTag.test_fuzzing)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 7, in test_fuzzing\n    self.assertEqual(add_tag(tag), [tag] if isinstance(tag, str) else [])\nAssertionError: Lists differ: ['', 'tag'] != ['tag']\n\nFirst differing element 0:\n''\n'tag'\n\nFirst list contains 1 additional elements.\nFirst extra element 1:\n'tag'\n\n- ['', 'tag']\n?  ----\n\n+ ['tag']\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          10,
+          11
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 12 input(s) compared, 4 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          4,
+          5
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.458,
+        "started_at": "2026-11-13T05:08:52.663933Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.22,
+        "started_at": "2026-11-13T05:08:53.121927Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import tags; assert tags.add_tag('test') == ['test']"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.173,
+        "started_at": "2026-11-13T05:08:57.881921Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import tags; assert tags.add_tag('test') == ['test']"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.131,
+        "started_at": "2026-11-13T05:08:58.055859Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"['tag1']\"}\n{\"i\": 1, \"ok\": true, \"value\": \"['tag2']\"}\n{\"i\": 2, \"ok\": true, \"value\": \"['tag3']\"}\n{\"i\": 3, \"ok\": true, \"value\": \"['tag4']\"}\n{\"i\": 4, \"ok\": true, \"value\": \"['tag6', 'tag5']\"}\n{\"i\": 5, \"ok\": true, \"value\": \"['tag8', 'tag7']\"}\n{\"i\": 6, \"ok\": true, \"value\": \"['tag9']\"}\n{\"i\": 7, \"ok\": true, \"value\": \"['tag11', 'tag10']\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"add_tag() missing 1 required positional argument: 'tag'\"}\n{\"i\": 9, \"ok\": true, \"value\": \"['tag12']\"}\n{\"i\": 10, \"ok\": true, \"value\": \"['tag13']\"}\n{\"i\": 11, \"ok\": true, \"value\": \"['tag14']\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.27,
+        "started_at": "2026-11-13T05:09:22.174535Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"['tag1']\"}\n{\"i\": 1, \"ok\": true, \"value\": \"['tag2']\"}\n{\"i\": 2, \"ok\": true, \"value\": \"['tag1', 'tag3']\"}\n{\"i\": 3, \"ok\": true, \"value\": \"['tag4']\"}\n{\"i\": 4, \"ok\": true, \"value\": \"['tag6', 'tag5']\"}\n{\"i\": 5, \"ok\": true, \"value\": \"['tag8', 'tag7']\"}\n{\"i\": 6, \"ok\": true, \"value\": \"['tag1', 'tag3', 'tag9']\"}\n{\"i\": 7, \"ok\": true, \"value\": \"['tag11', 'tag10']\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"add_tag() missing 1 required positional argument: 'tag'\"}\n{\"i\": 9, \"ok\": true, \"value\": \"['tag1', 'tag3', 'tag9', 'tag12']\"}\n{\"i\": 10, \"ok\": true, \"value\": \"['tag13']\"}\n{\"i\": 11, \"ok\": true, \"value\": \"['tag1', 'tag3', 'tag9', 'tag12', 'tag14']\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.152,
+        "started_at": "2026-11-13T05:09:22.444432Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"['tag1']\"}\n{\"i\": 1, \"ok\": true, \"value\": \"['tag2']\"}\n{\"i\": 2, \"ok\": true, \"value\": \"['tag1', 'tag3']\"}\n{\"i\": 3, \"ok\": true, \"value\": \"['tag4']\"}\n{\"i\": 4, \"ok\": true, \"value\": \"['tag6', 'tag5']\"}\n{\"i\": 5, \"ok\": true, \"value\": \"['tag8', 'tag7']\"}\n{\"i\": 6, \"ok\": true, \"value\": \"['tag1', 'tag3', 'tag9']\"}\n{\"i\": 7, \"ok\": true, \"value\": \"['tag11', 'tag10']\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"add_tag() missing 1 required positional argument: 'tag'\"}\n{\"i\": 9, \"ok\": true, \"value\": \"['tag1', 'tag3', 'tag9', 'tag12']\"}\n{\"i\": 10, \"ok\": true, \"value\": \"['tag13']\"}\n{\"i\": 11, \"ok\": true, \"value\": \"['tag1', 'tag3', 'tag9', 'tag12', 'tag14']\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.155,
+        "started_at": "2026-11-13T05:09:22.596546Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.339,
+        "started_at": "2026-11-13T05:09:42.169892Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.227,
+        "started_at": "2026-11-13T05:09:42.509258Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.241,
+        "started_at": "2026-11-13T05:09:42.736844Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_fuzzing (tribunal_probes.probe_4.TestAddTag.test_fuzzing)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 7, in test_fuzzing\n    self.assertEqual(add_tag(tag), [tag] if isinstance(tag, str) else [])\nAssertionError: Lists differ: ['', 'tag'] != ['tag']\n\nFirst differing element 0:\n''\n'tag'\n\nFirst list contains 1 additional elements.\nFirst extra element 1:\n'tag'\n\n- ['', 'tag']\n?  ----\n\n+ ['tag']\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.276,
+        "started_at": "2026-11-13T05:09:42.978410Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_fuzzing (tribunal_probes.probe_4.TestAddTag.test_fuzzing)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 7, in test_fuzzing\n    self.assertEqual(add_tag(tag), [tag] if isinstance(tag, str) else [])\nAssertionError: Lists differ: [123] != []\n\nFirst list contains 1 additional elements.\nFirst extra element 0:\n123\n\n- [123]\n+ []\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.273,
+        "started_at": "2026-11-13T05:09:43.254567Z"
+      }
+    ],
+    "issued_at": "2026-11-13T05:09:43.532362Z"
+  },
+  "digest": "f8e3d7d5f22160d226865db6d6b370ea6fdcc3c393602fa69b9539a5256870c7",
+  "signature": "PmHDfE4vDwC21SPXnGrx16sk+8yMFtio10FpTWsAn3q9TEK3CTZad5LCyUv89pgO6CrHHkg5qYOek2PgHVoIDw==",
+  "public_key": "gJN8amx3tadMBNAUk/QEKGKErHdeJS84bUtEOsPXp1A="
+}

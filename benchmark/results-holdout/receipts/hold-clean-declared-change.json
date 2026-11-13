@@ -1,0 +1,167 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_abd6a3076c12",
+    "submission_id": "sub_4787b4f7a6a6",
+    "repo": "hold-clean-declared-change",
+    "base_sha": "11e0509c44faea36026cf796554a07590a306e6d",
+    "head_sha": "8e6b68e13dcdfbd52bee3989cc29d6728ba0b6ba",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 8e6b68e13dcd. 7 sandboxed command(s) run, 0 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "changes the default separator of join_items from a comma to a semicolon",
+        "kind": "other"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The evidence only shows that the tests pass, but it does not provide any information about the default separator of join_items being changed from a comma to a semicolon.",
+        "command_indexes": [
+          0,
+          1,
+          2
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Claim not verified: changes the default separator of join_items from a comma to a semicolon",
+        "detail": "The evidence only shows that the tests pass, but it does not provide any information about the default separator of join_items being changed from a comma to a semicolon.",
+        "severity": "low",
+        "command_indexes": [
+          0,
+          1,
+          2
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.261,
+        "started_at": "2026-11-13T05:21:59.962372Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.213,
+        "started_at": "2026-11-13T05:22:00.224156Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_joiner.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.259,
+        "started_at": "2026-11-13T05:22:06.886018Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.316,
+        "started_at": "2026-11-13T05:22:36.318062Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.217,
+        "started_at": "2026-11-13T05:22:36.634240Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.229,
+        "started_at": "2026-11-13T05:22:36.851297Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.249,
+        "started_at": "2026-11-13T05:22:37.080713Z"
+      }
+    ],
+    "issued_at": "2026-11-13T05:22:37.332263Z"
+  },
+  "digest": "e5b0bd8735bffcb52945351ead6dbd2d6339e9645caf9a528460cb4e310a78b4",
+  "signature": "lzZT7wSaErnnAwG0ZIQWWMqxeQwHwkLCyNlA97Yjk2X+ywPdEK/SZHXgpbtxI8k6F8URNEdb9Gkh7Y8BmUDvDg==",
+  "public_key": "gJN8amx3tadMBNAUk/QEKGKErHdeJS84bUtEOsPXp1A="
+}

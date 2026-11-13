@@ -1,0 +1,466 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_04269c597fa0",
+    "submission_id": "sub_37cb2706ef28",
+    "repo": "hold-window-offbyone",
+    "base_sha": "03b575b6563a3027767d19233cb28e2d177a65e4",
+    "head_sha": "3483e239c2a1243a8ddb3a8f30ae1ccfab740b3f",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change 3 additional item(s) need review.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "Behavior differs: window([1, 2, 3, 4], 0, 2) returned [1, 2] on base but returned [1] on head; window([1, 2, 3, 4], 1, 2) returned [2, 3] on base but returned [2] on head; window([1, 2, 3, 4], 2, 2) returned [3, 4] on base but returned [3] on head",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: No behavior change",
+        "detail": "Behavior differs: window([1, 2, 3, 4], 0, 2) returned [1, 2] on base but returned [1] on head; window([1, 2, 3, 4], 1, 2) returned [2, 3] on base but returned [2] on head; window([1, 2, 3, 4], 2, 2) returned [3, 4] on base but returned [3] on head",
+        "severity": "high",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at windows.py:2 (Sub -> Add)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          17
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at windows.py:2 (Add -> Sub)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          18
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at windows.py:2 (1 -> 2)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          19
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: empty input",
+        "detail": "E\n======================================================================\nERROR: probe_1 (unittest.loader._FailedTest.probe_1)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_1\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_1.py\", line 1, in <module>\n    import unittest; from pkg.windows import window\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          7,
+          8
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: single item",
+        "detail": "E\n======================================================================\nERROR: probe_2 (unittest.loader._FailedTest.probe_2)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_2\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_2.py\", line 1, in <module>\n    import unittest; from pkg.windows import window\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          9,
+          10
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: negative size",
+        "detail": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 1, in <module>\n    import unittest; from pkg.windows import window\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          11,
+          12
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: fuzzing",
+        "detail": "E\n======================================================================\nERROR: probe_4 (unittest.loader._FailedTest.probe_4)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_4\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_4.py\", line 1, in <module>\n    import unittest; import random; from pkg.windows import window\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          13,
+          14
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 13 input(s) compared, 8 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/4 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.291,
+        "started_at": "2026-11-13T05:09:49.090312Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.238,
+        "started_at": "2026-11-13T05:09:49.382079Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_windows.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.295,
+        "started_at": "2026-11-13T05:09:55.344087Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_windows.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.227,
+        "started_at": "2026-11-13T05:09:55.639088Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[1, 2]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[2, 3]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"[3, 4]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[1, 2, 3, 4]\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"window() missing 3 required positional arguments: 'items', 'start', and 'size'\"}\n{\"i\": 5, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"['a', 'b', 'c']\"}\n{\"i\": 7, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"[4]\"}\n{\"i\": 9, \"ok\": true, \"value\": \"[1]\"}\n{\"i\": 10, \"ok\": true, \"value\": \"[2]\"}\n{\"i\": 11, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 12, \"ok\": true, \"value\": \"['a']\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.299,
+        "started_at": "2026-11-13T05:10:40.912465Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[1]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[2]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"[3]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[1, 2, 3, 4]\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"window() missing 3 required positional arguments: 'items', 'start', and 'size'\"}\n{\"i\": 5, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"['a', 'b']\"}\n{\"i\": 7, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"[4]\"}\n{\"i\": 9, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 10, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 11, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 12, \"ok\": true, \"value\": \"[]\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.147,
+        "started_at": "2026-11-13T05:10:41.211679Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[1]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[2]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"[3]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[1, 2, 3, 4]\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"window() missing 3 required positional arguments: 'items', 'start', and 'size'\"}\n{\"i\": 5, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"['a', 'b']\"}\n{\"i\": 7, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"[4]\"}\n{\"i\": 9, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 10, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 11, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 12, \"ok\": true, \"value\": \"[]\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.164,
+        "started_at": "2026-11-13T05:10:41.358886Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_1 (unittest.loader._FailedTest.probe_1)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_1\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_1.py\", line 1, in <module>\n    import unittest; from pkg.windows import window\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.342,
+        "started_at": "2026-11-13T05:11:09.377318Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_1 (unittest.loader._FailedTest.probe_1)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_1\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_1.py\", line 1, in <module>\n    import unittest; from pkg.windows import window\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.221,
+        "started_at": "2026-11-13T05:11:09.719340Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_2 (unittest.loader._FailedTest.probe_2)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_2\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_2.py\", line 1, in <module>\n    import unittest; from pkg.windows import window\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.226,
+        "started_at": "2026-11-13T05:11:09.940729Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_2 (unittest.loader._FailedTest.probe_2)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_2\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_2.py\", line 1, in <module>\n    import unittest; from pkg.windows import window\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.254,
+        "started_at": "2026-11-13T05:11:10.167306Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 1, in <module>\n    import unittest; from pkg.windows import window\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.268,
+        "started_at": "2026-11-13T05:11:10.422121Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 1, in <module>\n    import unittest; from pkg.windows import window\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.299,
+        "started_at": "2026-11-13T05:11:10.690282Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_4 (unittest.loader._FailedTest.probe_4)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_4\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_4.py\", line 1, in <module>\n    import unittest; import random; from pkg.windows import window\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.305,
+        "started_at": "2026-11-13T05:11:10.989754Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_4 (unittest.loader._FailedTest.probe_4)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_4\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_4.py\", line 1, in <module>\n    import unittest; import random; from pkg.windows import window\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.302,
+        "started_at": "2026-11-13T05:11:11.294673Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.291,
+        "started_at": "2026-11-13T05:11:11.599394Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_window (test_windows.T.test_window)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_windows.py\", line 8, in test_window\n    self.assertEqual(window([], 2, 5), [])\nAssertionError: None != []\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.283,
+        "started_at": "2026-11-13T05:11:11.891559Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.283,
+        "started_at": "2026-11-13T05:11:12.175816Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.27,
+        "started_at": "2026-11-13T05:11:12.460345Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.265,
+        "started_at": "2026-11-13T05:11:12.731493Z"
+      }
+    ],
+    "issued_at": "2026-11-13T05:11:12.999429Z"
+  },
+  "digest": "12f7cfc72ab62159fae4cfa99c39a061909a41af93a64f682003dc4ae4ebd24c",
+  "signature": "U143vLzhgMzTJUtmgy0HxBc3p7fl6lNCvQeafpCyzwHLvXL/lkcRlqY5fulXoUBAv8RmFER42dB3izWQbsKiCA==",
+  "public_key": "gJN8amx3tadMBNAUk/QEKGKErHdeJS84bUtEOsPXp1A="
+}

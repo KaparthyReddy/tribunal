@@ -1,0 +1,335 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_8b639ad3847e",
+    "submission_id": "sub_c9970c43d7ce",
+    "repo": "hold-clean-fix-mutable-default",
+    "base_sha": "1b6e1b67898a704e0d5cf0b82118cae8cd005e45",
+    "head_sha": "8679230e2b74314415e8e199d94ee0e52e8f14a1",
+    "verdict": "inconclusive",
+    "rationale": "1 item(s) need human review:\n- Critical claim not verified: fixes the leak when collect is called multiple times",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "fixes the leak when collect is called multiple times",
+        "kind": "fixes"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The test suite passing and the change in output from multiple calls to `collect` do not directly demonstrate that a memory leak has been fixed. Additional memory-related tests or analysis would be needed.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Claim not verified: fixes the leak when collect is called multiple times",
+        "detail": "The test suite passing and the change in output from multiple calls to `collect` do not directly demonstrate that a memory leak has been fixed. Additional memory-related tests or analysis would be needed.",
+        "severity": "low",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: multiple items",
+        "detail": "E\n======================================================================\nERROR: test_multiple_items (tribunal_probes.probe_3.T.test_multiple_items)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 8, in test_multiple_items\n    self.assertEqual(len(results), len(set(results)))\n                                       ^^^^^^^^^^^^\nTypeError: unhashable type: 'list'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          9,
+          10
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: default bucket",
+        "detail": "E\n======================================================================\nERROR: test_default_bucket (tribunal_probes.probe_4.T.test_default_bucket)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 8, in test_default_bucket\n    self.assertEqual(len(results), len(set(results)))\n                                       ^^^^^^^^^^^^\nTypeError: unhashable type: 'list'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          11,
+          12
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 3 input(s) compared, 1 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.268,
+        "started_at": "2026-11-13T05:20:58.562363Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.213,
+        "started_at": "2026-11-13T05:20:58.830623Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "from bucket import collect; print(collect('a'), collect('b'))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "['a', 'b'] ['a', 'b']\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.161,
+        "started_at": "2026-11-13T05:21:10.972118Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "from bucket import collect; print(collect('a'), collect('b'))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "['a'] ['b']\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.12,
+        "started_at": "2026-11-13T05:21:11.133887Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"['z', 'a']\"}\n{\"i\": 1, \"ok\": true, \"value\": \"['a']\"}\n{\"i\": 2, \"ok\": true, \"value\": \"['a', 'b']\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.246,
+        "started_at": "2026-11-13T05:21:27.698687Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"['z', 'a']\"}\n{\"i\": 1, \"ok\": true, \"value\": \"['a']\"}\n{\"i\": 2, \"ok\": true, \"value\": \"['b']\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.167,
+        "started_at": "2026-11-13T05:21:27.945104Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"['z', 'a']\"}\n{\"i\": 1, \"ok\": true, \"value\": \"['a']\"}\n{\"i\": 2, \"ok\": true, \"value\": \"['b']\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.159,
+        "started_at": "2026-11-13T05:21:28.112433Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.304,
+        "started_at": "2026-11-13T05:21:51.090922Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.213,
+        "started_at": "2026-11-13T05:21:51.395465Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_multiple_items (tribunal_probes.probe_3.T.test_multiple_items)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 8, in test_multiple_items\n    self.assertEqual(len(results), len(set(results)))\n                                       ^^^^^^^^^^^^\nTypeError: unhashable type: 'list'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.239,
+        "started_at": "2026-11-13T05:21:51.609069Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_multiple_items (tribunal_probes.probe_3.T.test_multiple_items)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 8, in test_multiple_items\n    self.assertEqual(len(results), len(set(results)))\n                                       ^^^^^^^^^^^^\nTypeError: unhashable type: 'list'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.242,
+        "started_at": "2026-11-13T05:21:51.848044Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_default_bucket (tribunal_probes.probe_4.T.test_default_bucket)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 8, in test_default_bucket\n    self.assertEqual(len(results), len(set(results)))\n                                       ^^^^^^^^^^^^\nTypeError: unhashable type: 'list'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.25,
+        "started_at": "2026-11-13T05:21:52.090945Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_default_bucket (tribunal_probes.probe_4.T.test_default_bucket)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 8, in test_default_bucket\n    self.assertEqual(len(results), len(set(results)))\n                                       ^^^^^^^^^^^^\nTypeError: unhashable type: 'list'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.263,
+        "started_at": "2026-11-13T05:21:52.341445Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.256,
+        "started_at": "2026-11-13T05:21:52.606539Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "FE\n======================================================================\nERROR: test_default_is_fresh (test_bucket.T.test_default_is_fresh)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_bucket.py\", line 11, in test_default_is_fresh\n    self.assertEqual(collect(\"a\"), [\"a\"])\n                     ^^^^^^^^^^^^\n  File \"/work/bucket.py\", line 4, in collect\n    bucket.append(item)\n    ^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'append'\n\n======================================================================\nFAIL: test_collect (test_bucket.T.test_collect)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_bucket.py\", line 8, in test_collect\n    self.assertEqual(collect(\"a\", [\"z\"]), [\"z\", \"a\"])\nAssertionError: Lists differ: ['a'] != ['z', 'a']\n\nFirst differing element 0:\n'a'\n'z'\n\nSecond list contains 1 additional elements.\nFirst extra element 1:\n'a'\n\n- ['a']\n+ ['z', 'a']\n\n----------------------------------------------------------------------\nRan 2 tests in 0.001s\n\nFAILED (failures=1, errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.284,
+        "started_at": "2026-11-13T05:21:52.862772Z"
+      }
+    ],
+    "issued_at": "2026-11-13T05:21:53.147867Z"
+  },
+  "digest": "d0a78096e2af06de3361f63c91248b43e1f68db44818f1eef97c005ceffa9d61",
+  "signature": "2IFTIJF1zLKKQ68xNotpMeOIPe2pSOYwFKaQxsp7FFKrdrSJz95r0HhohnSey4zFnjQAD/ZGaJhtEyY3WTC9Cg==",
+  "public_key": "gJN8amx3tadMBNAUk/QEKGKErHdeJS84bUtEOsPXp1A="
+}
