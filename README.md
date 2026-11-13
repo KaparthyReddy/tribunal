@@ -70,16 +70,21 @@ How to read it:
 - **Tribunal passed fewer bugs.** It passed 1 of 9 buggy changes against 4 for the baseline, and
   every change the baseline blocked, Tribunal blocked or flagged.
 - **That cost review time.** Tribunal flagged 3 of 5 clean changes and the baseline flagged none.
-  A gate that sends many clean changes to a human is not yet usable.
-- **The blocks came from running code.** All three came from differential execution, and the
-  baseline missed two of them. The baseline blocked four bugs that Tribunal only flagged.
-- **The one false green** happened because no differential check ran. The stage depends on the
-  model classifying a claim as "no behavior change".
-- Small samples, one run, a 7B model, and cases written by the tool's author. Predictions
-  and the full case table, misses included, are in [benchmark/HOLDOUT.md](benchmark/HOLDOUT.md).
+  Two of those flags came from a single surviving mutant in tests that never pass a boundary
+  value. A gate that sends many clean changes to a human is not yet usable.
+- **The blocks came from running code.** All three came from the differential check refuting a
+  "no behavior change" claim, and the baseline missed two of them. The baseline blocked four bugs
+  that Tribunal only flagged.
+- **The misses came from the claims.** In `return-type`, the extractor kept the declared change
+  and dropped "Callers are unaffected", so no differential check ran. The title announces the
+  type change, so that label is debatable. In `swallowed-error`, the model that audits claims
+  marked "no behavior change" supported from sampled outputs.
+- Small samples, one run, a 7B model, and cases written by the tool's author. Predictions, the
+  full case table and the label caveat are in [benchmark/HOLDOUT.md](benchmark/HOLDOUT.md).
 
-Raw results are in `benchmark/results-v1/`, `benchmark/results/`, `benchmark/results-holdout/`
-and `benchmark/results-holdout-combined/`. Reproduce with [benchmark/README.md](benchmark/README.md).
+Raw results are in `benchmark/results-v1/`, `benchmark/results/`, `benchmark/results-holdout/`,
+`benchmark/results-holdout-tail/` and `benchmark/results-holdout-combined/`. Reproduce with
+[benchmark/README.md](benchmark/README.md).
 
 ## Models
 
