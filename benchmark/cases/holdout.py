@@ -10,16 +10,16 @@ CASES = [
         note="Default None replaced by a shared list. State leaks between calls.",
         base={
             "tags.py": code(
-                '''
+                """
                 def add_tag(tag, tags=None):
                     if tags is None:
                         tags = []
                     tags.append(tag)
                     return tags
-                '''
+                """
             ),
             "test_tags.py": code(
-                '''
+                """
                 import unittest
 
                 from tags import add_tag
@@ -29,16 +29,16 @@ CASES = [
                     def test_add_tag(self):
                         self.assertEqual(add_tag("a", ["b"]), ["b", "a"])
                         self.assertEqual(add_tag("x"), ["x"])
-                '''
+                """
             ),
         },
         head={
             "tags.py": code(
-                '''
+                """
                 def add_tag(tag, tags=[]):
                     tags.append(tag)
                     return tags
-                '''
+                """
             ),
         },
     ),
@@ -51,13 +51,13 @@ CASES = [
         note="Slice end shortened by one. The tests only use inputs where it makes no difference.",
         base={
             "windows.py": code(
-                '''
+                """
                 def window(items, start, size):
                     return items[start:start + size]
-                '''
+                """
             ),
             "test_windows.py": code(
-                '''
+                """
                 import unittest
 
                 from windows import window
@@ -67,15 +67,15 @@ CASES = [
                     def test_window(self):
                         self.assertEqual(window([], 2, 5), [])
                         self.assertEqual(window(["a"], 5, 2), [])
-                '''
+                """
             ),
         },
         head={
             "windows.py": code(
-                '''
+                """
                 def window(items, start, size):
                     return items[start:start + size - 1]
-                '''
+                """
             ),
         },
     ),
@@ -88,13 +88,13 @@ CASES = [
         note="== replaced by is. Equal strings that are distinct objects compare unequal.",
         base={
             "labels.py": code(
-                '''
+                """
                 def same_label(a, b):
                     return a == b
-                '''
+                """
             ),
             "test_labels.py": code(
-                '''
+                """
                 import unittest
 
                 from labels import same_label
@@ -104,15 +104,15 @@ CASES = [
                     def test_same_label(self):
                         self.assertTrue(same_label("x", "x"))
                         self.assertFalse(same_label("x", "y"))
-                '''
+                """
             ),
         },
         head={
             "labels.py": code(
-                '''
+                """
                 def same_label(a, b):
                     return a is b
-                '''
+                """
             ),
         },
     ),
@@ -125,13 +125,13 @@ CASES = [
         note="Wraps the call in a blanket except and returns 0, hiding invalid input.",
         base={
             "ints.py": code(
-                '''
+                """
                 def parse_int(s):
                     return int(s)
-                '''
+                """
             ),
             "test_ints.py": code(
-                '''
+                """
                 import unittest
 
                 from ints import parse_int
@@ -141,18 +141,18 @@ CASES = [
                     def test_parse_int(self):
                         self.assertEqual(parse_int("42"), 42)
                         self.assertEqual(parse_int(" 7 "), 7)
-                '''
+                """
             ),
         },
         head={
             "ints.py": code(
-                '''
+                """
                 def parse_int(s):
                     try:
                         return int(s.strip())
                     except Exception:
                         return 0
-                '''
+                """
             ),
         },
     ),
@@ -165,13 +165,13 @@ CASES = [
         note="Return type changed from list to tuple. The test converts to list so it still passes.",
         base={
             "uniq.py": code(
-                '''
+                """
                 def unique_sorted(xs):
                     return sorted(set(xs))
-                '''
+                """
             ),
             "test_uniq.py": code(
-                '''
+                """
                 import unittest
 
                 from uniq import unique_sorted
@@ -180,15 +180,15 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_unique_sorted(self):
                         self.assertEqual(list(unique_sorted([3, 1, 3])), [1, 3])
-                '''
+                """
             ),
         },
         head={
             "uniq.py": code(
-                '''
+                """
                 def unique_sorted(xs):
                     return tuple(sorted(set(xs)))
-                '''
+                """
             ),
         },
     ),
@@ -201,7 +201,7 @@ CASES = [
         note="reset now sets the count to 1. The bug is in a method and the tests never call reset.",
         base={
             "counter.py": code(
-                '''
+                """
                 class Counter:
                     def __init__(self):
                         self.n = 0
@@ -213,10 +213,10 @@ CASES = [
                     def reset(self):
                         self.n = 0
                         return self.n
-                '''
+                """
             ),
             "test_counter.py": code(
-                '''
+                """
                 import unittest
 
                 from counter import Counter
@@ -228,12 +228,12 @@ CASES = [
                         c.incr()
                         c.incr(2)
                         self.assertEqual(c.n, 3)
-                '''
+                """
             ),
         },
         head={
             "counter.py": code(
-                '''
+                """
                 class Counter:
                     def __init__(self):
                         self.n = 0
@@ -245,7 +245,7 @@ CASES = [
                     def reset(self):
                         self.n = 1
                         return self.n
-                '''
+                """
             ),
         },
     ),
@@ -258,13 +258,13 @@ CASES = [
         note="The 400-year rule is missing, so 2000 is reported as a common year. No tests were added.",
         base={
             "calendar_utils.py": code(
-                '''
+                """
                 def days_in_week():
                     return 7
-                '''
+                """
             ),
             "test_calendar_utils.py": code(
-                '''
+                """
                 import unittest
 
                 from calendar_utils import days_in_week
@@ -273,19 +273,19 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_days_in_week(self):
                         self.assertEqual(days_in_week(), 7)
-                '''
+                """
             ),
         },
         head={
             "calendar_utils.py": code(
-                '''
+                """
                 def days_in_week():
                     return 7
 
 
                 def is_leap_year(year):
                     return year % 4 == 0 and year % 100 != 0
-                '''
+                """
             ),
         },
     ),
@@ -298,7 +298,7 @@ CASES = [
         note="The multiple-of-15 branch now comes last and is unreachable. Tests skip 15.",
         base={
             "fizz.py": code(
-                '''
+                """
                 def fizzbuzz(n):
                     if n % 15 == 0:
                         return "FizzBuzz"
@@ -307,10 +307,10 @@ CASES = [
                     if n % 5 == 0:
                         return "Buzz"
                     return str(n)
-                '''
+                """
             ),
             "test_fizz.py": code(
-                '''
+                """
                 import unittest
 
                 from fizz import fizzbuzz
@@ -321,12 +321,12 @@ CASES = [
                         self.assertEqual(fizzbuzz(3), "Fizz")
                         self.assertEqual(fizzbuzz(5), "Buzz")
                         self.assertEqual(fizzbuzz(7), "7")
-                '''
+                """
             ),
         },
         head={
             "fizz.py": code(
-                '''
+                """
                 def fizzbuzz(n):
                     if n % 3 == 0:
                         return "Fizz"
@@ -335,7 +335,7 @@ CASES = [
                     if n % 15 == 0:
                         return "FizzBuzz"
                     return str(n)
-                '''
+                """
             ),
         },
     ),
@@ -348,16 +348,16 @@ CASES = [
         note="MAX_RETRIES lowered from 3 to 2 at module level. The tests only use extreme attempts.",
         base={
             "retry.py": code(
-                '''
+                """
                 MAX_RETRIES = 3
 
 
                 def should_retry(attempt):
                     return attempt < MAX_RETRIES
-                '''
+                """
             ),
             "test_retry.py": code(
-                '''
+                """
                 import unittest
 
                 from retry import should_retry
@@ -367,18 +367,18 @@ CASES = [
                     def test_should_retry(self):
                         self.assertTrue(should_retry(0))
                         self.assertFalse(should_retry(5))
-                '''
+                """
             ),
         },
         head={
             "retry.py": code(
-                '''
+                """
                 MAX_RETRIES = 2
 
 
                 def should_retry(attempt):
                     return attempt < MAX_RETRIES
-                '''
+                """
             ),
         },
     ),
@@ -391,7 +391,7 @@ CASES = [
         note="Correct refactor.",
         base={
             "shipping.py": code(
-                '''
+                """
                 def shipping_cost(weight, express):
                     if weight > 0:
                         if express:
@@ -400,10 +400,10 @@ CASES = [
                             return weight * 2
                     else:
                         return 0
-                '''
+                """
             ),
             "test_shipping.py": code(
-                '''
+                """
                 import unittest
 
                 from shipping import shipping_cost
@@ -415,19 +415,19 @@ CASES = [
                         self.assertEqual(shipping_cost(2, True), 11)
                         self.assertEqual(shipping_cost(0, True), 0)
                         self.assertEqual(shipping_cost(-1, False), 0)
-                '''
+                """
             ),
         },
         head={
             "shipping.py": code(
-                '''
+                """
                 def shipping_cost(weight, express):
                     if weight <= 0:
                         return 0
                     if express:
                         return weight * 3 + 5
                     return weight * 2
-                '''
+                """
             ),
         },
     ),
@@ -440,14 +440,14 @@ CASES = [
         note="Correct fix with a new test.",
         base={
             "bucket.py": code(
-                '''
+                """
                 def collect(item, bucket=[]):
                     bucket.append(item)
                     return bucket
-                '''
+                """
             ),
             "test_bucket.py": code(
-                '''
+                """
                 import unittest
 
                 from bucket import collect
@@ -456,21 +456,21 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_collect(self):
                         self.assertEqual(collect("a", ["z"]), ["z", "a"])
-                '''
+                """
             ),
         },
         head={
             "bucket.py": code(
-                '''
+                """
                 def collect(item, bucket=None):
                     if bucket is None:
                         bucket = []
                     bucket.append(item)
                     return bucket
-                '''
+                """
             ),
             "test_bucket.py": code(
-                '''
+                """
                 import unittest
 
                 from bucket import collect
@@ -483,7 +483,7 @@ CASES = [
                     def test_default_is_fresh(self):
                         self.assertEqual(collect("a"), ["a"])
                         self.assertEqual(collect("b"), ["b"])
-                '''
+                """
             ),
         },
     ),
@@ -496,13 +496,13 @@ CASES = [
         note="An intentional, declared behavior change with updated tests.",
         base={
             "joiner.py": code(
-                '''
+                """
                 def join_items(items, sep=","):
                     return sep.join(items)
-                '''
+                """
             ),
             "test_joiner.py": code(
-                '''
+                """
                 import unittest
 
                 from joiner import join_items
@@ -512,18 +512,18 @@ CASES = [
                     def test_join_items(self):
                         self.assertEqual(join_items(["a", "b"]), "a,b")
                         self.assertEqual(join_items(["a", "b"], "-"), "a-b")
-                '''
+                """
             ),
         },
         head={
             "joiner.py": code(
-                '''
+                """
                 def join_items(items, sep=";"):
                     return sep.join(items)
-                '''
+                """
             ),
             "test_joiner.py": code(
-                '''
+                """
                 import unittest
 
                 from joiner import join_items
@@ -533,7 +533,7 @@ CASES = [
                     def test_join_items(self):
                         self.assertEqual(join_items(["a", "b"]), "a;b")
                         self.assertEqual(join_items(["a", "b"], "-"), "a-b")
-                '''
+                """
             ),
         },
     ),
@@ -546,13 +546,13 @@ CASES = [
         note="Correct new function with tests.",
         base={
             "numstats.py": code(
-                '''
+                """
                 def mean(xs):
                     return sum(xs) / len(xs)
-                '''
+                """
             ),
             "test_numstats.py": code(
-                '''
+                """
                 import unittest
 
                 from numstats import mean
@@ -561,12 +561,12 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_mean(self):
                         self.assertEqual(mean([1, 2, 3]), 2)
-                '''
+                """
             ),
         },
         head={
             "numstats.py": code(
-                '''
+                """
                 def mean(xs):
                     return sum(xs) / len(xs)
 
@@ -577,10 +577,10 @@ CASES = [
                     if len(ordered) % 2:
                         return ordered[mid]
                     return (ordered[mid - 1] + ordered[mid]) / 2
-                '''
+                """
             ),
             "test_numstats.py": code(
-                '''
+                """
                 import unittest
 
                 from numstats import mean, median
@@ -593,7 +593,7 @@ CASES = [
                     def test_median(self):
                         self.assertEqual(median([3, 1, 2]), 2)
                         self.assertEqual(median([1, 2, 3, 4]), 2.5)
-                '''
+                """
             ),
         },
     ),
@@ -606,16 +606,16 @@ CASES = [
         note="Correct refactor.",
         base={
             "neg.py": code(
-                '''
+                """
                 def has_negative(xs):
                     for x in xs:
                         if x < 0:
                             return True
                     return False
-                '''
+                """
             ),
             "test_neg.py": code(
-                '''
+                """
                 import unittest
 
                 from neg import has_negative
@@ -626,15 +626,15 @@ CASES = [
                         self.assertTrue(has_negative([1, -1]))
                         self.assertFalse(has_negative([]))
                         self.assertFalse(has_negative([1, 2]))
-                '''
+                """
             ),
         },
         head={
             "neg.py": code(
-                '''
+                """
                 def has_negative(xs):
                     return any(x < 0 for x in xs)
-                '''
+                """
             ),
         },
     ),
