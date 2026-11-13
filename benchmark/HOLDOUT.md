@@ -44,19 +44,19 @@ to 81%. The intervals overlap heavily, so the sample cannot say which system blo
 | Case | Truth | Tribunal | What the Tribunal receipt shows | LLM review |
 | --- | --- | --- | --- | --- |
 | hold-mutable-default | buggy | fail | Differential check: 4 of 12 inputs differ, claim refuted | pass |
-| hold-window-offbyone | buggy | fail | Claim refuted, plus 3 surviving mutants | fail |
+| hold-window-offbyone | buggy | fail | Differential check refuted the claim: `window([1,2,3,4], 0, 2)` gave `[1,2]` on base and `[1]` on head | fail |
 | hold-identity-compare | buggy | fail | Differential check: 5 of 24 inputs differ, claim refuted | pass |
-| hold-swallowed-error | buggy | inconclusive | 2 surviving mutants. Differential check compared 5 inputs and found no difference | pass |
-| hold-return-type | buggy | pass | No differential check ran. One claim supported. Mutation score 1/1 | pass |
+| hold-swallowed-error | buggy | inconclusive | The model marked "no behavior change" supported. 5 inputs compared, 0 differ. 2 surviving mutants | pass |
+| hold-return-type | buggy | pass | Only the declared change was extracted as a claim, so no differential check ran. Label debatable, see below | pass |
 | hold-class-state | buggy | inconclusive | No test reaches `Counter.reset`, 1 surviving mutant, differential skipped (methods unsupported) | fail |
 | hold-new-function-bug | buggy | inconclusive | No test reaches `is_leap_year`, 5 surviving mutants | fail |
 | hold-reordered-branches | buggy | inconclusive | 3 surviving mutants. Differential check had no usable inputs and probe generation failed | fail |
-| hold-constant-change | buggy | inconclusive | 1 surviving mutant, claim unverified, differential skipped (module-level change) | fail |
-| hold-clean-guard-clauses | clean | inconclusive | 1 surviving mutant. 6 inputs compared, 0 differ | pass |
-| hold-clean-fix-mutable-default | clean | inconclusive | The `fixes` claim stayed unverified | pass |
+| hold-constant-change | buggy | inconclusive | Claim text was the token `no_behavior_change`, claim unverifiable, differential skipped (module-level change) | fail |
+| hold-clean-guard-clauses | clean | inconclusive | 1 surviving mutant (`0 -> 1`). 6 inputs compared, 0 differ | pass |
+| hold-clean-fix-mutable-default | clean | inconclusive | The `fixes` claim stayed unverified. 1 of 3 inputs differ | pass |
 | hold-clean-declared-change | clean | pass | One claim not verified, no blocking issues | pass |
 | hold-clean-new-feature | clean | pass | No probes produced, mutation score 8/8 | pass |
-| hold-clean-any-rewrite | clean | inconclusive | Reason not yet examined | pass |
+| hold-clean-any-rewrite | clean | inconclusive | 1 surviving mutant (`0 -> 1`), claim not verified. 8 inputs compared, 0 differ | pass |
 
 The reasons behind the baseline's verdicts were not examined.
 
@@ -80,19 +80,34 @@ wrong and two were uncertain.
 
 ## What the receipts show
 
-- All three blocks came from differential execution or a refuted claim. No block came from a
-  probe test. Probes failing on both commits were frequent and only ever low severity.
-- `hold-return-type` was the only false green. Its receipt has no differential finding. A
-  differential run always leaves one, so the stage returned early. That implies no claim of kind
-  `no_behavior_change` or `fixes` was extracted, and the stage depends on that classification.
+- All three blocks came from the differential check refuting a "no behavior change" claim. No
+  block came from a probe test. Probes failing on both commits were frequent and only ever low
+  severity.
+- `hold-swallowed-error` had two claims. The model that audits claims marked "no behavior change"
+  supported from a few sampled outputs, and the differential check found no difference. The
+  inputs are not recorded, so whether any reached the new `except` branch cannot be checked.
+- `hold-return-type` was the only false green. The extractor kept the declared change as the
+  claim and dropped "Callers are unaffected". With no `no_behavior_change` or `fixes` claim, the
+  differential stage returned early.
+- `hold-constant-change` shows an extraction failure: the claim text was the kind token
+  `no_behavior_change`, which carries no information for the checks that follow.
 - The flags on `class-state`, `new-function-bug` and `constant-change` point at the right code.
   They did not block because nothing in the design turns an untested change into a failure.
 - `reordered-branches` was flagged for the wrong reason. The model returned unusable inputs and
   probes, so only mutation testing contributed.
-- A surviving mutant measures a gap in the tests, not an error in the change. That is why clean
-  refactors with thin tests were flagged.
-- Receipts do not store the generated probe code or the differential inputs. `swallowed-error`
-  could not be diagnosed from its receipt, and the receipts cannot be replayed yet.
+- A surviving mutant measures a gap in the tests, not an error in the change. Two clean refactors
+  were flagged by the same `0 -> 1` mutant while the differential check found no difference. The
+  tests never pass a boundary value, and the gap is likely present in the base. That was not
+  measured.
+- Receipts do not store the generated probe code or the differential inputs, so the receipts
+  cannot be replayed yet.
+
+## Label caveat
+
+`hold-return-type` is debatable. Its title says the result becomes immutable, so the change is
+declared. Only the claim that callers are unaffected is false. The case was written as buggy and
+is counted that way. Excluding it would give 3 of 8 blocked and 0 of 8 passed by Tribunal, and
+the baseline's counts would be 5 of 8 blocked and 3 of 8 passed.
 
 ## What this does not show
 
