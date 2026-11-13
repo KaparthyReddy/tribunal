@@ -7,6 +7,7 @@ from tribunal.agents.base import (
     passed,
 )
 from tribunal.agents.blast_radius import BlastRadius
+from tribunal.agents.characterize import Characterizer, merge_characterization
 from tribunal.agents.claims import extract_claims
 from tribunal.agents.judge import Judge, JudgePolicy
 from tribunal.agents.mutants import Mutant, generate_mutants
@@ -17,6 +18,7 @@ __all__ = [
     "AuditContext",
     "Auditor",
     "BlastRadius",
+    "Characterizer",
     "CommandRunner",
     "Evidence",
     "Judge",
@@ -26,5 +28,6 @@ __all__ = [
     "extract_claims",
     "generate_mutants",
     "is_infra_failure",
+    "merge_characterization",
     "passed",
 ]
