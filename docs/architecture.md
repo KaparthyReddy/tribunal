@@ -15,10 +15,22 @@ Every submission runs the same stages in order.
 | 2 | Claims | Extracts verifiable claims from the PR title and description. |
 | 3 | Blast radius | Builds a tree-sitter call graph of the head commit, finds changed functions, and checks that a test reaches each one. |
 | 4 | Auditor | Runs the test command on base and head, then plans and runs checks for each claim and judges the evidence. |
-| 5 | Skeptic | Writes adversarial probe tests and runs them on both commits, then runs mutation testing on the changed lines. |
-| 6 | Judge | Applies a deterministic policy to all findings and signs a receipt. |
+| 5 | Characterizer | Runs the changed functions on both commits with model-chosen inputs and compares the outputs. |
+| 6 | Skeptic | Writes adversarial probe tests and runs them on both commits, then runs mutation testing on the changed lines. |
+| 7 | Judge | Applies a deterministic policy to all findings and signs a receipt. |
 
 Only the Judge decides the verdict, and it uses no LLM. Agents produce findings and evidence.
+
+## Differential execution
+
+The Characterizer asks the model for call inputs, then runs the same calls on the base and head
+commits inside the sandbox. The comparison uses fixed rules:
+
+- A `no_behavior_change` claim is refuted if any input returns a different result.
+- A `fixes` claim is refuted if the input it describes raises the same error on both commits.
+- Inputs whose result differs between two identical head runs are dropped as nondeterministic.
+
+The model chooses inputs but never interprets the results.
 
 ## Verdict policy
 
@@ -53,7 +65,8 @@ receipt.
 
 - The sandbox has no network. The sandbox image must already contain the project's test
   dependencies. A networked setup phase is planned.
-- Call graph and mutation testing support Python only. Other languages produce an `info` finding.
-- Claim extraction and check planning use an LLM. A claim that cannot be checked with executable
-  evidence stays unverified instead of being assumed true.
+- Call graph, differential execution and mutation testing support Python only. Differential
+  execution covers top-level functions that exist in both versions.
+- Claim extraction, check planning and input generation use an LLM. A claim that cannot be
+  checked with executable evidence stays unverified instead of being assumed true.
 - Receipts prove what was run and what it printed. They do not prove the absence of bugs.
