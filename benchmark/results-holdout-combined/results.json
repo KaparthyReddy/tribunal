@@ -1,0 +1,533 @@
+{
+  "meta": {
+    "set": "holdout",
+    "started_at": "2026-11-13T05:08:43+00:00",
+    "provider": "ollama",
+    "model": "qwen2.5:7b-instruct",
+    "sandbox_image": "python:3.12-slim",
+    "tribunal_version": "0.1.0",
+    "cases_total": 14,
+    "merged_from": [
+      "results-holdout",
+      "results-holdout-tail"
+    ]
+  },
+  "cases": [
+    {
+      "id": "hold-mutable-default",
+      "category": "state",
+      "expect": "buggy",
+      "title": "Simplify add_tag",
+      "note": "Default None replaced by a shared list. State leaks between calls.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_d3fce571f7b8",
+        "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: No behavior change"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Fuzzing with random tags"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 12 input(s) compared, 4 differ"
+          }
+        ],
+        "seconds": 59.56
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change simplifies the function signature without altering behavior.",
+        "seconds": 3.53
+      }
+    },
+    {
+      "id": "hold-window-offbyone",
+      "category": "semantics",
+      "expect": "buggy",
+      "title": "Use a clearer slice in window",
+      "note": "Slice end shortened by one. The tests only use inputs where it makes no difference.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_04269c597fa0",
+        "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change 3 additional item(s) need review.",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: No behavior change"
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at windows.py:2 (Sub -> Add)"
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at windows.py:2 (Add -> Sub)"
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at windows.py:2 (1 -> 2)"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: empty input"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: single item"
+          }
+        ],
+        "seconds": 85.82
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "The change introduces a bug by reducing the slice size.",
+        "seconds": 2.24
+      }
+    },
+    {
+      "id": "hold-identity-compare",
+      "category": "semantics",
+      "expect": "buggy",
+      "title": "Use identity comparison in same_label",
+      "note": "== replaced by is. Equal strings that are distinct objects compare unequal.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_d8f8cdd118ab",
+        "rationale": "1 blocking issue(s):\n- Claim refuted: no behavior change",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: no behavior change"
+          },
+          {
+            "severity": "low",
+            "title": "Claim not verified: use identity comparison in same_label for speed"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Test identity comparison with identical objects"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 24 input(s) compared, 5 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 2/2 mutants killed"
+          }
+        ],
+        "seconds": 117.03
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "No behavior change and performance improvement as claimed.",
+        "seconds": 2.32
+      }
+    },
+    {
+      "id": "hold-swallowed-error",
+      "category": "errors",
+      "expect": "buggy",
+      "title": "Make parse_int tolerate whitespace",
+      "note": "Wraps the call in a blanket except and returns 0, hiding invalid input.",
+      "tribunal": {
+        "outcome": "inconclusive",
+        "receipt_id": "rcp_8f9b39e9297a",
+        "rationale": "2 item(s) need human review:\n- Surviving mutant at ints.py:5 (return value -> None)\n- Surviving mutant at ints.py:5 (0 -> 1)",
+        "findings": [
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at ints.py:5 (return value -> None)"
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at ints.py:5 (0 -> 1)"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 5 input(s) compared, 0 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 1/3 mutants killed"
+          }
+        ],
+        "seconds": 91.13
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change correctly adds whitespace tolerance without altering other behaviors.",
+        "seconds": 2.48
+      }
+    },
+    {
+      "id": "hold-return-type",
+      "category": "types",
+      "expect": "buggy",
+      "title": "Return an immutable result from unique_sorted",
+      "note": "Return type changed from list to tuple. The test converts to list so it still passes.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_1c07b0870c1f",
+        "rationale": "No blocking issues at 7f92acb09f24. 10 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "info",
+            "title": "Mutation score: 1/1 mutants killed"
+          }
+        ],
+        "seconds": 45.52
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change returns an immutable result as intended without affecting callers.",
+        "seconds": 2.65
+      }
+    },
+    {
+      "id": "hold-class-state",
+      "category": "state",
+      "expect": "buggy",
+      "title": "Tidy up Counter",
+      "note": "reset now sets the count to 1. The bug is in a method and the tests never call reset.",
+      "tribunal": {
+        "outcome": "inconclusive",
+        "receipt_id": "rcp_36a4b14b3c2b",
+        "rationale": "2 item(s) need human review:\n- No test reaches changed code: Counter.reset (counter.py)\n- Surviving mutant at counter.py:10 (1 -> 2)",
+        "findings": [
+          {
+            "severity": "medium",
+            "title": "No test reaches changed code: Counter.reset (counter.py)"
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at counter.py:10 (1 -> 2)"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check skipped: no changed top-level Python function found"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 0/1 mutants killed"
+          }
+        ],
+        "seconds": 43.55
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "Changing the value of `self.n` to 1 in `reset()` introduces a behavior change.",
+        "seconds": 3.21
+      }
+    },
+    {
+      "id": "hold-new-function-bug",
+      "category": "new-code",
+      "expect": "buggy",
+      "title": "Add is_leap_year",
+      "note": "The 400-year rule is missing, so 2000 is reported as a common year. No tests were added.",
+      "tribunal": {
+        "outcome": "inconclusive",
+        "receipt_id": "rcp_9516523a3e1a",
+        "rationale": "6 item(s) need human review:\n- No test reaches changed code: is_leap_year (calendar_utils.py)\n- Surviving mutant at calendar_utils.py:6 (return value -> None)\n- Surviving mutant at calendar_utils.py:6 (And -> Or)\n- Surviving mutant at calendar_utils.py:6 (Eq -> NotEq)\n- Surviving mutant at calendar_utils.py:6 (NotEq -> Eq)\n- Surviving mutant at calendar_utils.py:6 (0 -> 1)",
+        "findings": [
+          {
+            "severity": "medium",
+            "title": "No test reaches changed code: is_leap_year (calendar_utils.py)"
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at calendar_utils.py:6 (return value -> None)"
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at calendar_utils.py:6 (And -> Or)"
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at calendar_utils.py:6 (Eq -> NotEq)"
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at calendar_utils.py:6 (NotEq -> Eq)"
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at calendar_utils.py:6 (0 -> 1)"
+          }
+        ],
+        "seconds": 53.17
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "Missing condition for years divisible by 400",
+        "seconds": 2.18
+      }
+    },
+    {
+      "id": "hold-reordered-branches",
+      "category": "hidden-in-refactor",
+      "expect": "buggy",
+      "title": "Reorder branches in fizzbuzz",
+      "note": "The multiple-of-15 branch now comes last and is unreachable. Tests skip 15.",
+      "tribunal": {
+        "outcome": "inconclusive",
+        "receipt_id": "rcp_465e9c16a41a",
+        "rationale": "3 item(s) need human review:\n- Surviving mutant at fizz.py:7 (return value -> None)\n- Surviving mutant at fizz.py:6 (0 -> 1)\n- Surviving mutant at fizz.py:6 (15 -> 16)",
+        "findings": [
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at fizz.py:7 (return value -> None)"
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at fizz.py:6 (0 -> 1)"
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at fizz.py:6 (15 -> 16)"
+          },
+          {
+            "severity": "low",
+            "title": "Differential check skipped: no usable inputs"
+          },
+          {
+            "severity": "low",
+            "title": "Probe generation failed"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 1/4 mutants killed"
+          }
+        ],
+        "seconds": 90.84
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "The behavior has changed due to the reordering of conditions.",
+        "seconds": 3.4
+      }
+    },
+    {
+      "id": "hold-constant-change",
+      "category": "constant",
+      "expect": "buggy",
+      "title": "Tidy the retry module",
+      "note": "MAX_RETRIES lowered from 3 to 2 at module level. The tests only use extreme attempts.",
+      "tribunal": {
+        "outcome": "inconclusive",
+        "receipt_id": "rcp_a459937dbbb3",
+        "rationale": "2 item(s) need human review:\n- Surviving mutant at retry.py:1 (2 -> 3)\n- Critical claim not verified: no_behavior_change",
+        "findings": [
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at retry.py:1 (2 -> 3)"
+          },
+          {
+            "severity": "low",
+            "title": "Claim not verified: no_behavior_change"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Test empty input"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Test negative values"
+          },
+          {
+            "severity": "info",
+            "title": "Module-level changes are not coverage-checked"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check skipped: no changed top-level Python function found"
+          }
+        ],
+        "seconds": 50.2
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "Changes max retries without stating behavior unchanged",
+        "seconds": 2.3
+      }
+    },
+    {
+      "id": "hold-clean-guard-clauses",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Use guard clauses in shipping_cost",
+      "note": "Correct refactor.",
+      "tribunal": {
+        "outcome": "inconclusive",
+        "receipt_id": "rcp_56fd344c51c1",
+        "rationale": "1 item(s) need human review:\n- Surviving mutant at shipping.py:2 (0 -> 1)",
+        "findings": [
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at shipping.py:2 (0 -> 1)"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Test zero weight"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Test negative weight"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 6 input(s) compared, 0 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 7/8 mutants killed"
+          }
+        ],
+        "seconds": 66.77
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The changes introduce guard clauses and do not alter the shipping cost logic.",
+        "seconds": 2.95
+      }
+    },
+    {
+      "id": "hold-clean-fix-mutable-default",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Fix collect leaking items between calls",
+      "note": "Correct fix with a new test.",
+      "tribunal": {
+        "outcome": "inconclusive",
+        "receipt_id": "rcp_8b639ad3847e",
+        "rationale": "1 item(s) need human review:\n- Critical claim not verified: fixes the leak when collect is called multiple times",
+        "findings": [
+          {
+            "severity": "low",
+            "title": "Claim not verified: fixes the leak when collect is called multiple times"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: multiple items"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: default bucket"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 3 input(s) compared, 1 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 1/1 mutants killed"
+          }
+        ],
+        "seconds": 57.05
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change initializes `bucket` to a new list when None, fixing the issue.",
+        "seconds": 3.99
+      }
+    },
+    {
+      "id": "hold-clean-declared-change",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Change the default separator of join_items",
+      "note": "An intentional, declared behavior change with updated tests.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_abd6a3076c12",
+        "rationale": "No blocking issues at 8e6b68e13dcd. 7 sandboxed command(s) run, 0 of 1 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "low",
+            "title": "Claim not verified: changes the default separator of join_items from a comma to a semicolon"
+          }
+        ],
+        "seconds": 40.04
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change matches the description and tests.",
+        "seconds": 4.35
+      }
+    },
+    {
+      "id": "hold-clean-new-feature",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Add median",
+      "note": "Correct new function with tests.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_c66073110e71",
+        "rationale": "No blocking issues at 178074b432ea. 12 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "low",
+            "title": "Skeptic produced no valid probes"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 8/8 mutants killed"
+          }
+        ],
+        "seconds": 52.66
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The median function is correctly implemented and tested.",
+        "seconds": 4.67
+      }
+    },
+    {
+      "id": "hold-clean-any-rewrite",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Use any() in has_negative",
+      "note": "Correct refactor.",
+      "tribunal": {
+        "outcome": "inconclusive",
+        "receipt_id": "rcp_2c5b73f4e8eb",
+        "rationale": "1 item(s) need human review:\n- Surviving mutant at neg.py:2 (0 -> 1)",
+        "findings": [
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at neg.py:2 (0 -> 1)"
+          },
+          {
+            "severity": "low",
+            "title": "Claim not verified: uses any() in has_negative"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: mixed list"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 8 input(s) compared, 0 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 2/3 mutants killed"
+          }
+        ],
+        "seconds": 133.06
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change uses any() correctly and there is no behavior change.",
+        "seconds": 4.92
+      }
+    }
+  ]
+}
