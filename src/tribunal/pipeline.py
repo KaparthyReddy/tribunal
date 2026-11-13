@@ -7,11 +7,13 @@ from tribunal.agents import (
     AuditContext,
     Auditor,
     BlastRadius,
+    Characterizer,
     CommandRunner,
     Evidence,
     Judge,
     Skeptic,
     extract_claims,
+    merge_characterization,
 )
 from tribunal.config import Settings, get_settings
 from tribunal.graph import changed_ranges
@@ -44,6 +46,7 @@ class Pipeline:
         allowed_roots: Sequence[Path] = (),
         prepare: Callable[[], None] | None = None,
         use_ledger: bool = True,
+        differential: bool = True,
         blast: BlastRadius | None = None,
     ) -> None:
         self.store = store
@@ -53,6 +56,7 @@ class Pipeline:
         self.allowed_roots = tuple(Path(root).expanduser().resolve() for root in allowed_roots)
         self.prepare = prepare
         self.use_ledger = use_ledger
+        self.differential = differential
         self.blast = blast or BlastRadius()
 
     def submit(
@@ -163,6 +167,9 @@ class Pipeline:
 
             findings.extend(self.blast.analyze(head_dir, ranges).findings)
             audit = Auditor(self.llm, self.runner).audit(ctx, claims)
+            if self.differential:
+                characterization = Characterizer(self.llm, self.runner).run(ctx, claims, ranges)
+                merge_characterization(audit, characterization, claims)
             findings.extend(audit.findings)
             findings.extend(Skeptic(self.llm, self.runner).attack(ctx, ranges).findings)
 
