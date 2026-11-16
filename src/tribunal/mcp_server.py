@@ -8,6 +8,8 @@ from mcp.server.fastmcp import FastMCP
 from tribunal.config import Settings, get_settings
 from tribunal.pipeline import Pipeline, SubmissionError, build_pipeline
 from tribunal.receipts import verify_receipt
+from tribunal.replay import ReplayError, replay_receipt, runner_factory_from
+from tribunal.sandbox import PolicyError, SandboxUnavailableError
 from tribunal.summary import summarize
 
 log = logging.getLogger(__name__)
@@ -89,6 +91,29 @@ class TribunalTools:
             "trusted": receipt.public_key == pipeline.signer.public_key_b64,
         }
 
+    def replay(self, receipt_id: str, repo_path: str | None = None) -> dict[str, Any]:
+        pipeline = self.pipeline
+        receipt = pipeline.store.get_receipt(receipt_id)
+        if receipt is None:
+            return {"error": f"unknown receipt {receipt_id}"}
+
+        location = repo_path
+        if location is None:
+            submission = pipeline.store.get_submission(receipt.body.submission_id)
+            if submission is None:
+                return {"error": "the repository for this receipt is unknown; pass repo_path"}
+            location = submission.repo_path
+
+        try:
+            path = pipeline.resolve_repo(location)
+            report = replay_receipt(receipt, path, runner_factory_from(pipeline.runner))
+        except (SubmissionError, ReplayError, SandboxUnavailableError, PolicyError) as exc:
+            return {"error": str(exc)}
+        except Exception as exc:
+            log.exception("replay failed for %s", receipt_id)
+            return {"error": f"replay failed: {exc}"}
+        return report.as_dict()
+
 
 def create_server(pipeline: Pipeline | None = None, settings: Settings | None = None) -> FastMCP:
     resolved = settings or get_settings()
@@ -124,5 +149,15 @@ def create_server(pipeline: Pipeline | None = None, settings: Settings | None = 
     def verify(receipt_id: str) -> dict[str, Any]:
         """Check a receipt's digest and Ed25519 signature, and whether this server signed it."""
         return tools.verify(receipt_id)
+
+    @server.tool()
+    def replay(receipt_id: str, repo_path: str | None = None) -> dict[str, Any]:
+        """Re-run every sandboxed command in a receipt at its exact commit and compare outcomes.
+
+        Returns overall reproduced, diverged or incomplete, with counts and any commands whose
+        outcome changed or could not be replayed. Receipts from before version 2 carry no replay
+        data and come back incomplete.
+        """
+        return tools.replay(receipt_id, repo_path)
 
     return server
