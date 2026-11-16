@@ -1,8 +1,8 @@
 # MCP clients
 
-Tribunal exposes three tools over stdio: `submit`, `verdict` and `verify`.
+Tribunal exposes four tools over stdio: `submit`, `verdict`, `verify` and `replay`.
 
-Install the repository once and keep a `.env` with `ANTHROPIC_API_KEY` in it:
+Install the repository once and keep a `.env` with your model settings in it:
 
 ```
 git clone https://github.com/KaparthyReddy/tribunal.git
@@ -53,6 +53,8 @@ Ask the agent to verify its own work before it reports done:
 
 `submit` blocks until the verdict is ready and returns the verdict, findings, claim statuses
 and a receipt id. `verify` checks that a receipt was not altered and was signed by this server.
+`replay` re-runs every sandboxed command in a receipt at its exact commit and reports whether
+the outcomes reproduce.
 
 To restrict which repositories the server may read, set `TRIBUNAL_ALLOWED_REPO_ROOTS` in `.env`
 to a JSON list, for example `["/Users/you/code"]`.
