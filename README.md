@@ -3,8 +3,8 @@
 Adversarial verification for AI-written code.
 
 Coding agents produce diffs. Tribunal decides whether anyone should trust them.
-Agents attack a change at its exact commit, in a sandbox, and issue a signed verdict with an
-evidence receipt.
+Agents attack a change at its exact commit, in a sandbox, and issue a signed verdict with a
+receipt that can be replayed.
 
 | Agent | Job |
 |-------|-----|
@@ -18,9 +18,9 @@ A human reads the verdict and the receipt, not the raw diff.
 
 ## Interfaces
 
-- CLI: `tribunal submit`, `verdict`, `verify-receipt`, `trust`, `public-key`
+- CLI: `tribunal submit`, `verdict`, `verify-receipt`, `replay`, `trust`, `public-key`
 - HTTP API: `tribunal serve`, interactive docs at `/docs`
-- MCP server: `tribunal mcp` with `submit`, `verdict`, `verify`
+- MCP server: `tribunal mcp` with `submit`, `verdict`, `verify`, `replay`
 - GitHub Action: verifies pull requests and comments the verdict
 
 ## Guarantees
@@ -29,9 +29,12 @@ A human reads the verdict and the receipt, not the raw diff.
 - Every receipt is canonical JSON, SHA-256 digested and Ed25519 signed
 - A verdict is bound to a head SHA; a new commit invalidates old evidence
 - Only the Judge decides the verdict, and it uses no LLM
+- Receipts carry the generated probe code, differential inputs and mutated sources, so
+  `tribunal replay` can re-run every command at the exact commit and compare the outcomes
 
-Receipts record every command and its output. They do not yet include the generated probe code
-and differential inputs, so they cannot be replayed. This is the next fix.
+Replay shows that the evidence is real and reproducible. It does not show that the generated
+tests were good ones. Receipts made before version 2, including all benchmark receipts so far,
+carry no replay data. See [Receipt format](docs/receipt-format.md) for the limits.
 
 ## Benchmark
 
@@ -82,6 +85,9 @@ How to read it:
 - Small samples, one run, a 7B model, and cases written by the tool's author. Predictions, the
   full case table and the label caveat are in [benchmark/HOLDOUT.md](benchmark/HOLDOUT.md).
 
+A second held-out set tests a redesign of the detection logic. Its cases and predictions are
+committed before the redesign. See [benchmark/HOLDOUT2.md](benchmark/HOLDOUT2.md).
+
 Raw results are in `benchmark/results-v1/`, `benchmark/results/`, `benchmark/results-holdout/`,
 `benchmark/results-holdout-tail/` and `benchmark/results-holdout-combined/`. Reproduce with
 [benchmark/README.md](benchmark/README.md).
@@ -109,10 +115,12 @@ Set `TRIBUNAL_OLLAMA_MODEL=qwen2.5:7b-instruct` in `.env`, then verify a change:
 ```bash
 uv run tribunal submit --repo-path /path/to/repo --base HEAD~1 --head HEAD \
   --title "Fix parser" --description "Fixes the crash on empty input." \
-  --test-cmd "python -m unittest" --agent codex
+  --test-cmd "python -m unittest" --agent codex --json > receipt.json
+uv run tribunal replay receipt.json --repo-path /path/to/repo
 ```
 
-Exit codes: `0` pass, `1` fail, `2` inconclusive, `3` error.
+Exit codes for `submit`: `0` pass, `1` fail, `2` inconclusive, `3` error.
+Exit codes for `replay`: `0` reproduced, `1` diverged, `2` incomplete, `3` error.
 
 ## Docs
 
@@ -122,6 +130,7 @@ Exit codes: `0` pass, `1` fail, `2` inconclusive, `3` error.
 - [MCP clients](docs/mcp-clients.md)
 - [Benchmark](benchmark/README.md)
 - [Held-out evaluation](benchmark/HOLDOUT.md)
+- [Second held-out evaluation](benchmark/HOLDOUT2.md)
 
 ## Status
 
