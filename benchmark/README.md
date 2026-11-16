@@ -8,10 +8,12 @@ repository with a base commit and a head commit, built on the fly.
 | Set | Cases | Purpose |
 | --- | --- | --- |
 | dev | 20 | Used while designing Tribunal. Results are in-sample. |
-| holdout | 14 | Written after the design was fixed. Run once. See [HOLDOUT.md](HOLDOUT.md). |
+| holdout | 14 | Written after the first design. Run once. See [HOLDOUT.md](HOLDOUT.md). |
+| holdout2 | 17 | Tests the redesign. Run once per version. See [HOLDOUT2.md](HOLDOUT2.md). |
 
 Dev categories: regression (5), untested (6), false-claim (2), clean (7).
 Holdout categories: state, semantics, errors, types, new-code, hidden-in-refactor, constant, clean.
+Holdout2 categories: semantics, state, boundary, new-code, regression, clean.
 
 ## Systems
 
@@ -40,12 +42,17 @@ uv run python -m benchmark.run --list
 uv run python -m benchmark.run --only regress-last-n,clean-rename
 uv run python -m benchmark.run
 uv run python -m benchmark.run --set holdout
+uv run python -m benchmark.run --set holdout2
 uv run python -m benchmark.report
 ```
 
 Results go to `benchmark/results/` for dev and `benchmark/results-<set>/` for the others.
 `results.json` is rewritten after every case, so a partial run is usable. Signed receipts are
-saved under `receipts/`. `report.html` is a self-contained page.
+saved under `receipts/`. `report.html` is a self-contained page. Each run records the git
+commit of the code it ran in `meta`.
+
+Held-out sets refuse to overwrite existing results. Use `--out DIR` to store a second version's
+results, or `--force` to overwrite.
 
 Useful flags: `--set`, `--skip-baseline`, `--skip-tribunal`, `--out DIR`, `--force`.
 
