@@ -1,5 +1,6 @@
 import argparse
 import json
+import subprocess
 import sys
 import tempfile
 import time
@@ -26,10 +27,13 @@ from tribunal.sandbox import (
 SystemFn = Callable[[Case, Path, str, str], dict[str, Any]]
 Progress = Callable[[int, int, list[dict[str, Any]]], None]
 
+SET_CHOICES = [*CASE_SETS, "all"]
+GUARDED = frozenset({"holdout", "holdout2", "all"})
+
 
 def select_cases(only: str | None, case_set: str = "dev") -> list[Case]:
     if case_set == "all":
-        pool = [*CASE_SETS["dev"], *CASE_SETS["holdout"]]
+        pool = [case for cases in CASE_SETS.values() for case in cases]
     elif case_set in CASE_SETS:
         pool = list(CASE_SETS[case_set])
     else:
@@ -51,14 +55,27 @@ def default_out(case_set: str) -> Path:
 
 
 def holdout_guard(case_set: str, out: Path, force: bool) -> str | None:
-    if case_set not in {"holdout", "all"} or force:
+    if case_set not in GUARDED or force:
         return None
     if (out / "results.json").exists():
         return (
-            f"{out / 'results.json'} already exists. The holdout set is run once; "
-            "pass --force to overwrite it."
+            f"{out / 'results.json'} already exists. Held-out sets are run once per version; "
+            "pass --force to overwrite it or use --out for a different version."
         )
     return None
+
+
+def code_version() -> dict[str, Any]:
+    def git(*args: str) -> str | None:
+        try:
+            result = subprocess.run(["git", *args], capture_output=True, text=True, timeout=10)
+        except (OSError, subprocess.TimeoutExpired):
+            return None
+        return result.stdout.strip() if result.returncode == 0 else None
+
+    commit = git("rev-parse", "--short", "HEAD")
+    status = git("status", "--porcelain", "--untracked-files=no")
+    return {"git_commit": commit or "unknown", "git_dirty": bool(status)}
 
 
 def _timed(fn: SystemFn, case: Case, repo: Path, base: str, head: str) -> dict[str, Any]:
@@ -162,7 +179,7 @@ def main(argv: list[str] | None = None) -> int:
         prog="python -m benchmark.run",
         description="Score Tribunal against a plain LLM review on seeded-bug changes.",
     )
-    parser.add_argument("--set", dest="case_set", choices=["dev", "holdout", "all"], default="dev")
+    parser.add_argument("--set", dest="case_set", choices=SET_CHOICES, default="dev")
     parser.add_argument("--only", help="comma separated case ids")
     parser.add_argument("--out", type=Path, default=None)
     parser.add_argument("--skip-baseline", action="store_true")
@@ -218,6 +235,7 @@ def main(argv: list[str] | None = None) -> int:
             ),
             "sandbox_image": settings.sandbox_image,
             "tribunal_version": __version__,
+            **code_version(),
         }
 
         def progress(index: int, total: int, rows: list[dict[str, Any]]) -> None:
