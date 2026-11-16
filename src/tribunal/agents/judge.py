@@ -103,6 +103,7 @@ class Judge:
         claim_results: list[ClaimResult],
         findings: list[Finding],
         commands: list[CommandRecord],
+        blobs: dict[str, str] | None = None,
     ) -> SignedReceipt:
         verdict, rationale = self.decide(submission, claims, claim_results, findings, commands)
         ordered = sorted(findings, key=lambda f: SEVERITY_RANK[f.severity], reverse=True)
@@ -117,5 +118,6 @@ class Judge:
             claim_results=claim_results,
             findings=ordered,
             commands=commands,
+            blobs=dict(blobs or {}),
         )
         return self.signer.sign(body)
