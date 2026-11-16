@@ -59,6 +59,14 @@ class Pipeline:
         self.differential = differential
         self.blast = blast or BlastRadius()
 
+    def resolve_repo(self, repo_path: str | Path) -> Path:
+        path = Path(repo_path).expanduser().resolve()
+        if not path.is_dir():
+            raise SubmissionError(f"{path} is not a directory")
+        if self.allowed_roots and not any(path.is_relative_to(root) for root in self.allowed_roots):
+            raise SubmissionError(f"{path} is outside the allowed repository roots")
+        return path
+
     def submit(
         self,
         *,
@@ -71,11 +79,7 @@ class Pipeline:
         agent: str = "unknown",
         test_command: Sequence[str] | None = None,
     ) -> Submission:
-        path = Path(repo_path).expanduser().resolve()
-        if not path.is_dir():
-            raise SubmissionError(f"{path} is not a directory")
-        if self.allowed_roots and not any(path.is_relative_to(root) for root in self.allowed_roots):
-            raise SubmissionError(f"{path} is outside the allowed repository roots")
+        path = self.resolve_repo(repo_path)
         try:
             base_sha = resolve_sha(path, base)
             head_sha = resolve_sha(path, head)
@@ -143,7 +147,7 @@ class Pipeline:
             workspace(repo, submission.base_sha) as base_dir,
             workspace(repo, submission.head_sha) as head_dir,
         ):
-            evidence = Evidence()
+            evidence = Evidence(sides={base_dir: "base", head_dir: "head"})
             ctx = AuditContext(
                 submission=submission,
                 base_dir=base_dir,
@@ -174,7 +178,12 @@ class Pipeline:
             findings.extend(Skeptic(self.llm, self.runner).attack(ctx, ranges).findings)
 
         return Judge(self.signer, policy).issue(
-            submission, claims, audit.claim_results, findings, evidence.commands
+            submission,
+            claims,
+            audit.claim_results,
+            findings,
+            evidence.commands,
+            blobs=evidence.blobs,
         )
 
 
