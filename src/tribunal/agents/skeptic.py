@@ -160,8 +160,12 @@ class Skeptic:
 
     def _run_probe(self, ctx: AuditContext, number: int, probe: Probe, result: AgentResult) -> None:
         argv = ["python", "-m", "unittest", f"{PROBE_DIR}.probe_{number}"]
+        overlay = {
+            f"{PROBE_DIR}/__init__.py": "",
+            f"{PROBE_DIR}/probe_{number}.py": probe.code,
+        }
         head_idx, head = ctx.evidence.run(
-            self.runner, ctx.head_dir, argv, timeout_s=self.probe_timeout_s
+            self.runner, ctx.head_dir, argv, timeout_s=self.probe_timeout_s, overlay=overlay
         )
         if passed(head):
             return
@@ -178,7 +182,7 @@ class Skeptic:
             return
 
         base_idx, base = ctx.evidence.run(
-            self.runner, ctx.base_dir, argv, timeout_s=self.probe_timeout_s
+            self.runner, ctx.base_dir, argv, timeout_s=self.probe_timeout_s, overlay=overlay
         )
         indexes = [head_idx, base_idx]
         state = "hangs" if head.timed_out else "fails"
@@ -269,7 +273,11 @@ class Skeptic:
             try:
                 path.write_text(mutant.source, encoding="utf-8")
                 idx, record = ctx.evidence.run(
-                    self.runner, ctx.head_dir, argv, timeout_s=self.mutant_timeout_s
+                    self.runner,
+                    ctx.head_dir,
+                    argv,
+                    timeout_s=self.mutant_timeout_s,
+                    overlay={mutant.file: mutant.source},
                 )
             finally:
                 path.write_bytes(original)
