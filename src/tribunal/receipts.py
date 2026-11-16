@@ -13,9 +13,27 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import (
 
 from tribunal.models import ReceiptBody, SignedReceipt
 
+BODY_FIELDS_V2 = ("blobs",)
+COMMAND_FIELDS_V2 = ("side", "overlay", "timeout_s")
+
+
+def has_v2_data(body: ReceiptBody) -> bool:
+    if body.blobs:
+        return True
+    return any(
+        command.side is not None or command.overlay or command.timeout_s is not None
+        for command in body.commands
+    )
+
 
 def canonical_bytes(body: ReceiptBody) -> bytes:
     payload = body.model_dump(mode="json")
+    if body.version < 2:
+        for name in BODY_FIELDS_V2:
+            payload.pop(name, None)
+        for command in payload.get("commands", []):
+            for name in COMMAND_FIELDS_V2:
+                command.pop(name, None)
     return json.dumps(
         payload,
         sort_keys=True,
@@ -61,6 +79,8 @@ class ReceiptSigner:
         return base64.b64encode(raw).decode("ascii")
 
     def sign(self, body: ReceiptBody) -> SignedReceipt:
+        if body.version < 2 and has_v2_data(body):
+            raise ValueError("a version 1 receipt cannot carry replay data")
         data = canonical_bytes(body)
         signature = self._private_key.sign(data)
         return SignedReceipt(
@@ -73,6 +93,8 @@ class ReceiptSigner:
 
 def verify_receipt(receipt: SignedReceipt, trusted_public_key: str | None = None) -> bool:
     if trusted_public_key is not None and receipt.public_key != trusted_public_key:
+        return False
+    if receipt.body.version < 2 and has_v2_data(receipt.body):
         return False
     data = canonical_bytes(receipt.body)
     if hashlib.sha256(data).hexdigest() != receipt.digest:
