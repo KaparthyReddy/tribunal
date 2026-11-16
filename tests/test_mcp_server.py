@@ -1,4 +1,5 @@
 import asyncio
+from pathlib import Path
 
 import pytest
 
@@ -35,9 +36,24 @@ def test_errors_are_returned_not_raised(scenario, pipe) -> None:
     assert "error" in tools.submit(repo_path=str(repo), base="nope", head=shas[1])
     assert "error" in tools.verdict("sub_missing")
     assert "error" in tools.verify("rcp_missing")
+    assert "error" in tools.replay("rcp_missing")
+
+
+def test_replay_tool(scenario, pipe, tmp_path: Path) -> None:
+    repo, shas = scenario
+    tools = TribunalTools(lambda: pipe)
+    result = tools.submit(repo_path=str(repo), base=shas[0], head=shas[1])
+
+    replayed = tools.replay(result["receipt_id"])
+    assert replayed["overall"] == "reproduced"
+    assert replayed["commands"] == 1
+
+    pipe.allowed_roots = (tmp_path / "elsewhere",)
+    refused = tools.replay(result["receipt_id"], repo_path=str(repo))
+    assert "allowed repository roots" in refused["error"]
 
 
 def test_server_registers_tools(pipe) -> None:
     server = create_server(pipeline=pipe)
     listed = asyncio.run(server.list_tools())
-    assert {tool.name for tool in listed} == {"submit", "verdict", "verify"}
+    assert {tool.name for tool in listed} == {"submit", "verdict", "verify", "replay"}
