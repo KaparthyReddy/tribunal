@@ -1,3 +1,5 @@
+import hashlib
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Protocol
@@ -5,6 +7,7 @@ from typing import Protocol
 from tribunal.models import ClaimResult, CommandRecord, Finding
 
 INFRA_EXIT_CODES = frozenset({125, 126, 127})
+MAX_BLOB_BYTES = 512_000
 
 
 class CommandRunner(Protocol):
@@ -21,9 +24,38 @@ class CommandRunner(Protocol):
 @dataclass
 class Evidence:
     commands: list[CommandRecord] = field(default_factory=list)
+    blobs: dict[str, str] = field(default_factory=dict)
+    sides: dict[Path, str] = field(default_factory=dict)
+    blob_budget: int = MAX_BLOB_BYTES
+    stored_bytes: int = field(default=0, init=False)
 
-    def add(self, record: CommandRecord) -> int:
-        self.commands.append(record)
+    def _blob(self, content: str) -> str:
+        data = content.encode("utf-8")
+        digest = hashlib.sha256(data).hexdigest()
+        if digest not in self.blobs and self.stored_bytes + len(data) <= self.blob_budget:
+            self.blobs[digest] = content
+            self.stored_bytes += len(data)
+        return digest
+
+    def add(
+        self,
+        record: CommandRecord,
+        *,
+        workdir: Path | None = None,
+        overlay: Mapping[str, str] | None = None,
+        timeout_s: int | None = None,
+    ) -> int:
+        update: dict[str, object] = {}
+        side = self.sides.get(workdir) if workdir is not None else None
+        if side is not None:
+            update["side"] = side
+        if overlay:
+            update["overlay"] = {
+                path: self._blob(content) for path, content in sorted(overlay.items())
+            }
+        if record.timeout_s is None and timeout_s is not None:
+            update["timeout_s"] = timeout_s
+        self.commands.append(record.model_copy(update=update) if update else record)
         return len(self.commands) - 1
 
     def run(
@@ -34,9 +66,11 @@ class Evidence:
         *,
         env: dict[str, str] | None = None,
         timeout_s: int | None = None,
+        overlay: Mapping[str, str] | None = None,
     ) -> tuple[int, CommandRecord]:
         record = runner.run(workdir, argv, env=env, timeout_s=timeout_s)
-        return self.add(record), record
+        index = self.add(record, workdir=workdir, overlay=overlay, timeout_s=timeout_s)
+        return index, self.commands[index]
 
 
 @dataclass
