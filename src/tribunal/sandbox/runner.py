@@ -148,4 +148,5 @@ class SandboxRunner:
             stderr_truncated=stderr_truncated,
             duration_s=round(duration, 3),
             started_at=started_at,
+            timeout_s=timeout,
         )
