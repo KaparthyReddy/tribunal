@@ -19,7 +19,7 @@ MAX_DIFF_CHARS = 8000
 MAX_CALL_CHARS = 2000
 IMPORT_ERRORS = frozenset({"ModuleNotFoundError", "ImportError"})
 
-DRIVER = """\
+DRIVER = '''\
 import contextlib
 import copy
 import importlib
@@ -67,7 +67,7 @@ def main():
 
 
 main()
-"""
+'''
 
 SYSTEM = """You design test inputs for comparing two versions of the same Python functions.
 A coding agent changed the functions below. Your calls will run on the old and the new version,
@@ -290,16 +290,17 @@ class Characterizer:
             )
             return result
 
-        self._write(ctx, calls)
+        files = self._files(calls)
+        self._write(ctx, files)
         try:
             base_idx, base_rec = ctx.evidence.run(
-                self.runner, ctx.base_dir, ARGV, timeout_s=self.timeout_s
+                self.runner, ctx.base_dir, ARGV, timeout_s=self.timeout_s, overlay=files
             )
             head_idx, head_rec = ctx.evidence.run(
-                self.runner, ctx.head_dir, ARGV, timeout_s=self.timeout_s
+                self.runner, ctx.head_dir, ARGV, timeout_s=self.timeout_s, overlay=files
             )
             again_idx, again_rec = ctx.evidence.run(
-                self.runner, ctx.head_dir, ARGV, timeout_s=self.timeout_s
+                self.runner, ctx.head_dir, ARGV, timeout_s=self.timeout_s, overlay=files
             )
         finally:
             self._cleanup(ctx)
@@ -388,19 +389,24 @@ class Characterizer:
         data = complete_json(self.llm, system, _prompt(ctx, claims, targets))
         return parse_calls(data, targets, claims, self.max_calls)
 
-    def _write(self, ctx: AuditContext, calls: list[Call]) -> None:
+    def _files(self, calls: list[Call]) -> dict[str, str]:
         payload = json.dumps(
             [
                 {"module": c.module, "function": c.function, "args": c.args, "kwargs": c.kwargs}
                 for c in calls
             ]
         )
+        return {
+            f"{CHAR_DIR}/__init__.py": "",
+            f"{CHAR_DIR}/driver.py": DRIVER,
+            f"{CHAR_DIR}/calls.json": payload,
+        }
+
+    def _write(self, ctx: AuditContext, files: dict[str, str]) -> None:
         for root in (ctx.base_dir, ctx.head_dir):
-            directory = root / CHAR_DIR
-            directory.mkdir(exist_ok=True)
-            (directory / "__init__.py").write_text("", encoding="utf-8")
-            (directory / "driver.py").write_text(DRIVER, encoding="utf-8")
-            (directory / "calls.json").write_text(payload, encoding="utf-8")
+            (root / CHAR_DIR).mkdir(exist_ok=True)
+            for relative, content in files.items():
+                (root / relative).write_text(content, encoding="utf-8")
 
     def _cleanup(self, ctx: AuditContext) -> None:
         for root in (ctx.base_dir, ctx.head_dir):
