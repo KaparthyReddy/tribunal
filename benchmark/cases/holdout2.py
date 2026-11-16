@@ -10,13 +10,13 @@ CASES = [
         note="A missing key now returns None instead of raising KeyError. Tests only use present keys.",
         base={
             "config.py": code(
-                '''
+                """
                 def config_value(config, key):
                     return config[key]
-                '''
+                """
             ),
             "test_config.py": code(
-                '''
+                """
                 import unittest
 
                 from config import config_value
@@ -25,15 +25,15 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_config_value(self):
                         self.assertEqual(config_value({"a": 1}, "a"), 1)
-                '''
+                """
             ),
         },
         head={
             "config.py": code(
-                '''
+                """
                 def config_value(config, key):
                     return config.get(key)
-                '''
+                """
             ),
         },
     ),
@@ -46,14 +46,14 @@ CASES = [
         note="The default page size doubled. Tests always pass the size explicitly.",
         base={
             "paging.py": code(
-                '''
+                """
                 def paginate(items, page, size=10):
                     start = page * size
                     return items[start:start + size]
-                '''
+                """
             ),
             "test_paging.py": code(
-                '''
+                """
                 import unittest
 
                 from paging import paginate
@@ -63,16 +63,16 @@ CASES = [
                     def test_paginate(self):
                         self.assertEqual(paginate(list(range(30)), 1, 10), list(range(10, 20)))
                         self.assertEqual(paginate(list(range(30)), 0, 5), [0, 1, 2, 3, 4])
-                '''
+                """
             ),
         },
         head={
             "paging.py": code(
-                '''
+                """
                 def paginate(items, page, size=20):
                     start = page * size
                     return items[start:start + size]
-                '''
+                """
             ),
         },
     ),
@@ -85,13 +85,13 @@ CASES = [
         note="Ties are now ordered alphabetically instead of keeping input order. Tests have no ties.",
         base={
             "sorting.py": code(
-                '''
+                """
                 def sort_by_length(words):
                     return sorted(words, key=len)
-                '''
+                """
             ),
             "test_sorting.py": code(
-                '''
+                """
                 import unittest
 
                 from sorting import sort_by_length
@@ -100,15 +100,15 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_sort_by_length(self):
                         self.assertEqual(sort_by_length(["ccc", "a", "bb"]), ["a", "bb", "ccc"])
-                '''
+                """
             ),
         },
         head={
             "sorting.py": code(
-                '''
+                """
                 def sort_by_length(words):
                     return sorted(words, key=lambda w: (len(w), w))
-                '''
+                """
             ),
         },
     ),
@@ -121,13 +121,13 @@ CASES = [
         note="Floor division truncates fractional averages. Tests only use evenly divisible inputs.",
         base={
             "averages.py": code(
-                '''
+                """
                 def average(xs):
                     return sum(xs) / len(xs)
-                '''
+                """
             ),
             "test_averages.py": code(
-                '''
+                """
                 import unittest
 
                 from averages import average
@@ -137,15 +137,15 @@ CASES = [
                     def test_average(self):
                         self.assertEqual(average([2, 4, 6]), 4)
                         self.assertEqual(average([5]), 5)
-                '''
+                """
             ),
         },
         head={
             "averages.py": code(
-                '''
+                """
                 def average(xs):
                     return sum(xs) // len(xs)
-                '''
+                """
             ),
         },
     ),
@@ -158,7 +158,7 @@ CASES = [
         note="The insufficient funds check was removed from a method. Tests never overdraw.",
         base={
             "account.py": code(
-                '''
+                """
                 class Account:
                     def __init__(self, balance=0):
                         self.balance = balance
@@ -172,10 +172,10 @@ CASES = [
                             raise ValueError("insufficient funds")
                         self.balance -= amount
                         return self.balance
-                '''
+                """
             ),
             "test_account.py": code(
-                '''
+                """
                 import unittest
 
                 from account import Account
@@ -187,12 +187,12 @@ CASES = [
 
                     def test_withdraw(self):
                         self.assertEqual(Account(100).withdraw(30), 70)
-                '''
+                """
             ),
         },
         head={
             "account.py": code(
-                '''
+                """
                 class Account:
                     def __init__(self, balance=0):
                         self.balance = balance
@@ -204,7 +204,7 @@ CASES = [
                     def withdraw(self, amount):
                         self.balance -= amount
                         return self.balance
-                '''
+                """
             ),
         },
     ),
@@ -217,15 +217,15 @@ CASES = [
         note="A string exactly n long is now truncated. Tests never use that length.",
         base={
             "trunc.py": code(
-                '''
+                """
                 def truncate(s, n):
                     if len(s) <= n:
                         return s
                     return s[: n - 3] + "..."
-                '''
+                """
             ),
             "test_trunc.py": code(
-                '''
+                """
                 import unittest
 
                 from trunc import truncate
@@ -235,17 +235,17 @@ CASES = [
                     def test_truncate(self):
                         self.assertEqual(truncate("hi", 10), "hi")
                         self.assertEqual(truncate("hello world", 8), "hello...")
-                '''
+                """
             ),
         },
         head={
             "trunc.py": code(
-                '''
+                """
                 def truncate(s, n):
                     if len(s) < n:
                         return s
                     return s[: n - 3] + "..."
-                '''
+                """
             ),
         },
     ),
@@ -258,16 +258,16 @@ CASES = [
         note="fullmatch became match, so strings with a valid prefix are accepted.",
         base={
             "hexcheck.py": code(
-                '''
+                """
                 import re
 
 
                 def is_hex(s):
                     return re.fullmatch(r"[0-9a-f]+", s) is not None
-                '''
+                """
             ),
             "test_hexcheck.py": code(
-                '''
+                """
                 import unittest
 
                 from hexcheck import is_hex
@@ -277,18 +277,18 @@ CASES = [
                     def test_is_hex(self):
                         self.assertTrue(is_hex("deadbeef"))
                         self.assertFalse(is_hex("xyz"))
-                '''
+                """
             ),
         },
         head={
             "hexcheck.py": code(
-                '''
+                """
                 import re
 
 
                 def is_hex(s):
                     return re.match(r"[0-9a-f]+", s) is not None
-                '''
+                """
             ),
         },
     ),
@@ -301,13 +301,13 @@ CASES = [
         note="Splitting on a single space counts empty tokens for repeated spaces. No tests were added.",
         base={
             "text_utils.py": code(
-                '''
+                """
                 def shout(s):
                     return s.upper()
-                '''
+                """
             ),
             "test_text_utils.py": code(
-                '''
+                """
                 import unittest
 
                 from text_utils import shout
@@ -316,19 +316,19 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_shout(self):
                         self.assertEqual(shout("hi"), "HI")
-                '''
+                """
             ),
         },
         head={
             "text_utils.py": code(
-                '''
+                """
                 def shout(s):
                     return s.upper()
 
 
                 def word_count(text):
                     return len(text.split(" "))
-                '''
+                """
             ),
         },
     ),
@@ -341,17 +341,17 @@ CASES = [
         note="A weight of exactly 10 moved from light to heavy. Every line is exercised by typical inputs.",
         base={
             "shipping.py": code(
-                '''
+                """
                 def shipping_label(weight):
                     if weight > 100:
                         return "freight"
                     if weight > 10:
                         return "heavy"
                     return "light"
-                '''
+                """
             ),
             "test_shipping.py": code(
-                '''
+                """
                 import unittest
 
                 from shipping import shipping_label
@@ -362,19 +362,19 @@ CASES = [
                         self.assertEqual(shipping_label(500), "freight")
                         self.assertEqual(shipping_label(50), "heavy")
                         self.assertEqual(shipping_label(5), "light")
-                '''
+                """
             ),
         },
         head={
             "shipping.py": code(
-                '''
+                """
                 def shipping_label(weight):
                     if weight > 100:
                         return "freight"
                     if weight >= 10:
                         return "heavy"
                     return "light"
-                '''
+                """
             ),
         },
     ),
@@ -387,13 +387,13 @@ CASES = [
         note="The function now sorts its argument in place. The returned values are identical.",
         base={
             "copies.py": code(
-                '''
+                """
                 def sorted_copy(xs):
                     return sorted(xs)
-                '''
+                """
             ),
             "test_copies.py": code(
-                '''
+                """
                 import unittest
 
                 from copies import sorted_copy
@@ -402,16 +402,16 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_sorted_copy(self):
                         self.assertEqual(sorted_copy([3, 1, 2]), [1, 2, 3])
-                '''
+                """
             ),
         },
         head={
             "copies.py": code(
-                '''
+                """
                 def sorted_copy(xs):
                     xs.sort()
                     return xs
-                '''
+                """
             ),
         },
     ),
@@ -425,13 +425,13 @@ CASES = [
         tests_catch=True,
         base={
             "pricing.py": code(
-                '''
+                """
                 def discount(price, pct):
                     return price * (100 - pct) / 100
-                '''
+                """
             ),
             "test_pricing.py": code(
-                '''
+                """
                 import unittest
 
                 from pricing import discount
@@ -440,15 +440,15 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_discount(self):
                         self.assertEqual(discount(200, 10), 180)
-                '''
+                """
             ),
         },
         head={
             "pricing.py": code(
-                '''
+                """
                 def discount(price, pct):
                     return price * pct / 100
-                '''
+                """
             ),
         },
     ),
@@ -461,7 +461,7 @@ CASES = [
         note="Correct refactor with thin tests.",
         base={
             "evens.py": code(
-                '''
+                """
                 def first_even(xs):
                     found = None
                     for x in xs:
@@ -469,10 +469,10 @@ CASES = [
                             found = x
                             break
                     return found
-                '''
+                """
             ),
             "test_evens.py": code(
-                '''
+                """
                 import unittest
 
                 from evens import first_even
@@ -482,15 +482,15 @@ CASES = [
                     def test_first_even(self):
                         self.assertEqual(first_even([1, 2, 3, 4]), 2)
                         self.assertIsNone(first_even([1, 3]))
-                '''
+                """
             ),
         },
         head={
             "evens.py": code(
-                '''
+                """
                 def first_even(xs):
                     return next((x for x in xs if x % 2 == 0), None)
-                '''
+                """
             ),
         },
     ),
@@ -503,13 +503,13 @@ CASES = [
         note="Correct fix with a new test that fails on the base commit.",
         base={
             "palindrome.py": code(
-                '''
+                """
                 def is_palindrome(s):
                     return s == s[::-1]
-                '''
+                """
             ),
             "test_palindrome.py": code(
-                '''
+                """
                 import unittest
 
                 from palindrome import is_palindrome
@@ -519,19 +519,19 @@ CASES = [
                     def test_is_palindrome(self):
                         self.assertTrue(is_palindrome("abba"))
                         self.assertFalse(is_palindrome("abc"))
-                '''
+                """
             ),
         },
         head={
             "palindrome.py": code(
-                '''
+                """
                 def is_palindrome(s):
                     lowered = s.lower()
                     return lowered == lowered[::-1]
-                '''
+                """
             ),
             "test_palindrome.py": code(
-                '''
+                """
                 import unittest
 
                 from palindrome import is_palindrome
@@ -544,7 +544,7 @@ CASES = [
 
                     def test_mixed_case(self):
                         self.assertTrue(is_palindrome("Aba"))
-                '''
+                """
             ),
         },
     ),
@@ -557,13 +557,13 @@ CASES = [
         note="An intentional, declared behavior change with updated tests.",
         base={
             "greet.py": code(
-                '''
+                """
                 def greeting(name):
                     return "Hello, " + name
-                '''
+                """
             ),
             "test_greet.py": code(
-                '''
+                """
                 import unittest
 
                 from greet import greeting
@@ -572,18 +572,18 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_greeting(self):
                         self.assertEqual(greeting("Ann"), "Hello, Ann")
-                '''
+                """
             ),
         },
         head={
             "greet.py": code(
-                '''
+                """
                 def greeting(name):
                     return "Hi, " + name
-                '''
+                """
             ),
             "test_greet.py": code(
-                '''
+                """
                 import unittest
 
                 from greet import greeting
@@ -592,7 +592,7 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_greeting(self):
                         self.assertEqual(greeting("Ann"), "Hi, Ann")
-                '''
+                """
             ),
         },
     ),
@@ -605,13 +605,13 @@ CASES = [
         note="Correct change that adds an optional parameter with a test.",
         base={
             "labels.py": code(
-                '''
+                """
                 def label(name):
                     return name.strip()
-                '''
+                """
             ),
             "test_labels.py": code(
-                '''
+                """
                 import unittest
 
                 from labels import label
@@ -620,21 +620,21 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_label(self):
                         self.assertEqual(label(" a "), "a")
-                '''
+                """
             ),
         },
         head={
             "labels.py": code(
-                '''
+                """
                 def label(name, upper=False):
                     cleaned = name.strip()
                     if upper:
                         return cleaned.upper()
                     return cleaned
-                '''
+                """
             ),
             "test_labels.py": code(
-                '''
+                """
                 import unittest
 
                 from labels import label
@@ -646,7 +646,7 @@ CASES = [
 
                     def test_upper(self):
                         self.assertEqual(label(" a ", upper=True), "A")
-                '''
+                """
             ),
         },
     ),
@@ -659,7 +659,7 @@ CASES = [
         note="Correct deletion of a function nothing calls.",
         base={
             "totals.py": code(
-                '''
+                """
                 def total(xs):
                     return sum(xs)
 
@@ -669,10 +669,10 @@ CASES = [
                     for x in xs:
                         t += x
                     return t
-                '''
+                """
             ),
             "test_totals.py": code(
-                '''
+                """
                 import unittest
 
                 from totals import total
@@ -681,15 +681,15 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_total(self):
                         self.assertEqual(total([1, 2]), 3)
-                '''
+                """
             ),
         },
         head={
             "totals.py": code(
-                '''
+                """
                 def total(xs):
                     return sum(xs)
-                '''
+                """
             ),
         },
     ),
@@ -702,13 +702,13 @@ CASES = [
         note="Comment only.",
         base={
             "areas.py": code(
-                '''
+                """
                 def area(w, h):
                     return w * h
-                '''
+                """
             ),
             "test_areas.py": code(
-                '''
+                """
                 import unittest
 
                 from areas import area
@@ -717,16 +717,16 @@ CASES = [
                 class T(unittest.TestCase):
                     def test_area(self):
                         self.assertEqual(area(2, 3), 6)
-                '''
+                """
             ),
         },
         head={
             "areas.py": code(
-                '''
+                """
                 def area(w, h):
                     # width times height
                     return w * h
-                '''
+                """
             ),
         },
     ),

@@ -69,7 +69,9 @@ def test_default_out() -> None:
 
 def test_holdout_guard(tmp_path: Path) -> None:
     for case_set in ("holdout", "holdout2", "all"):
-        assert holdout_guard(case_set, tmp_path, False) is None or (tmp_path / "results.json").exists()
+        assert (
+            holdout_guard(case_set, tmp_path, False) is None or (tmp_path / "results.json").exists()
+        )
     (tmp_path / "results.json").write_text("{}")
     for case_set in ("holdout", "holdout2", "all"):
         message = holdout_guard(case_set, tmp_path, False)
