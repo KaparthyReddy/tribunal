@@ -15,7 +15,20 @@ from tribunal.llm import LLMError
 from tribunal.models import SignedReceipt, Verdict
 from tribunal.pipeline import PipelineError, SubmissionError, build_pipeline
 from tribunal.receipts import ReceiptSigner, verify_receipt
-from tribunal.sandbox import SandboxUnavailableError, WorkspaceError
+from tribunal.replay import (
+    ReplayError,
+    ReplayReport,
+    RunnerFactory,
+    replay_receipt,
+    runner_factory_from,
+)
+from tribunal.sandbox import (
+    PolicyError,
+    SandboxPolicy,
+    SandboxRunner,
+    SandboxUnavailableError,
+    WorkspaceError,
+)
 from tribunal.store import Store
 from tribunal.summary import render_markdown, render_text
 
@@ -26,6 +39,7 @@ app = typer.Typer(
 )
 
 EXIT_CODES = {Verdict.PASS: 0, Verdict.FAIL: 1, Verdict.INCONCLUSIVE: 2}
+EXIT_REPLAY = {"reproduced": 0, "diverged": 1, "incomplete": 2, "empty": 2}
 EXIT_ERROR = 3
 
 HANDLED = (
@@ -33,6 +47,8 @@ HANDLED = (
     GitError,
     LLMError,
     PipelineError,
+    PolicyError,
+    ReplayError,
     SandboxUnavailableError,
     SubmissionError,
     WorkspaceError,
@@ -55,6 +71,39 @@ def _local_public_key() -> str | None:
     if not settings.key_path.exists():
         return None
     return ReceiptSigner.load_or_create(settings.key_path).public_key_b64
+
+
+def _load_receipt(target: str) -> SignedReceipt:
+    path = Path(target)
+    if path.is_file():
+        try:
+            return SignedReceipt.model_validate_json(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            _fail(f"cannot read receipt: {exc}")
+    found = _open_store().get_receipt(target)
+    if found is None:
+        _fail(f"unknown receipt {target}")
+    return found
+
+
+def _replay_runner_factory() -> RunnerFactory:
+    settings = get_settings()
+    return runner_factory_from(SandboxRunner(SandboxPolicy.from_settings(settings)))
+
+
+def _render_replay(report: ReplayReport) -> str:
+    lines = [
+        f"replay: {report.overall.upper()}",
+        (
+            f"commands {len(report.results)}  reproduced {report.count('reproduced')}  "
+            f"output differs {report.count('output_differs')}  "
+            f"diverged {report.count('diverged')}  skipped {report.count('skipped')}"
+        ),
+    ]
+    for result in report.results:
+        if result.status in ("diverged", "skipped"):
+            lines.append(f"  [{result.index}] {result.status}: {result.detail}")
+    return "\n".join(lines)
 
 
 @app.command()
@@ -156,9 +205,7 @@ def ci_cmd(
             typer.echo("warning: GITHUB_TOKEN is not set, skipping comment", err=True)
         else:
             try:
-                typer.echo(
-                    f"comment: {upsert_comment(context.repo, context.number, token, markdown)}"
-                )
+                typer.echo(f"comment: {upsert_comment(context.repo, context.number, token, markdown)}")
             except CIError as exc:
                 typer.echo(f"warning: {exc}", err=True)
 
@@ -192,17 +239,7 @@ def verify_receipt_cmd(
     target: Annotated[str, typer.Argument(help="Receipt JSON file or receipt id")],
     public_key: Annotated[str | None, typer.Option("--public-key", help="Expected key")] = None,
 ) -> None:
-    path = Path(target)
-    if path.is_file():
-        try:
-            receipt = SignedReceipt.model_validate_json(path.read_text(encoding="utf-8"))
-        except (OSError, ValueError) as exc:
-            _fail(f"cannot read receipt: {exc}")
-    else:
-        found = _open_store().get_receipt(target)
-        if found is None:
-            _fail(f"unknown receipt {target}")
-        receipt = found
+    receipt = _load_receipt(target)
 
     expected = public_key or _local_public_key()
     intact = verify_receipt(receipt)
@@ -219,6 +256,33 @@ def verify_receipt_cmd(
     typer.echo(f"signer: {signer_text}")
     typer.echo(f"verdict: {receipt.body.verdict.value}  head: {receipt.body.head_sha[:12]}")
     raise typer.Exit(0 if intact and signer_ok else 1)
+
+
+@app.command()
+def replay(
+    target: Annotated[str, typer.Argument(help="Receipt JSON file or receipt id")],
+    repo_path: Annotated[
+        Path | None,
+        typer.Option("--repo-path", help="Repository the receipt was made from"),
+    ] = None,
+    as_json: Annotated[bool, typer.Option("--json")] = False,
+) -> None:
+    receipt = _load_receipt(target)
+
+    path = repo_path
+    if path is None:
+        submission = _open_store().get_submission(receipt.body.submission_id)
+        if submission is None:
+            _fail("the repository for this receipt is unknown; pass --repo-path")
+        path = Path(submission.repo_path)
+
+    try:
+        report = replay_receipt(receipt, path, _replay_runner_factory())
+    except HANDLED as exc:
+        _fail(str(exc))
+
+    typer.echo(json.dumps(report.as_dict(), indent=2) if as_json else _render_replay(report))
+    raise typer.Exit(EXIT_REPLAY[report.overall])
 
 
 @app.command()
