@@ -19,7 +19,7 @@ MAX_DIFF_CHARS = 8000
 MAX_CALL_CHARS = 2000
 IMPORT_ERRORS = frozenset({"ModuleNotFoundError", "ImportError"})
 
-DRIVER = '''\
+DRIVER = """\
 import contextlib
 import copy
 import importlib
@@ -67,7 +67,7 @@ def main():
 
 
 main()
-'''
+"""
 
 SYSTEM = """You design test inputs for comparing two versions of the same Python functions.
 A coding agent changed the functions below. Your calls will run on the old and the new version,
