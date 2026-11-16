@@ -1,0 +1,56 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_dc99c9d908c8",
+    "submission_id": "sub_51a1bf37244c",
+    "repo": "tribunal-demo",
+    "base_sha": "fb8995c58285673524d1259a328367573c6c67b2",
+    "head_sha": "b3d03dc7c46e8b589ff3cb3017fc448f6496cac8",
+    "verdict": "inconclusive",
+    "rationale": "3 item(s) need human review:\n- Claim extraction failed\n- No test reaches changed code: add (calc.py)\n- No executable evidence was produced",
+    "claims": [],
+    "claim_results": [],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Claim extraction failed",
+        "detail": "anthropic request failed: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cgty8pPZQDVi5eyS8qD9c'}",
+        "severity": "medium",
+        "command_indexes": []
+      },
+      {
+        "source": "blast_radius",
+        "title": "No test reaches changed code: add (calc.py)",
+        "detail": "0 dependent function(s) within depth 4.",
+        "severity": "medium",
+        "command_indexes": []
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe generation failed",
+        "detail": "anthropic request failed: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cgty8qyoLnR7BsKvZw4oW'}",
+        "severity": "low",
+        "command_indexes": []
+      },
+      {
+        "source": "ledger",
+        "title": "Scrutiny standard: agent 'demo' has 0/1 passing verdicts",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation testing skipped: no test command provided",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [],
+    "issued_at": "2026-11-10T08:56:19.675223Z"
+  },
+  "digest": "5eacbed649d0a527bd71c3178630c1ca9a65abfe51b715128ebe60fc244336c2",
+  "signature": "rng+8avSxGU+V3jAXK84jXGDHaVyxYRgENLcHBFxZyyqUKK9GdnJVzwiX28vD7AhI5aD+Nt5gjWSvFGXQb7oAg==",
+  "public_key": "yQ3XD//vHnuPGmdWWQkYDHeG08emnsSNKwzy0aFeUEQ="
+}
