@@ -1,8 +1,11 @@
 import uuid
 from datetime import UTC, datetime
 from enum import StrEnum
+from typing import Literal
 
 from pydantic import BaseModel, Field
+
+RECEIPT_VERSION = 2
 
 
 def new_id(prefix: str) -> str:
@@ -73,6 +76,9 @@ class CommandRecord(BaseModel):
     stderr_truncated: bool = False
     duration_s: float
     started_at: datetime
+    side: Literal["base", "head"] | None = None
+    overlay: dict[str, str] = Field(default_factory=dict)
+    timeout_s: int | None = None
 
 
 class Claim(BaseModel):
@@ -97,7 +103,7 @@ class Finding(BaseModel):
 
 
 class ReceiptBody(BaseModel):
-    version: int = 1
+    version: int = RECEIPT_VERSION
     receipt_id: str = Field(default_factory=lambda: new_id("rcp"))
     submission_id: str
     repo: str
@@ -109,6 +115,7 @@ class ReceiptBody(BaseModel):
     claim_results: list[ClaimResult] = Field(default_factory=list)
     findings: list[Finding] = Field(default_factory=list)
     commands: list[CommandRecord] = Field(default_factory=list)
+    blobs: dict[str, str] = Field(default_factory=dict)
     issued_at: datetime = Field(default_factory=utcnow)
 
 
