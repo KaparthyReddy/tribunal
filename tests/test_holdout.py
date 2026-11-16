@@ -49,8 +49,8 @@ def test_holdout_case_behaves_as_declared(case, tmp_path: Path) -> None:
 def test_select_cases_by_set() -> None:
     assert len(select_cases(None)) == 20
     assert len(select_cases(None, "holdout")) == 14
-    assert len(select_cases(None, "all")) == 34
-    assert [c.id for c in select_cases("hold-fizz", "holdout")] if False else True
+    assert len(select_cases(None, "holdout2")) == 17
+    assert len(select_cases(None, "all")) == 51
     assert [c.id for c in select_cases("hold-new-function-bug", "holdout")] == [
         "hold-new-function-bug"
     ]
@@ -58,20 +58,22 @@ def test_select_cases_by_set() -> None:
         select_cases("hold-new-function-bug", "dev")
     with pytest.raises(ValueError):
         select_cases(None, "nope")
-    assert set(CASE_SETS) == {"dev", "holdout"}
+    assert set(CASE_SETS) == {"dev", "holdout", "holdout2"}
 
 
 def test_default_out() -> None:
     assert default_out("dev") == Path("benchmark/results")
     assert default_out("holdout") == Path("benchmark/results-holdout")
+    assert default_out("holdout2") == Path("benchmark/results-holdout2")
 
 
 def test_holdout_guard(tmp_path: Path) -> None:
-    assert holdout_guard("holdout", tmp_path, False) is None
+    for case_set in ("holdout", "holdout2", "all"):
+        assert holdout_guard(case_set, tmp_path, False) is None or (tmp_path / "results.json").exists()
     (tmp_path / "results.json").write_text("{}")
-    message = holdout_guard("holdout", tmp_path, False)
-    assert message is not None
-    assert "--force" in message
-    assert holdout_guard("holdout", tmp_path, True) is None
+    for case_set in ("holdout", "holdout2", "all"):
+        message = holdout_guard(case_set, tmp_path, False)
+        assert message is not None
+        assert "--force" in message
+        assert holdout_guard(case_set, tmp_path, True) is None
     assert holdout_guard("dev", tmp_path, False) is None
-    assert holdout_guard("all", tmp_path, False) is not None
