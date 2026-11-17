@@ -41,7 +41,7 @@ def test_probe_commands_carry_their_files(
     assert checked == [True]
 
 
-def test_differential_commands_carry_driver_and_inputs(
+def test_differential_commands_carry_driver_inputs_and_trace_files(
     scenario, make_runner, make_pipeline, probes_json, is_head
 ) -> None:
     repo, shas = scenario
@@ -49,13 +49,18 @@ def test_differential_commands_carry_driver_and_inputs(
     def handler(workdir: Path, argv: list[str]) -> tuple[int, str, str]:
         if argv[-1].endswith("driver"):
             value = "3" if is_head(workdir) else "2"
-            return 0, json.dumps({"i": 0, "ok": True, "value": value}), ""
+            lines = [
+                json.dumps({"i": 0, "ok": True, "value": value, "state": "[[1], {}]"}),
+                json.dumps({"trace": {"lib.py": [1, 2]}}),
+            ]
+            return 0, "\n".join(lines), ""
         return 0, "ok", ""
 
     llm = ScriptedLLM(
         [
             json.dumps({"claims": [{"text": "no behavior change", "kind": "no_behavior_change"}]}),
             json.dumps({"checks": []}),
+            probes_json,
             json.dumps(
                 {
                     "calls": [
@@ -63,7 +68,6 @@ def test_differential_commands_carry_driver_and_inputs(
                     ]
                 }
             ),
-            probes_json,
         ]
     )
     fake = make_runner(handler)
@@ -88,8 +92,9 @@ def test_differential_commands_carry_driver_and_inputs(
             "tribunal_chars/calls.json",
         }
         assert body.blobs[command.overlay["tribunal_chars/driver.py"]] == DRIVER
-    calls = json.loads(body.blobs[drivers[0].overlay["tribunal_chars/calls.json"]])
-    assert calls == [{"module": "lib", "function": "f", "args": [1], "kwargs": {}}]
+    spec = json.loads(body.blobs[drivers[0].overlay["tribunal_chars/calls.json"]])
+    assert spec["calls"] == [{"module": "lib", "function": "f", "args": [1], "kwargs": {}}]
+    assert spec["trace"] == ["lib.py"]
 
     report = replay_receipt(receipt, repo, lambda image: fake)
     assert report.overall == "reproduced"
