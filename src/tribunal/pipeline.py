@@ -10,13 +10,17 @@ from tribunal.agents import (
     Characterizer,
     CommandRunner,
     Evidence,
+    FailToPass,
     Judge,
     Skeptic,
+    demote_test_gaps,
+    deterministic_claims,
+    enforce_fixed_rules,
     extract_claims,
     merge_characterization,
 )
 from tribunal.config import Settings, get_settings
-from tribunal.graph import changed_ranges
+from tribunal.graph import changed_ranges, changed_sides
 from tribunal.ledger import compute_trust, policy_for
 from tribunal.llm import LLMClient, LLMError, make_llm, preflight
 from tribunal.models import Claim, Finding, Severity, SignedReceipt, Submission, SubmissionStatus
@@ -123,7 +127,9 @@ class Pipeline:
         repo = Path(submission.repo_path)
         diff = gitutil.diff(repo, submission.base_sha, submission.head_sha)
         files = gitutil.tracked_files(repo, submission.head_sha)
+        changed = gitutil.changed_files(repo, submission.base_sha, submission.head_sha)
         ranges = changed_ranges(repo, submission.base_sha, submission.head_sha)
+        changes = changed_sides(repo, submission.base_sha, submission.head_sha)
 
         findings: list[Finding] = []
         policy = None
@@ -160,6 +166,7 @@ class Pipeline:
             try:
                 claims = extract_claims(self.llm, submission)
             except LLMError as exc:
+                claims = deterministic_claims(submission)
                 findings.append(
                     Finding(
                         source="auditor",
@@ -171,11 +178,22 @@ class Pipeline:
 
             findings.extend(self.blast.analyze(head_dir, ranges).findings)
             audit = Auditor(self.llm, self.runner).audit(ctx, claims)
+            enforce_fixed_rules(audit, claims)
+            skeptic = Skeptic(self.llm, self.runner).attack(ctx, ranges)
+
+            identical = False
             if self.differential:
-                characterization = Characterizer(self.llm, self.runner).run(ctx, claims, ranges)
+                characterization = Characterizer(self.llm, self.runner).run(
+                    ctx, claims, changes, changed
+                )
                 merge_characterization(audit, characterization, claims)
+                identical = characterization.behavior_identical
+            merge_characterization(
+                audit, FailToPass(self.runner).run(ctx, claims, changed), claims
+            )
+
             findings.extend(audit.findings)
-            findings.extend(Skeptic(self.llm, self.runner).attack(ctx, ranges).findings)
+            findings.extend(demote_test_gaps(skeptic.findings) if identical else skeptic.findings)
 
         return Judge(self.signer, policy).issue(
             submission,
