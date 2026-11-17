@@ -547,12 +547,14 @@ class Characterizer:
             return result
         if analysis.new_functions or analysis.deleted_functions:
             names = ", ".join([*analysis.new_functions, *analysis.deleted_functions][:6])
-            return self._settled(
+            self._settled(
                 result,
                 no_change,
                 "Structural check: no existing function changed",
                 f"Only new or unreferenced removed functions changed ({names}).",
             )
+            result.behavior_identical = not analysis.new_functions
+            return result
         result.findings.append(
             self._finding(
                 "Differential check skipped: no changed top-level Python function found",
@@ -574,12 +576,14 @@ class Characterizer:
         self, ctx: AuditContext, claims: list[Claim], targets: list[Target], limit: int
     ) -> list[Call]:
         system = SYSTEM.replace("{n}", str(limit))
-        return complete_parsed(
-            self.llm,
-            system,
-            _prompt(ctx, claims, targets),
-            lambda data: parse_calls(data, targets, claims, limit),
-        )
+
+        def parse(data: Any) -> list[Call]:
+            calls = parse_calls(data, targets, claims, limit)
+            if not calls:
+                raise LLMError("none of the calls used the listed module and function names")
+            return calls
+
+        return complete_parsed(self.llm, system, _prompt(ctx, claims, targets), parse)
 
     def _more(
         self,
@@ -812,7 +816,7 @@ class Characterizer:
             and not analysis.truncated
         )
         if identical:
-            result.behavior_identical = True
+            result.behavior_identical = not analysis.new_functions
             for claim in no_change:
                 self._support(
                     result,
