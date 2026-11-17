@@ -1,7 +1,7 @@
 import json
 import re
 from collections import deque
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from typing import Any, Protocol
 
 import anthropic
@@ -36,8 +36,53 @@ def extract_json(text: str) -> Any:
     raise LLMError("no JSON found in model output")
 
 
-def complete_json(llm: LLMClient, system: str, user: str, *, max_tokens: int | None = None) -> Any:
-    return extract_json(llm.complete(system, user, max_tokens=max_tokens))
+def complete_json(
+    llm: LLMClient,
+    system: str,
+    user: str,
+    *,
+    max_tokens: int | None = None,
+    retries: int = 1,
+) -> Any:
+    prompt = user
+    attempt = 0
+    while True:
+        text = llm.complete(system, prompt, max_tokens=max_tokens)
+        try:
+            return extract_json(text)
+        except LLMError as exc:
+            if attempt >= retries:
+                raise
+            attempt += 1
+            prompt = (
+                f"{user}\n\nYour previous reply was not valid JSON ({exc}). "
+                "Reply again with only the JSON object, nothing else."
+            )
+
+
+def complete_parsed[T](
+    llm: LLMClient,
+    system: str,
+    user: str,
+    parse: Callable[[Any], T],
+    *,
+    max_tokens: int | None = None,
+    retries: int = 1,
+) -> T:
+    prompt = user
+    attempt = 0
+    while True:
+        text = llm.complete(system, prompt, max_tokens=max_tokens)
+        try:
+            return parse(extract_json(text))
+        except LLMError as exc:
+            if attempt >= retries:
+                raise
+            attempt += 1
+            prompt = (
+                f"{user}\n\nYour previous reply was rejected ({exc}). "
+                "Reply again with only JSON in exactly the requested shape."
+            )
 
 
 class AnthropicClient:
