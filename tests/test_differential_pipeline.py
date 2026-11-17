@@ -13,13 +13,18 @@ def test_false_no_change_claim_fails_the_pipeline(
     def handler(workdir: Path, argv: list[str]) -> tuple[int, str, str]:
         if argv[-1].endswith("driver"):
             value = "3" if is_head(workdir) else "2"
-            return 0, json.dumps({"i": 0, "ok": True, "value": value}), ""
+            lines = [
+                json.dumps({"i": 0, "ok": True, "value": value, "state": "[[1], {}]"}),
+                json.dumps({"trace": {"lib.py": [1, 2]}}),
+            ]
+            return 0, "\n".join(lines), ""
         return 0, "ok", ""
 
     llm = ScriptedLLM(
         [
             json.dumps({"claims": [{"text": "no behavior change", "kind": "no_behavior_change"}]}),
             json.dumps({"checks": []}),
+            probes_json,
             json.dumps(
                 {
                     "calls": [
@@ -27,7 +32,6 @@ def test_false_no_change_claim_fails_the_pipeline(
                     ]
                 }
             ),
-            probes_json,
         ]
     )
     pipe = make_pipeline(make_runner(handler), llm)
@@ -57,7 +61,9 @@ def test_differential_can_be_disabled(scenario, make_runner, make_pipeline, prob
             probes_json,
         ]
     )
-    pipe = make_pipeline(make_runner(lambda workdir, argv: (0, "ok", "")), llm, differential=False)
+    pipe = make_pipeline(
+        make_runner(lambda workdir, argv: (0, "ok", "")), llm, differential=False
+    )
     submission = pipe.submit(
         repo_path=str(repo),
         base=shas[0],
