@@ -1,31 +1,42 @@
 import json
+import re
 import shutil
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path, PurePosixPath
 from typing import Any
 
 from tribunal.agents.auditor import AuditContext
-from tribunal.agents.base import AgentResult, CommandRunner, is_infra_failure
-from tribunal.graph import build_callgraph, is_test_file
-from tribunal.llm import LLMClient, LLMError, complete_json
+from tribunal.agents.base import CRITICAL_KINDS, AgentResult, CommandRunner, is_infra_failure
+from tribunal.agents.staticcheck import class_spans, required_line, same_syntax, statement_spans
+from tribunal.graph import CallGraph, FileChange, Symbol, build_callgraph, is_test_file
+from tribunal.llm import LLMClient, LLMError, complete_parsed
 from tribunal.models import Claim, ClaimKind, ClaimResult, ClaimStatus, Finding, Severity
 
 CHAR_DIR = "tribunal_chars"
 ARGV = ["python", "-m", f"{CHAR_DIR}.driver"]
 MAX_CALLS = 24
-MAX_FUNCTIONS = 6
+MAX_TOTAL_CALLS = 36
+MAX_FUNCTIONS = 8
 MAX_SOURCE_CHARS = 1500
 MAX_DIFF_CHARS = 8000
 MAX_CALL_CHARS = 2000
+MAX_LINES_PER_RANGE = 2000
+MAX_UNCOVERED_SHOWN = 12
 IMPORT_ERRORS = frozenset({"ModuleNotFoundError", "ImportError"})
+SIGNATURE_ERROR = re.compile(
+    r"unexpected keyword argument|positional argument|required positional|takes \d+ positional"
+)
+DOC_SUFFIXES = (".md", ".rst", ".txt")
 
-DRIVER = """\
+DRIVER = '''\
 import contextlib
 import copy
 import importlib
 import io
 import json
+import os
 import signal
+import sys
 
 CALL_TIMEOUT_S = 5
 
@@ -45,40 +56,79 @@ def _describe(value):
 
 def main():
     with open("tribunal_chars/calls.json", encoding="utf-8") as handle:
-        calls = json.load(handle)
+        spec = json.load(handle)
+    calls = spec["calls"]
+    watch = set(spec.get("trace", []))
+    executed = {}
+    names = {}
+
+    def watched(filename):
+        if filename not in names:
+            try:
+                rel = os.path.relpath(os.path.abspath(filename), os.getcwd()).replace(os.sep, "/")
+            except ValueError:
+                rel = ""
+            names[filename] = rel if rel in watch else ""
+        return names[filename]
+
+    def tracer(frame, event, arg):
+        rel = watched(frame.f_code.co_filename)
+        if not rel:
+            return None
+        lines = executed.setdefault(rel, set())
+
+        def local(frame, event, arg):
+            if event == "line":
+                lines.add(frame.f_lineno)
+            return local
+
+        return local
+
     signal.signal(signal.SIGALRM, _on_alarm)
-    for index, call in enumerate(calls):
-        signal.alarm(CALL_TIMEOUT_S)
-        try:
-            module = importlib.import_module(call["module"])
-            function = getattr(module, call["function"])
+    if watch:
+        sys.settrace(tracer)
+    try:
+        for index, call in enumerate(calls):
+            signal.alarm(CALL_TIMEOUT_S)
             args = copy.deepcopy(call["args"])
             kwargs = copy.deepcopy(call["kwargs"])
-            with contextlib.redirect_stdout(io.StringIO()):
-                value = function(*args, **kwargs)
-            record = {"i": index, "ok": True, "value": _describe(value)}
-        except _Timeout:
-            record = {"i": index, "ok": False, "exc": "Timeout", "msg": ""}
-        except BaseException as exc:
-            record = {"i": index, "ok": False, "exc": type(exc).__name__, "msg": str(exc)[:200]}
-        finally:
-            signal.alarm(0)
-        print(json.dumps(record), flush=True)
+            try:
+                module = importlib.import_module(call["module"])
+                function = getattr(module, call["function"])
+                with contextlib.redirect_stdout(io.StringIO()):
+                    value = function(*args, **kwargs)
+                record = {"i": index, "ok": True, "value": _describe(value)}
+            except _Timeout:
+                record = {"i": index, "ok": False, "exc": "Timeout", "msg": ""}
+            except BaseException as exc:
+                record = {"i": index, "ok": False, "exc": type(exc).__name__, "msg": str(exc)[:200]}
+            finally:
+                signal.alarm(0)
+            record["state"] = _describe([args, kwargs])
+            print(json.dumps(record), flush=True)
+    finally:
+        sys.settrace(None)
+    trace = {name: sorted(lines) for name, lines in executed.items()}
+    print(json.dumps({"trace": trace}), flush=True)
 
 
 main()
-"""
+'''
 
 SYSTEM = """You design test inputs for comparing two versions of the same Python functions.
 A coding agent changed the functions below. Your calls will run on the old and the new version,
-and the outputs will be compared, so choose inputs that would expose any difference in behavior.
+and the results and the state of the arguments afterwards will be compared, so choose inputs
+that would expose any difference in behavior.
 Rules:
 - Only call the listed functions, using the exact module and function names given.
 - args is a JSON array and kwargs is a JSON object. Use JSON values only.
 - Return at most {n} calls in total.
-- Cover typical values, empty inputs, None, zero, negatives, boundaries, duplicates,
-  unordered input, mixed case, padded whitespace, punctuation and unicode.
+- Make sure the calls reach every branch of the changed code, including error paths.
+- Cover typical values, empty inputs, None, zero, negatives, values on both sides of every
+  comparison, duplicates, ties, unordered input, mixed case, padded whitespace, punctuation,
+  unicode and invalid values.
 - Include calls that omit optional arguments so default values are exercised.
+- Include calls that pass mutable arguments such as lists and dicts.
 - For every claim of kind fixes, include the exact input the claim describes and set "claim"
   to that claim's id. Use null for all other calls.
 - Never include calls that depend on time, randomness, files or the network.
@@ -103,6 +153,38 @@ class Call:
     claim: str | None = None
 
 
+@dataclass
+class Analysis:
+    targets: list[Target] = field(default_factory=list)
+    head_required: dict[str, set[int]] = field(default_factory=dict)
+    base_required: dict[str, set[int]] = field(default_factory=dict)
+    outside: list[str] = field(default_factory=list)
+    new_functions: list[str] = field(default_factory=list)
+    deleted_functions: list[str] = field(default_factory=list)
+    referenced: set[str] = field(default_factory=set)
+    truncated: int = 0
+
+    @property
+    def trace_files(self) -> list[str]:
+        return sorted(set(self.head_required) | set(self.base_required))
+
+
+@dataclass
+class Run:
+    calls: list[Call]
+    indexes: tuple[int, int, int]
+    ok: bool = True
+    detail: str = ""
+    base_res: dict[int, dict[str, Any]] = field(default_factory=dict)
+    head_res: dict[int, dict[str, Any]] = field(default_factory=dict)
+    again_res: dict[int, dict[str, Any]] = field(default_factory=dict)
+    base_trace: dict[str, set[int]] | None = None
+    head_trace: dict[str, set[int]] | None = None
+    comparable: list[int] = field(default_factory=list)
+    differing: list[int] = field(default_factory=list)
+    new_api: list[int] = field(default_factory=list)
+
+
 def module_name(path: str) -> str | None:
     pure = PurePosixPath(path)
     if pure.suffix != ".py":
@@ -113,40 +195,115 @@ def module_name(path: str) -> str | None:
     return ".".join(parts)
 
 
-def select_targets(
+def _read(path: Path) -> str | None:
+    try:
+        return path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return None
+
+
+def _line_text(path: Path, line: int) -> str:
+    text = _read(path)
+    if text is None:
+        return ""
+    lines = text.splitlines()
+    return lines[line - 1].strip() if 0 < line <= len(lines) else ""
+
+
+def referenced_names(graph: CallGraph) -> set[str]:
+    names: set[str] = set()
+    for parsed in graph.files.values():
+        for callees in parsed.calls.values():
+            names.update(callees)
+    return names
+
+
+def analyze_changes(
     base_dir: Path,
     head_dir: Path,
-    ranges: dict[str, list[tuple[int, int]]],
+    changes: dict[str, FileChange],
     limit: int = MAX_FUNCTIONS,
-) -> list[Target]:
+) -> Analysis:
     head_graph = build_callgraph(head_dir)
     base_graph = build_callgraph(base_dir)
+    analysis = Analysis(referenced=referenced_names(head_graph))
+    chosen: dict[str, Symbol] = {}
+    module_files: set[str] = set()
+    outside: dict[str, None] = {}
+    new: dict[str, None] = {}
+    deleted: dict[str, None] = {}
 
-    found = {}
-    for file, spans in sorted(ranges.items()):
+    sides = (
+        ("head", head_graph, base_graph, head_dir, analysis.head_required),
+        ("base", base_graph, head_graph, base_dir, analysis.base_required),
+    )
+    for file, change in sorted(changes.items()):
         if not file.endswith(".py") or is_test_file(file):
             continue
-        for start, end in spans:
-            for symbol in head_graph.symbols_in(file, start, end):
-                if symbol.is_module or "." in symbol.qualname:
-                    continue
-                if symbol.key in base_graph.symbols:
-                    found[symbol.key] = symbol
+        for side, graph, other, root, required in sides:
+            ranges = change.added if side == "head" else change.removed
+            if not ranges:
+                continue
+            source = _read(root / file)
+            parsed = graph.files.get(file)
+            spans = statement_spans(source) if source is not None else None
+            if source is None or parsed is None or spans is None:
+                outside[f"{file} (could not be analyzed)"] = None
+                continue
+            classes = class_spans(source)
+            for start, end in ranges:
+                for line in range(start, min(end, start + MAX_LINES_PER_RANGE) + 1):
+                    if line in parsed.blank_lines:
+                        continue
+                    symbol = graph.symbol_at_line(file, line)
+                    statement = required_line(spans, line)
+                    if symbol.is_module:
+                        if any(first <= line <= last for first, last in classes):
+                            outside[f"class body in {file}"] = None
+                            continue
+                        module_files.add(file)
+                    else:
+                        owner = symbol.qualname.split(".")[0]
+                        key = f"{file}::{owner}"
+                        if key not in graph.symbols:
+                            outside[f"{symbol.qualname} ({file})"] = None
+                            continue
+                        if key not in other.symbols:
+                            (new if side == "head" else deleted)[owner] = None
+                            continue
+                        chosen[key] = head_graph.symbols[key]
+                    if statement is not None:
+                        required.setdefault(file, set()).add(statement)
 
-    targets: list[Target] = []
-    for symbol in sorted(found.values(), key=lambda s: (s.file, s.start)):
+    for file in sorted(module_files):
+        for symbol in head_graph.symbols.values():
+            if symbol.file != file or symbol.is_module or "." in symbol.qualname:
+                continue
+            if symbol.key in base_graph.symbols:
+                chosen.setdefault(symbol.key, symbol)
+        if not any(symbol.file == file for symbol in chosen.values()):
+            outside[f"module-level code in {file} (no function to call)"] = None
+
+    for name in deleted:
+        if name in analysis.referenced:
+            outside[f"removed function {name} is still referenced"] = None
+
+    ordered = sorted(chosen.values(), key=lambda symbol: (symbol.file, symbol.start))
+    analysis.truncated = max(0, len(ordered) - limit)
+    for symbol in ordered[:limit]:
         module = module_name(symbol.file)
-        if module is None:
+        text = _read(head_dir / symbol.file)
+        if module is None or text is None:
+            outside[f"{symbol.qualname} ({symbol.file}, not importable)"] = None
             continue
-        try:
-            lines = (head_dir / symbol.file).read_text(encoding="utf-8").splitlines()
-        except (OSError, UnicodeDecodeError):
-            continue
+        lines = text.splitlines()
         source = "\n".join(lines[symbol.start - 1 : symbol.end])[:MAX_SOURCE_CHARS]
-        targets.append(Target(symbol.file, module, symbol.name, source))
-        if len(targets) >= limit:
-            break
-    return targets
+        analysis.targets.append(Target(symbol.file, module, symbol.qualname, source))
+
+    analysis.outside = list(outside)
+    analysis.new_functions = list(new)
+    analysis.deleted_functions = list(deleted)
+    return analysis
 
 
 def parse_calls(
@@ -204,10 +361,35 @@ def parse_results(stdout: str) -> dict[int, dict[str, Any]]:
     return results
 
 
-def _signature(record: dict[str, Any]) -> tuple[str, str]:
+def parse_trace(stdout: str) -> dict[str, set[int]] | None:
+    found: dict[str, set[int]] | None = None
+    for line in stdout.splitlines():
+        line = line.strip()
+        if not line.startswith('{"trace"'):
+            continue
+        try:
+            record = json.loads(line)
+        except ValueError:
+            continue
+        trace = record.get("trace") if isinstance(record, dict) else None
+        if isinstance(trace, dict):
+            found = {
+                str(name): {number for number in numbers if isinstance(number, int)}
+                for name, numbers in trace.items()
+                if isinstance(numbers, list)
+            }
+    return found
+
+
+def _outcome(record: dict[str, Any]) -> tuple[str, str]:
     if record.get("ok"):
         return ("ok", str(record.get("value", "")))
     return ("exc", str(record.get("exc", "?")))
+
+
+def _signature(record: dict[str, Any]) -> tuple[str, str, str]:
+    kind, detail = _outcome(record)
+    return (kind, detail, str(record.get("state", "")))
 
 
 def _label(record: dict[str, Any]) -> str:
@@ -223,9 +405,32 @@ def _call_text(call: Call) -> str:
     return text if len(text) <= 120 else text[:117] + "..."
 
 
+def _describe_difference(call: Call, base: dict[str, Any], head: dict[str, Any]) -> str:
+    text = _call_text(call)
+    if _outcome(base) == _outcome(head):
+        return (
+            f"{text} leaves its arguments as {base.get('state')} on base "
+            f"but {head.get('state')} on head"
+        )
+    return f"{text} {_label(base)} on base but {_label(head)} on head"
+
+
+def _is_new_signature(base: dict[str, Any], head: dict[str, Any]) -> bool:
+    return bool(
+        not base.get("ok")
+        and base.get("exc") == "TypeError"
+        and head.get("ok")
+        and SIGNATURE_ERROR.search(str(base.get("msg", "")))
+    )
+
+
+def _call_key(call: Call) -> str:
+    return json.dumps([call.module, call.function, call.args, call.kwargs], sort_keys=True)
+
+
 def _prompt(ctx: AuditContext, claims: list[Claim], targets: list[Target]) -> str:
     functions = "\n\n".join(f"# {t.module}.{t.function}\n{t.source}" for t in targets)
-    claim_lines = "\n".join(f"{c.id} ({c.kind.value}): {c.text}" for c in claims)
+    claim_lines = "\n".join(f"{c.id} ({c.kind.value}): {c.text}" for c in claims) or "(none)"
     return (
         f"PR title: {ctx.submission.title}\n\n"
         f"Claims:\n{claim_lines}\n\n"
@@ -252,29 +457,25 @@ class Characterizer:
         self,
         ctx: AuditContext,
         claims: list[Claim],
-        ranges: dict[str, list[tuple[int, int]]],
+        changes: dict[str, FileChange],
+        changed_files: list[str],
     ) -> AgentResult:
         result = AgentResult()
-        relevant = [
-            claim
-            for claim in claims
-            if claim.kind in (ClaimKind.NO_BEHAVIOR_CHANGE, ClaimKind.FIXES)
-        ]
-        if not relevant:
-            return result
+        no_change = [c for c in claims if c.kind is ClaimKind.NO_BEHAVIOR_CHANGE]
+        fixes = [c for c in claims if c.kind is ClaimKind.FIXES]
+        critical = [c for c in claims if c.kind in CRITICAL_KINDS]
+        tests_changed = any(is_test_file(path) for path in changed_files)
 
-        targets = select_targets(ctx.base_dir, ctx.head_dir, ranges)
-        if not targets:
-            result.findings.append(
-                self._finding(
-                    "Differential check skipped: no changed top-level Python function found",
-                    Severity.INFO,
-                )
-            )
-            return result
+        explanation = self._static(ctx, changed_files)
+        if explanation is not None:
+            return self._settled(result, no_change, "Static check: no runtime change", explanation)
+
+        analysis = analyze_changes(ctx.base_dir, ctx.head_dir, changes)
+        if not analysis.targets:
+            return self._without_targets(result, no_change, analysis)
 
         try:
-            calls = self._generate(ctx, relevant, targets)
+            calls = self._generate(ctx, critical, analysis.targets, self.max_calls)
         except LLMError as exc:
             result.findings.append(
                 self._finding(
@@ -290,111 +491,149 @@ class Characterizer:
             )
             return result
 
-        files = self._files(calls)
-        self._write(ctx, files)
-        try:
-            base_idx, base_rec = ctx.evidence.run(
-                self.runner, ctx.base_dir, ARGV, timeout_s=self.timeout_s, overlay=files
-            )
-            head_idx, head_rec = ctx.evidence.run(
-                self.runner, ctx.head_dir, ARGV, timeout_s=self.timeout_s, overlay=files
-            )
-            again_idx, again_rec = ctx.evidence.run(
-                self.runner, ctx.head_dir, ARGV, timeout_s=self.timeout_s, overlay=files
-            )
-        finally:
-            self._cleanup(ctx)
-
-        base_res = parse_results(base_rec.stdout)
-        head_res = parse_results(head_rec.stdout)
-        again_res = parse_results(again_rec.stdout)
-        records = (base_rec, head_rec, again_rec)
-        if not (base_res and head_res and again_res) or any(
-            is_infra_failure(record) for record in records
-        ):
-            detail = (head_rec.stderr or base_rec.stderr)[-500:]
+        run = self._execute(ctx, calls, analysis)
+        if not run.ok:
             result.findings.append(
                 Finding(
                     source="characterize",
                     title="Differential check could not run",
-                    detail=detail,
+                    detail=run.detail,
                     severity=Severity.LOW,
-                    command_indexes=[base_idx, head_idx, again_idx],
+                    command_indexes=list(run.indexes),
                 )
             )
             return result
 
-        comparable = [
-            i
-            for i in range(len(calls))
-            if i in base_res
-            and i in head_res
-            and i in again_res
-            and _signature(head_res[i]) == _signature(again_res[i])
-        ]
-        if comparable and all(head_res[i].get("exc") in IMPORT_ERRORS for i in comparable):
-            result.findings.append(
-                Finding(
-                    source="characterize",
-                    title="Differential check could not import the changed modules",
-                    severity=Severity.LOW,
-                    command_indexes=[base_idx, head_idx],
-                )
-            )
-            return result
+        missing = self._missing(analysis, run)
+        if missing and len(calls) < MAX_TOTAL_CALLS:
+            extra = self._more(ctx, critical, analysis, missing, calls)
+            if extra:
+                combined = calls + extra
+                second = self._execute(ctx, combined, analysis)
+                if second.ok:
+                    run, missing = second, self._missing(analysis, second)
 
-        differing = [i for i in comparable if _signature(base_res[i]) != _signature(head_res[i])]
-        result.findings.append(
-            Finding(
-                source="characterize",
-                title=(
-                    f"Differential check: {len(comparable)} input(s) compared, "
-                    f"{len(differing)} differ"
-                ),
-                severity=Severity.INFO,
-                command_indexes=[base_idx, head_idx],
-            )
+        self._conclude(result, no_change, fixes, analysis, run, missing, tests_changed)
+        return result
+
+    def _static(self, ctx: AuditContext, changed_files: list[str]) -> str | None:
+        if not changed_files:
+            return None
+        for path in changed_files:
+            if is_test_file(path) or path.endswith(DOC_SUFFIXES):
+                continue
+            if not path.endswith(".py"):
+                return None
+            base = _read(ctx.base_dir / path)
+            head = _read(ctx.head_dir / path)
+            if base is None or head is None or not same_syntax(base, head):
+                return None
+        return (
+            "No non-test code changed apart from docstrings, comments and formatting, "
+            "so the syntax trees are identical."
         )
 
-        for claim in relevant:
-            if claim.kind is ClaimKind.NO_BEHAVIOR_CHANGE and differing:
-                examples = "; ".join(
-                    f"{_call_text(calls[i])} {_label(base_res[i])} on base but "
-                    f"{_label(head_res[i])} on head"
-                    for i in differing[:3]
+    def _without_targets(
+        self, result: AgentResult, no_change: list[Claim], analysis: Analysis
+    ) -> AgentResult:
+        if analysis.outside:
+            result.findings.append(
+                self._finding(
+                    "Differential check skipped: changed code is outside its reach",
+                    Severity.INFO,
+                    "; ".join(analysis.outside[:6]),
                 )
-                self._refute(result, claim, f"Behavior differs: {examples}", [base_idx, head_idx])
-            elif claim.kind is ClaimKind.FIXES:
-                targeted = [i for i in comparable if calls[i].claim == claim.id]
-                if not targeted or any(i in differing for i in targeted):
-                    continue
-                failing = [i for i in targeted if not head_res[i].get("ok")]
-                if failing:
-                    examples = "; ".join(
-                        f"{_call_text(calls[i])} {_label(head_res[i])} on both versions"
-                        for i in failing[:3]
-                    )
-                    self._refute(
-                        result,
-                        claim,
-                        f"The input described by the claim still fails: {examples}",
-                        [base_idx, head_idx],
-                    )
+            )
+            return result
+        if analysis.new_functions or analysis.deleted_functions:
+            names = ", ".join([*analysis.new_functions, *analysis.deleted_functions][:6])
+            return self._settled(
+                result,
+                no_change,
+                "Structural check: no existing function changed",
+                f"Only new or unreferenced removed functions changed ({names}).",
+            )
+        result.findings.append(
+            self._finding(
+                "Differential check skipped: no changed top-level Python function found",
+                Severity.INFO,
+            )
+        )
+        return result
+
+    def _settled(
+        self, result: AgentResult, no_change: list[Claim], title: str, explanation: str
+    ) -> AgentResult:
+        result.behavior_identical = True
+        result.findings.append(self._finding(title, Severity.INFO, explanation))
+        for claim in no_change:
+            self._support(result, claim, explanation, [])
         return result
 
     def _generate(
-        self, ctx: AuditContext, claims: list[Claim], targets: list[Target]
+        self, ctx: AuditContext, claims: list[Claim], targets: list[Target], limit: int
     ) -> list[Call]:
-        system = SYSTEM.replace("{n}", str(self.max_calls))
-        data = complete_json(self.llm, system, _prompt(ctx, claims, targets))
-        return parse_calls(data, targets, claims, self.max_calls)
+        system = SYSTEM.replace("{n}", str(limit))
+        return complete_parsed(
+            self.llm,
+            system,
+            _prompt(ctx, claims, targets),
+            lambda data: parse_calls(data, targets, claims, limit),
+        )
 
-    def _files(self, calls: list[Call]) -> dict[str, str]:
+    def _more(
+        self,
+        ctx: AuditContext,
+        claims: list[Claim],
+        analysis: Analysis,
+        missing: list[tuple[str, str, int]],
+        existing: list[Call],
+    ) -> list[Call]:
+        room = MAX_TOTAL_CALLS - len(existing)
+        if room <= 0:
+            return []
+        lines = []
+        for side, file, line in missing[:MAX_UNCOVERED_SHOWN]:
+            root = ctx.head_dir if side == "head" else ctx.base_dir
+            label = "new" if side == "head" else "old"
+            lines.append(f"{label} version {file}:{line}: {_line_text(root / file, line)}")
+        used = json.dumps(
+            [{"function": c.function, "args": c.args, "kwargs": c.kwargs} for c in existing]
+        )[:3000]
+        prompt = (
+            _prompt(ctx, claims, analysis.targets)
+            + "\n\nThese changed lines did not run under the inputs already used. "
+            + "Add calls that execute them:\n"
+            + "\n".join(lines)
+            + f"\n\nInputs already used:\n{used}"
+        )
+        system = SYSTEM.replace("{n}", str(room))
+        try:
+            fresh = complete_parsed(
+                self.llm,
+                system,
+                prompt,
+                lambda data: parse_calls(data, analysis.targets, claims, room),
+            )
+        except LLMError:
+            return []
+        known = {_call_key(call) for call in existing}
+        return [call for call in fresh if _call_key(call) not in known]
+
+    def _files(self, calls: list[Call], trace_files: list[str]) -> dict[str, str]:
         payload = json.dumps(
-            [
-                {"module": c.module, "function": c.function, "args": c.args, "kwargs": c.kwargs}
-                for c in calls
-            ]
+            {
+                "calls": [
+                    {
+                        "module": c.module,
+                        "function": c.function,
+                        "args": c.args,
+                        "kwargs": c.kwargs,
+                    }
+                    for c in calls
+                ],
+                "trace": list(trace_files),
+            }
         )
         return {
             f"{CHAR_DIR}/__init__.py": "",
@@ -412,9 +651,226 @@ class Characterizer:
         for root in (ctx.base_dir, ctx.head_dir):
             shutil.rmtree(root / CHAR_DIR, ignore_errors=True)
 
+    def _execute(self, ctx: AuditContext, calls: list[Call], analysis: Analysis) -> Run:
+        files = self._files(calls, analysis.trace_files)
+        self._write(ctx, files)
+        try:
+            base_idx, base_rec = ctx.evidence.run(
+                self.runner, ctx.base_dir, ARGV, timeout_s=self.timeout_s, overlay=files
+            )
+            head_idx, head_rec = ctx.evidence.run(
+                self.runner, ctx.head_dir, ARGV, timeout_s=self.timeout_s, overlay=files
+            )
+            again_idx, again_rec = ctx.evidence.run(
+                self.runner, ctx.head_dir, ARGV, timeout_s=self.timeout_s, overlay=files
+            )
+        finally:
+            self._cleanup(ctx)
+
+        run = Run(calls=calls, indexes=(base_idx, head_idx, again_idx))
+        run.base_res = parse_results(base_rec.stdout)
+        run.head_res = parse_results(head_rec.stdout)
+        run.again_res = parse_results(again_rec.stdout)
+        records = (base_rec, head_rec, again_rec)
+        if not (run.base_res and run.head_res and run.again_res) or any(
+            is_infra_failure(record) for record in records
+        ):
+            run.ok = False
+            run.detail = (head_rec.stderr or base_rec.stderr)[-500:]
+            return run
+
+        run.base_trace = parse_trace(base_rec.stdout)
+        run.head_trace = parse_trace(head_rec.stdout)
+        for i in range(len(calls)):
+            if not (i in run.base_res and i in run.head_res and i in run.again_res):
+                continue
+            if _signature(run.head_res[i]) != _signature(run.again_res[i]):
+                continue
+            if _is_new_signature(run.base_res[i], run.head_res[i]):
+                run.new_api.append(i)
+                continue
+            run.comparable.append(i)
+            if _signature(run.base_res[i]) != _signature(run.head_res[i]):
+                run.differing.append(i)
+        return run
+
+    def _missing(self, analysis: Analysis, run: Run) -> list[tuple[str, str, int]]:
+        missing: list[tuple[str, str, int]] = []
+        for side, required, trace in (
+            ("head", analysis.head_required, run.head_trace),
+            ("base", analysis.base_required, run.base_trace),
+        ):
+            for file in sorted(required):
+                hit = (trace or {}).get(file, set())
+                missing.extend((side, file, line) for line in sorted(required[file] - hit))
+        return missing
+
+    def _conclude(
+        self,
+        result: AgentResult,
+        no_change: list[Claim],
+        fixes: list[Claim],
+        analysis: Analysis,
+        run: Run,
+        missing: list[tuple[str, str, int]],
+        tests_changed: bool,
+    ) -> None:
+        calls = run.calls
+        indexes = [run.indexes[0], run.indexes[1]]
+        comparable, differing = run.comparable, run.differing
+
+        if comparable and all(run.head_res[i].get("exc") in IMPORT_ERRORS for i in comparable):
+            result.findings.append(
+                Finding(
+                    source="characterize",
+                    title="Differential check could not import the changed modules",
+                    severity=Severity.LOW,
+                    command_indexes=indexes,
+                )
+            )
+            return
+
+        detail = ""
+        if run.new_api:
+            detail = (
+                f"{len(run.new_api)} input(s) use a signature that exists only on the new "
+                "version and were not compared."
+            )
+        result.findings.append(
+            Finding(
+                source="characterize",
+                title=(
+                    f"Differential check: {len(comparable)} input(s) compared, "
+                    f"{len(differing)} differ"
+                ),
+                detail=detail,
+                severity=Severity.INFO,
+                command_indexes=indexes,
+            )
+        )
+
+        if differing:
+            examples = "; ".join(
+                _describe_difference(calls[i], run.base_res[i], run.head_res[i])
+                for i in differing[:3]
+            )
+            for claim in no_change:
+                self._refute(result, claim, f"Behavior differs: {examples}", indexes)
+            if not no_change and (fixes or tests_changed):
+                result.findings.append(
+                    Finding(
+                        source="characterize",
+                        title=f"Behavior differs on {len(differing)} input(s)",
+                        detail=examples,
+                        severity=Severity.INFO,
+                        command_indexes=indexes,
+                    )
+                )
+            elif not no_change:
+                result.findings.append(
+                    Finding(
+                        source="characterize",
+                        title=f"Behavior change not declared: {len(differing)} input(s) differ",
+                        detail=examples,
+                        severity=Severity.MEDIUM,
+                        command_indexes=indexes,
+                    )
+                )
+
+        if missing:
+            shown = ", ".join(f"{file}:{line}" for _, file, line in missing[:8])
+            result.findings.append(
+                Finding(
+                    source="characterize",
+                    title="Changed code never exercised by the differential inputs",
+                    detail=f"{len(missing)} changed line(s) did not run, for example {shown}.",
+                    severity=Severity.MEDIUM,
+                    command_indexes=indexes,
+                )
+            )
+        if analysis.outside:
+            result.findings.append(
+                self._finding(
+                    "Not differentially checked: " + "; ".join(analysis.outside[:4]),
+                    Severity.INFO,
+                )
+            )
+        if analysis.truncated:
+            result.findings.append(
+                self._finding(
+                    f"Differential check limited to {MAX_FUNCTIONS} functions",
+                    Severity.INFO,
+                    f"{analysis.truncated} more changed function(s) were not compared.",
+                )
+            )
+
+        identical = (
+            not differing
+            and bool(comparable)
+            and not missing
+            and not analysis.outside
+            and not analysis.truncated
+        )
+        if identical:
+            result.behavior_identical = True
+            for claim in no_change:
+                self._support(
+                    result,
+                    claim,
+                    f"{len(comparable)} input(s) gave the same results and argument state on "
+                    "both commits, and every changed line ran.",
+                    indexes,
+                )
+
+        differing_set = set(differing)
+        for claim in fixes:
+            targeted = [i for i in comparable if calls[i].claim == claim.id]
+            if not targeted:
+                continue
+            recovered = [
+                i
+                for i in targeted
+                if not run.base_res[i].get("ok") and run.head_res[i].get("ok")
+            ]
+            if recovered:
+                examples = "; ".join(
+                    f"{_call_text(calls[i])} {_label(run.base_res[i])} on base and "
+                    f"{_label(run.head_res[i])} on head"
+                    for i in recovered[:3]
+                )
+                self._support(
+                    result, claim, f"The input described by the claim now succeeds: {examples}", indexes
+                )
+            elif not differing_set.intersection(targeted):
+                failing = [i for i in targeted if not run.head_res[i].get("ok")]
+                if failing:
+                    examples = "; ".join(
+                        f"{_call_text(calls[i])} {_label(run.head_res[i])} on both versions"
+                        for i in failing[:3]
+                    )
+                    self._refute(
+                        result,
+                        claim,
+                        f"The input described by the claim still fails: {examples}",
+                        indexes,
+                    )
+
     @staticmethod
     def _finding(title: str, severity: Severity, detail: str = "") -> Finding:
         return Finding(source="characterize", title=title, detail=detail, severity=severity)
+
+    @staticmethod
+    def _support(
+        result: AgentResult, claim: Claim, explanation: str, indexes: list[int]
+    ) -> None:
+        result.claim_results.append(
+            ClaimResult(
+                claim_id=claim.id,
+                status=ClaimStatus.SUPPORTED,
+                explanation=explanation[:1000],
+                command_indexes=indexes,
+            )
+        )
 
     @staticmethod
     def _refute(result: AgentResult, claim: Claim, explanation: str, indexes: list[int]) -> None:
@@ -438,24 +894,24 @@ class Characterizer:
 
 
 def merge_characterization(
-    audit: AgentResult, characterization: AgentResult, claims: list[Claim]
+    audit: AgentResult, extra: AgentResult, claims: list[Claim]
 ) -> None:
     by_id = {claim.id: claim for claim in claims}
-    for refuted in characterization.claim_results:
-        claim = by_id.get(refuted.claim_id)
+    for new in extra.claim_results:
+        claim = by_id.get(new.claim_id)
         if claim is None:
             continue
-        prior = [r for r in audit.claim_results if r.claim_id == refuted.claim_id]
+        prior = [r for r in audit.claim_results if r.claim_id == new.claim_id]
         if any(r.status is ClaimStatus.REFUTED for r in prior):
             continue
-        indexes = sorted({*refuted.command_indexes, *(i for r in prior for i in r.command_indexes)})
-        audit.claim_results = [r for r in audit.claim_results if r.claim_id != refuted.claim_id]
-        audit.claim_results.append(refuted.model_copy(update={"command_indexes": indexes}))
+        indexes = sorted({*new.command_indexes, *(i for r in prior for i in r.command_indexes)})
+        audit.claim_results = [r for r in audit.claim_results if r.claim_id != new.claim_id]
+        audit.claim_results.append(new.model_copy(update={"command_indexes": indexes}))
         stale = f"Claim not verified: {claim.text}"
         audit.findings = [f for f in audit.findings if f.title != stale]
 
     titles = {finding.title for finding in audit.findings}
-    for finding in characterization.findings:
+    for finding in extra.findings:
         if finding.title not in titles:
             audit.findings.append(finding)
             titles.add(finding.title)
