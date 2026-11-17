@@ -4,10 +4,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Protocol
 
-from tribunal.models import ClaimResult, CommandRecord, Finding
+from tribunal.models import ClaimKind, ClaimResult, CommandRecord, Finding
 
 INFRA_EXIT_CODES = frozenset({125, 126, 127})
 MAX_BLOB_BYTES = 512_000
+CRITICAL_KINDS = frozenset({ClaimKind.FIXES, ClaimKind.NO_BEHAVIOR_CHANGE})
 
 
 class CommandRunner(Protocol):
@@ -77,6 +78,7 @@ class Evidence:
 class AgentResult:
     findings: list[Finding] = field(default_factory=list)
     claim_results: list[ClaimResult] = field(default_factory=list)
+    behavior_identical: bool = False
 
 
 def passed(record: CommandRecord) -> bool:
