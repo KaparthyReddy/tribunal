@@ -144,7 +144,7 @@ def test_ledger_finding_added_for_known_agent(
 ) -> None:
     repo, shas = scenario
     runner = make_runner(lambda workdir, argv: (0, "ok", ""))
-    pipe = make_pipeline(runner, ScriptedLLM([probes_json]))
+    pipe = make_pipeline(runner, ScriptedLLM([probes_json]), differential=False)
 
     for _ in range(5):
         old = Submission(
