@@ -58,7 +58,9 @@ def test_surviving_mutants_become_test_gaps() -> None:
             severity=Severity.MEDIUM,
             command_indexes=[3],
         ),
-        Finding(source="skeptic", title="Mutation score: 1/2 mutants killed", severity=Severity.INFO),
+        Finding(
+            source="skeptic", title="Mutation score: 1/2 mutants killed", severity=Severity.INFO
+        ),
         Finding(source="auditor", title="Surviving mutant at b.py:1 (x)", severity=Severity.MEDIUM),
     ]
     demoted = demote_test_gaps(findings)

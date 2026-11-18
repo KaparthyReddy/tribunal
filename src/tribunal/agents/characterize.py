@@ -28,7 +28,7 @@ SIGNATURE_ERROR = re.compile(
 )
 DOC_SUFFIXES = (".md", ".rst", ".txt")
 
-DRIVER = '''\
+DRIVER = """\
 import contextlib
 import copy
 import importlib
@@ -113,7 +113,7 @@ def main():
 
 
 main()
-'''
+"""
 
 SYSTEM = """You design test inputs for comparing two versions of the same Python functions.
 A coding agent changed the functions below. Your calls will run on the old and the new version,
@@ -832,9 +832,7 @@ class Characterizer:
             if not targeted:
                 continue
             recovered = [
-                i
-                for i in targeted
-                if not run.base_res[i].get("ok") and run.head_res[i].get("ok")
+                i for i in targeted if not run.base_res[i].get("ok") and run.head_res[i].get("ok")
             ]
             if recovered:
                 examples = "; ".join(
@@ -843,7 +841,10 @@ class Characterizer:
                     for i in recovered[:3]
                 )
                 self._support(
-                    result, claim, f"The input described by the claim now succeeds: {examples}", indexes
+                    result,
+                    claim,
+                    f"The input described by the claim now succeeds: {examples}",
+                    indexes,
                 )
             elif not differing_set.intersection(targeted):
                 failing = [i for i in targeted if not run.head_res[i].get("ok")]
@@ -864,9 +865,7 @@ class Characterizer:
         return Finding(source="characterize", title=title, detail=detail, severity=severity)
 
     @staticmethod
-    def _support(
-        result: AgentResult, claim: Claim, explanation: str, indexes: list[int]
-    ) -> None:
+    def _support(result: AgentResult, claim: Claim, explanation: str, indexes: list[int]) -> None:
         result.claim_results.append(
             ClaimResult(
                 claim_id=claim.id,
@@ -897,9 +896,7 @@ class Characterizer:
         )
 
 
-def merge_characterization(
-    audit: AgentResult, extra: AgentResult, claims: list[Claim]
-) -> None:
+def merge_characterization(audit: AgentResult, extra: AgentResult, claims: list[Claim]) -> None:
     by_id = {claim.id: claim for claim in claims}
     for new in extra.claim_results:
         claim = by_id.get(new.claim_id)

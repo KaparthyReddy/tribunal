@@ -61,9 +61,7 @@ def test_differential_can_be_disabled(scenario, make_runner, make_pipeline, prob
             probes_json,
         ]
     )
-    pipe = make_pipeline(
-        make_runner(lambda workdir, argv: (0, "ok", "")), llm, differential=False
-    )
+    pipe = make_pipeline(make_runner(lambda workdir, argv: (0, "ok", "")), llm, differential=False)
     submission = pipe.submit(
         repo_path=str(repo),
         base=shas[0],

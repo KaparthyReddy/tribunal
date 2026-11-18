@@ -4,7 +4,15 @@ from pathlib import Path
 from tribunal.agents.auditor import AuditContext
 from tribunal.agents.base import AgentResult, CommandRunner, is_infra_failure, passed
 from tribunal.graph import is_test_file
-from tribunal.models import Claim, ClaimKind, ClaimResult, ClaimStatus, CommandRecord, Finding, Severity
+from tribunal.models import (
+    Claim,
+    ClaimKind,
+    ClaimResult,
+    ClaimStatus,
+    CommandRecord,
+    Finding,
+    Severity,
+)
 
 IMPORT_FAILURE = re.compile(r"\b(?:ImportError|ModuleNotFoundError)\b")
 

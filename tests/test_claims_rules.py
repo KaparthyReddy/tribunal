@@ -49,12 +49,12 @@ def test_other_phrases_do_not_match(text: str) -> None:
 
 
 def test_kind_token_text_is_replaced_by_the_matching_sentence() -> None:
-    llm = ScriptedLLM(
-        [_claims_json({"text": "no_behavior_change", "kind": "no_behavior_change"})]
-    )
+    llm = ScriptedLLM([_claims_json({"text": "no_behavior_change", "kind": "no_behavior_change"})])
     claims = extract_claims(
         llm,
-        _submission(title="Tidy the retry module", description="Tidy the retry module. No behavior change."),
+        _submission(
+            title="Tidy the retry module", description="Tidy the retry module. No behavior change."
+        ),
     )
     assert [(c.id, c.text, c.kind) for c in claims] == [
         ("c1", "No behavior change.", ClaimKind.NO_BEHAVIOR_CHANGE)
@@ -67,9 +67,7 @@ def test_other_kind_tokens_are_dropped() -> None:
 
 
 def test_backstop_adds_a_no_change_claim_the_model_dropped() -> None:
-    llm = ScriptedLLM(
-        [_claims_json({"text": "Makes the return value immutable", "kind": "other"})]
-    )
+    llm = ScriptedLLM([_claims_json({"text": "Makes the return value immutable", "kind": "other"})])
     claims = extract_claims(
         llm,
         _submission(

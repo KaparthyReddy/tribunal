@@ -188,9 +188,7 @@ class Pipeline:
                 )
                 merge_characterization(audit, characterization, claims)
                 identical = characterization.behavior_identical
-            merge_characterization(
-                audit, FailToPass(self.runner).run(ctx, claims, changed), claims
-            )
+            merge_characterization(audit, FailToPass(self.runner).run(ctx, claims, changed), claims)
 
             findings.extend(audit.findings)
             findings.extend(demote_test_gaps(skeptic.findings) if identical else skeptic.findings)

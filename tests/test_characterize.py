@@ -62,7 +62,13 @@ def _ctx(
 
 
 def _call(*args, claim: str | None = None) -> dict:
-    return {"module": "greet", "function": "greet", "args": list(args), "kwargs": {}, "claim": claim}
+    return {
+        "module": "greet",
+        "function": "greet",
+        "args": list(args),
+        "kwargs": {},
+        "claim": claim,
+    }
 
 
 def _llm(*batches: list[dict]) -> ScriptedLLM:
@@ -103,7 +109,9 @@ def _write(root: Path, files: dict[str, str]) -> Path:
 
 
 def _analyze(tmp_path: Path, base: dict[str, str], head: dict[str, str], changes):
-    return analyze_changes(_write(tmp_path / "base", base), _write(tmp_path / "head", head), changes)
+    return analyze_changes(
+        _write(tmp_path / "base", base), _write(tmp_path / "head", head), changes
+    )
 
 
 def test_module_name() -> None:
@@ -123,7 +131,13 @@ def test_parse_calls_filters() -> None:
             _call("a"),
             {"module": "greet", "function": "other", "args": []},
             {"module": "greet", "function": "greet", "args": "bad"},
-            {"module": "greet", "function": "greet", "args": [], "kwargs": {"p": "?"}, "claim": "c9"},
+            {
+                "module": "greet",
+                "function": "greet",
+                "args": [],
+                "kwargs": {"p": "?"},
+                "claim": "c9",
+            },
             "junk",
         ]
     }
@@ -151,9 +165,7 @@ def test_parse_results_and_trace_ignore_noise() -> None:
 
 
 def test_analysis_targets_a_changed_top_level_function(tmp_path: Path) -> None:
-    analysis = _analyze(
-        tmp_path, {"greet.py": BASE_SRC}, {"greet.py": HEAD_SRC}, CHANGES
-    )
+    analysis = _analyze(tmp_path, {"greet.py": BASE_SRC}, {"greet.py": HEAD_SRC}, CHANGES)
     assert [(t.module, t.function) for t in analysis.targets] == [("greet", "greet")]
     assert analysis.head_required == {"greet.py": {1, 2}}
     assert analysis.base_required == {"greet.py": {1, 2}}
@@ -221,7 +233,9 @@ def test_a_difference_refutes_a_no_change_claim(tmp_path: Path, make_runner) -> 
 
 def test_identical_covered_inputs_support_a_no_change_claim(tmp_path: Path, make_runner) -> None:
     same = _out([_result(0)], COVERED)
-    result = _run(_ctx(tmp_path), _llm([_call("Ann")]), _runner(make_runner, same, same), [NO_CHANGE])
+    result = _run(
+        _ctx(tmp_path), _llm([_call("Ann")]), _runner(make_runner, same, same), [NO_CHANGE]
+    )
 
     assert [r.status for r in result.claim_results] == [ClaimStatus.SUPPORTED]
     assert result.behavior_identical
@@ -447,7 +461,9 @@ def test_merge_replaces_result_and_drops_stale_finding() -> None:
     )
     extra = AgentResult(
         findings=[
-            Finding(source="characterize", title="Claim refuted: no change", severity=Severity.HIGH),
+            Finding(
+                source="characterize", title="Claim refuted: no change", severity=Severity.HIGH
+            ),
             Finding(
                 source="characterize",
                 title="Differential check: 1 input(s) compared, 1 differ",
@@ -470,7 +486,9 @@ def test_merge_replaces_result_and_drops_stale_finding() -> None:
 
 def test_merge_keeps_an_existing_refutation_without_duplicates() -> None:
     audit = AgentResult(
-        findings=[Finding(source="auditor", title="Claim refuted: no change", severity=Severity.HIGH)],
+        findings=[
+            Finding(source="auditor", title="Claim refuted: no change", severity=Severity.HIGH)
+        ],
         claim_results=[
             ClaimResult(claim_id="c1", status=ClaimStatus.REFUTED, command_indexes=[0, 1])
         ],
