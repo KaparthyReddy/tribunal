@@ -13,7 +13,7 @@ NEW = "new test\n"
 def _ctx(tmp_path: Path, test_command: list[str] | None = None) -> AuditContext:
     base, head = tmp_path / "base", tmp_path / "head"
     for root, test in ((base, OLD), (head, NEW)):
-        root.mkdir()
+        root.mkdir(parents=True)
         (root / "test_x.py").write_text(test)
         (root / "x.py").write_text("x = 1\n")
     submission = Submission(
