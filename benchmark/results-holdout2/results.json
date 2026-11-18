@@ -1,0 +1,623 @@
+{
+  "meta": {
+    "set": "holdout2",
+    "started_at": "2026-11-18T08:04:22+00:00",
+    "provider": "ollama",
+    "model": "qwen2.5:7b-instruct",
+    "sandbox_image": "python:3.12-slim",
+    "tribunal_version": "0.1.0",
+    "git_commit": "42a9bf9",
+    "git_dirty": false,
+    "cases_total": 17
+  },
+  "cases": [
+    {
+      "id": "h2-dict-get",
+      "category": "semantics",
+      "expect": "buggy",
+      "title": "Use dict.get in config_value",
+      "note": "A missing key now returns None instead of raising KeyError. Tests only use present keys.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_3d356e1b0329",
+        "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: No behavior change"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: None input"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Empty dictionary"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Key not found"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Fuzz testing"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 8 input(s) compared, 3 differ"
+          }
+        ],
+        "seconds": 61.13
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "No behavior change and code is clearer.",
+        "seconds": 1.98
+      }
+    },
+    {
+      "id": "h2-default-arg",
+      "category": "semantics",
+      "expect": "buggy",
+      "title": "Tidy paginate",
+      "note": "The default page size doubled. Tests always pass the size explicitly.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_e046543d298e",
+        "rationale": "No blocking issues at 304bdcd8c9e7. 13 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "info",
+            "title": "Differential check: 9 input(s) compared, 0 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Test gap, behavior unchanged: surviving mutant at paging.py:1 (20 -> 21)"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 0/1 mutants killed"
+          }
+        ],
+        "seconds": 44.91
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "Changed default size from 10 to 20, which is a behavior change.",
+        "seconds": 2.12
+      }
+    },
+    {
+      "id": "h2-sort-tiebreak",
+      "category": "semantics",
+      "expect": "buggy",
+      "title": "Make sort_by_length deterministic",
+      "note": "Ties are now ordered alphabetically instead of keeping input order. Tests have no ties.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_e07e49200290",
+        "rationale": "No blocking issues at 6b82ba00d1f2. 13 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "info",
+            "title": "Differential check: 6 input(s) compared, 0 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 1/1 mutants killed"
+          }
+        ],
+        "seconds": 42.79
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change ensures deterministic ordering without altering behavior as stated.",
+        "seconds": 1.81
+      }
+    },
+    {
+      "id": "h2-int-division",
+      "category": "semantics",
+      "expect": "buggy",
+      "title": "Avoid float noise in average",
+      "note": "Floor division truncates fractional averages. Tests only use evenly divisible inputs.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_8df3876f7c8b",
+        "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change.",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: No behavior change."
+          },
+          {
+            "severity": "low",
+            "title": "Claim not verified: Use integer division in average to avoid floating point noise."
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: empty list"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: single element"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: all zeros"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: mixed values"
+          }
+        ],
+        "seconds": 89.2
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change uses integer division as described and should not alter the behavior.",
+        "seconds": 2.05
+      }
+    },
+    {
+      "id": "h2-method-overdraft",
+      "category": "state",
+      "expect": "buggy",
+      "title": "Simplify Account.withdraw",
+      "note": "The insufficient funds check was removed from a method. Tests never overdraw.",
+      "tribunal": {
+        "outcome": "inconclusive",
+        "receipt_id": "rcp_2c0cf92706ba",
+        "rationale": "1 item(s) need human review:\n- Critical claim not verified: No behavior change",
+        "findings": [
+          {
+            "severity": "low",
+            "title": "Claim not verified: No behavior change"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check skipped: changed code is outside its reach"
+          }
+        ],
+        "seconds": 51.95
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "The behavior has changed as it no longer checks for insufficient funds.",
+        "seconds": 2.23
+      }
+    },
+    {
+      "id": "h2-truncate-boundary",
+      "category": "boundary",
+      "expect": "buggy",
+      "title": "Tidy truncate",
+      "note": "A string exactly n long is now truncated. Tests never use that length.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_3cfe9d224514",
+        "rationale": "2 blocking issue(s):\n- Claim refuted: no behavior change\n- Probe broke the change: string exactly n",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: no behavior change"
+          },
+          {
+            "severity": "high",
+            "title": "Probe broke the change: string exactly n"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 10 input(s) compared, 1 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 1/1 mutants killed"
+          }
+        ],
+        "seconds": 50.75
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change correctly updates the condition without altering behavior.",
+        "seconds": 1.88
+      }
+    },
+    {
+      "id": "h2-regex-anchor",
+      "category": "semantics",
+      "expect": "buggy",
+      "title": "Simplify is_hex",
+      "note": "fullmatch became match, so strings with a valid prefix are accepted.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_a87faa7914d5",
+        "rationale": "1 blocking issue(s):\n- Claim refuted: no behavior change",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: no behavior change"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Single digit"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Fuzz testing with random strings"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 14 input(s) compared, 7 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 2/2 mutants killed"
+          }
+        ],
+        "seconds": 67.53
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "Changes behavior by matching from start only",
+        "seconds": 2.06
+      }
+    },
+    {
+      "id": "h2-new-word-count",
+      "category": "new-code",
+      "expect": "buggy",
+      "title": "Add word_count",
+      "note": "Splitting on a single space counts empty tokens for repeated spaces. No tests were added.",
+      "tribunal": {
+        "outcome": "inconclusive",
+        "receipt_id": "rcp_3772aad5044a",
+        "rationale": "2 item(s) need human review:\n- No test reaches changed code: word_count (text_utils.py)\n- Surviving mutant at text_utils.py:6 (return value -> None)",
+        "findings": [
+          {
+            "severity": "medium",
+            "title": "No test reaches changed code: word_count (text_utils.py)"
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at text_utils.py:6 (return value -> None)"
+          },
+          {
+            "severity": "low",
+            "title": "Claim not verified: adds_tests for word_count"
+          },
+          {
+            "severity": "low",
+            "title": "Probe generation failed"
+          },
+          {
+            "severity": "info",
+            "title": "Structural check: no existing function changed"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 0/1 mutants killed"
+          }
+        ],
+        "seconds": 28.33
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change adds the required function without altering existing behavior.",
+        "seconds": 2.34
+      }
+    },
+    {
+      "id": "h2-label-boundary",
+      "category": "boundary",
+      "expect": "buggy",
+      "title": "Tidy shipping_label",
+      "note": "A weight of exactly 10 moved from light to heavy. Every line is exercised by typical inputs.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_e2a07ea39e55",
+        "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change. 1 additional item(s) need review.",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: No behavior change."
+          },
+          {
+            "severity": "medium",
+            "title": "Surviving mutant at shipping.py:4 (10 -> 11)"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Test edge cases"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Test empty and None inputs"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 5 input(s) compared, 1 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 1/2 mutants killed"
+          }
+        ],
+        "seconds": 83.21
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "Tidy change with correct logic update, no behavior change.",
+        "seconds": 2.2
+      }
+    },
+    {
+      "id": "h2-mutates-argument",
+      "category": "state",
+      "expect": "buggy",
+      "title": "Avoid an allocation in sorted_copy",
+      "note": "The function now sorts its argument in place. The returned values are identical.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_55e7e710d01b",
+        "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Claim refuted: No behavior change"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 14 input(s) compared, 4 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 1/1 mutants killed"
+          }
+        ],
+        "seconds": 62.86
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change avoids unnecessary allocation without altering behavior.",
+        "seconds": 2.14
+      }
+    },
+    {
+      "id": "h2-tests-catch-it",
+      "category": "regression",
+      "expect": "buggy",
+      "title": "Simplify discount",
+      "note": "The percentage is applied the wrong way round. Existing tests fail.",
+      "tribunal": {
+        "outcome": "fail",
+        "receipt_id": "rcp_8536c1e83106",
+        "rationale": "4 blocking issue(s):\n- Regression: test command passes on base but fails on head\n- Claim refuted: No behavior change\n- Probe broke the change: Discount with zero percentage\n- Probe broke the change: Discount with full percentage",
+        "findings": [
+          {
+            "severity": "high",
+            "title": "Regression: test command passes on base but fails on head"
+          },
+          {
+            "severity": "high",
+            "title": "Claim refuted: No behavior change"
+          },
+          {
+            "severity": "high",
+            "title": "Probe broke the change: Discount with zero percentage"
+          },
+          {
+            "severity": "high",
+            "title": "Probe broke the change: Discount with full percentage"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: Discount with negative percentage"
+          },
+          {
+            "severity": "low",
+            "title": "Mutation testing skipped: test command does not pass on head"
+          }
+        ],
+        "seconds": 43.25
+      },
+      "baseline": {
+        "outcome": "fail",
+        "reason": "The new implementation does not correctly apply the discount percentage.",
+        "seconds": 2.15
+      }
+    },
+    {
+      "id": "h2-clean-first-even",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Use next() in first_even",
+      "note": "Correct refactor with thin tests.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_1ca84bc9ed59",
+        "rationale": "No blocking issues at 865d6b7176ca. 16 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "info",
+            "title": "Differential check: 13 input(s) compared, 0 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 4/4 mutants killed"
+          }
+        ],
+        "seconds": 60.23
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change uses a generator expression with next(), achieving the same functionality without altering behavior.",
+        "seconds": 2.82
+      }
+    },
+    {
+      "id": "h2-clean-palindrome-fix",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Fix is_palindrome for mixed case",
+      "note": "Correct fix with a new test that fails on the base commit.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_8956868e8f03",
+        "rationale": "No blocking issues at 2dddc92b5a3e. 12 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "low",
+            "title": "Skeptic produced no valid probes"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 7 input(s) compared, 1 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Behavior differs on 1 input(s)"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 3/3 mutants killed"
+          }
+        ],
+        "seconds": 45.34
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change correctly handles mixed-case palindromes and the tests validate this.",
+        "seconds": 3.51
+      }
+    },
+    {
+      "id": "h2-clean-declared-change",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Shorten the greeting",
+      "note": "An intentional, declared behavior change with updated tests.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_f4f3ae26183c",
+        "rationale": "No blocking issues at 30076c27f7ff. 16 sandboxed command(s) run, 0 of 1 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "low",
+            "title": "Claim not verified: Changes the greeting from 'Hello' to 'Hi'."
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 1 input(s) compared, 0 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 2/2 mutants killed"
+          }
+        ],
+        "seconds": 45.78
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change matches the description and passes tests.",
+        "seconds": 3.62
+      }
+    },
+    {
+      "id": "h2-clean-optional-param",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Add an upper option to label",
+      "note": "Correct change that adds an optional parameter with a test.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_6e78c78c6cb1",
+        "rationale": "No blocking issues at ebc0601d62a3. 19 sandboxed command(s) run, 1 of 2 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "low",
+            "title": "Claim not verified: adds an optional upper parameter to label"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: None input"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: negative index"
+          },
+          {
+            "severity": "low",
+            "title": "Probe fails on both base and head: unicode input"
+          },
+          {
+            "severity": "info",
+            "title": "Differential check: 1 input(s) compared, 0 differ"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 3/3 mutants killed"
+          }
+        ],
+        "seconds": 53.75
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change adds an optional parameter and the tests cover both existing and new functionality.",
+        "seconds": 3.6
+      }
+    },
+    {
+      "id": "h2-clean-dead-code",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Remove unused helper",
+      "note": "Correct deletion of a function nothing calls.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_c1b2c2310e90",
+        "rationale": "No blocking issues at 430816b7a1b3. 12 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "info",
+            "title": "Structural check: no existing function changed"
+          },
+          {
+            "severity": "info",
+            "title": "Mutation score: 1/1 mutants killed"
+          }
+        ],
+        "seconds": 42.65
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "Removal of unused code with no behavior change as described.",
+        "seconds": 3.05
+      }
+    },
+    {
+      "id": "h2-clean-comment-only",
+      "category": "clean",
+      "expect": "clean",
+      "title": "Add a comment to area",
+      "note": "Comment only.",
+      "tribunal": {
+        "outcome": "pass",
+        "receipt_id": "rcp_d9a89142f520",
+        "rationale": "No blocking issues at 8697f1f33abd. 8 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+        "findings": [
+          {
+            "severity": "info",
+            "title": "Static check: no runtime change"
+          }
+        ],
+        "seconds": 35.78
+      },
+      "baseline": {
+        "outcome": "pass",
+        "reason": "The change adds a comment without altering behavior.",
+        "seconds": 2.17
+      }
+    }
+  ]
+}

@@ -1,0 +1,305 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_14ed36b7a5cf",
+    "submission_id": "sub_2a5b6bc411b9",
+    "repo": "h2-clean-dead-code",
+    "base_sha": "2a1e0647dfdb904a76572b51ddd29cf64a79212d",
+    "head_sha": "1f5a28ada6e7648c752207f5aeba6688a955c62b",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 1f5a28ada6e7. 15 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "The test suite results are identical between the base and head states, indicating no behavior change.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Differential check: 6 input(s) compared, 0 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          7,
+          8
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.266,
+        "started_at": "2026-11-18T08:48:41.486103Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.232,
+        "started_at": "2026-11-18T08:48:41.752079Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_totals.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.317,
+        "started_at": "2026-11-18T08:48:52.918224Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_totals.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.236,
+        "started_at": "2026-11-18T08:48:53.235512Z"
+      },
+      {
+        "argv": [
+          "grep",
+          "-r",
+          "_legacy_total",
+          "."
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.116,
+        "started_at": "2026-11-18T08:48:53.472148Z"
+      },
+      {
+        "argv": [
+          "diff",
+          "--git",
+          "totals.py.orig",
+          "totals.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 2,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "diff: unrecognized option '--git'\ndiff: Try 'diff --help' for more information.\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.127,
+        "started_at": "2026-11-18T08:48:53.588837Z"
+      },
+      {
+        "argv": [
+          "diff",
+          "--git",
+          "totals.py.orig",
+          "totals.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 2,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "diff: unrecognized option '--git'\ndiff: Try 'diff --help' for more information.\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.136,
+        "started_at": "2026-11-18T08:48:53.716168Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"6\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"total() missing 1 required positional argument: 'xs'\"}\n{\"i\": 2, \"ok\": true, \"value\": \"-6\"}\n{\"i\": 3, \"ok\": true, \"value\": \"0\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"total() takes 1 positional argument but 2 were given\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"unsupported operand type(s) for +: 'int' and 'str'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.559,
+        "started_at": "2026-11-18T08:49:16.655679Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"6\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"total() missing 1 required positional argument: 'xs'\"}\n{\"i\": 2, \"ok\": true, \"value\": \"-6\"}\n{\"i\": 3, \"ok\": true, \"value\": \"0\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"total() takes 1 positional argument but 2 were given\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"unsupported operand type(s) for +: 'int' and 'str'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.219,
+        "started_at": "2026-11-18T08:49:17.215131Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"6\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"total() missing 1 required positional argument: 'xs'\"}\n{\"i\": 2, \"ok\": true, \"value\": \"-6\"}\n{\"i\": 3, \"ok\": true, \"value\": \"0\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"total() takes 1 positional argument but 2 were given\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"unsupported operand type(s) for +: 'int' and 'str'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.199,
+        "started_at": "2026-11-18T08:49:17.434162Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.346,
+        "started_at": "2026-11-18T08:49:46.041443Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.238,
+        "started_at": "2026-11-18T08:49:46.387913Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.247,
+        "started_at": "2026-11-18T08:49:46.626092Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.256,
+        "started_at": "2026-11-18T08:49:46.875203Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_total (test_totals.T.test_total)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_totals.py\", line 8, in test_total\n    self.assertEqual(total([1, 2]), 3)\nAssertionError: None != 3\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.284,
+        "started_at": "2026-11-18T08:49:47.131939Z"
+      }
+    ],
+    "issued_at": "2026-11-18T08:49:47.416716Z"
+  },
+  "digest": "42ddbf79ac83e4326a48c77f17b151e45c4bec5527d59bd991194f45ae927dca",
+  "signature": "ktHg99pm86hkPQTp7tz0afJk8nubZ4SxZViIVUOXG0dkJF6hiUNyAkNoP3RtXLqjIYwafUN6hoLmMSD3TDliDw==",
+  "public_key": "veLapdXUYWIS6C+TYA+lFFuam+NaEoVd6nA6Xbx4MW4="
+}

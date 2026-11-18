@@ -1,0 +1,346 @@
+{
+  "body": {
+    "version": 2,
+    "receipt_id": "rcp_e07e49200290",
+    "submission_id": "sub_4bbcceb1babe",
+    "repo": "h2-sort-tiebreak",
+    "base_sha": "5819ef0361d9ec19cd9832e107878b33aff1d185",
+    "head_sha": "6b82ba00d1f289999bfd145084c12e260428902b",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 6b82ba00d1f2. 13 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "6 input(s) gave the same results and argument state on both commits, and every changed line ran.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          10,
+          11
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Differential check: 6 input(s) compared, 0 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          10,
+          11
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.245,
+        "started_at": "2026-11-18T08:06:14.594754Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.252,
+        "started_at": "2026-11-18T08:06:14.840304Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import sorting; import random; words = [random.randbytes(10).decode() for _ in range(10)]; print(sorting.sort_by_length(words))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xf5 in position 0: invalid start byte\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.171,
+        "started_at": "2026-11-18T08:06:19.458227Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import sorting; import random; words = [random.randbytes(10).decode() for _ in range(10)]; print(sorting.sort_by_length(words))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xc1 in position 5: invalid start byte\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.136,
+        "started_at": "2026-11-18T08:06:19.629670Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.291,
+        "started_at": "2026-11-18T08:06:42.416106Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "516e856da35faf63dc83cb94d321d5c6306d33d4c46d832a0c8dd3fb150b8f44"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.239,
+        "started_at": "2026-11-18T08:06:42.707523Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "8b88c797ff48992fcd6857f4e7488f4406f7f08bdc1b08ce819302aaf986b1f7"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.267,
+        "started_at": "2026-11-18T08:06:42.947140Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "7ecea7e343ad9d883f6aca68ef6aded05ea1680b3c81df9e49b8e9d8d0118d4f"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.269,
+        "started_at": "2026-11-18T08:06:43.214297Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "6c07ee1fe2283fe21942128a213e021c52fc7bcd6d06a607aa5d9801840495ab"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.23,
+        "started_at": "2026-11-18T08:06:43.485253Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_sort_by_length (test_sorting.T.test_sort_by_length)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_sorting.py\", line 8, in test_sort_by_length\n    self.assertEqual(sort_by_length([\"ccc\", \"a\", \"bb\"]), [\"a\", \"bb\", \"ccc\"])\nAssertionError: None != ['a', 'bb', 'ccc']\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.266,
+        "started_at": "2026-11-18T08:06:43.716037Z",
+        "side": "head",
+        "overlay": {
+          "sorting.py": "f6c1cd6b3855f9ad853d6772714e2b7c3774a11818942e71c8e32e64f25a3078"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"['a', 'bb', 'ccc']\", \"state\": \"[[['a', 'bb', 'ccc']], {}]\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\", \"state\": \"[[[], []], {}]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\", \"state\": \"[[[''], ['a']], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"['abc', 'def', 'ghij', 'klmno']\", \"state\": \"[[['abc', 'def', 'ghij', 'klmno']], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"[['a'], ['bb'], ['ccc']]\", \"state\": \"[[[['a'], ['bb'], ['ccc']]], {}]\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\", \"state\": \"[[['a', 'bb', 'ccc'], {'key': 'len'}], {}]\"}\n{\"trace\": {\"sorting.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.275,
+        "started_at": "2026-11-18T08:06:55.415322Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "342ec212a754d81fe3cd42ac5ae743354839e9f3cc9e06d92e8ba777fc66d477",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"['a', 'bb', 'ccc']\", \"state\": \"[[['a', 'bb', 'ccc']], {}]\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\", \"state\": \"[[[], []], {}]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\", \"state\": \"[[[''], ['a']], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"['abc', 'def', 'ghij', 'klmno']\", \"state\": \"[[['abc', 'def', 'ghij', 'klmno']], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"[['a'], ['bb'], ['ccc']]\", \"state\": \"[[[['a'], ['bb'], ['ccc']]], {}]\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\", \"state\": \"[[['a', 'bb', 'ccc'], {'key': 'len'}], {}]\"}\n{\"trace\": {\"sorting.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.159,
+        "started_at": "2026-11-18T08:06:55.690623Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "342ec212a754d81fe3cd42ac5ae743354839e9f3cc9e06d92e8ba777fc66d477",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"['a', 'bb', 'ccc']\", \"state\": \"[[['a', 'bb', 'ccc']], {}]\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\", \"state\": \"[[[], []], {}]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\", \"state\": \"[[[''], ['a']], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"['abc', 'def', 'ghij', 'klmno']\", \"state\": \"[[['abc', 'def', 'ghij', 'klmno']], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"[['a'], ['bb'], ['ccc']]\", \"state\": \"[[[['a'], ['bb'], ['ccc']]], {}]\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\", \"state\": \"[[['a', 'bb', 'ccc'], {'key': 'len'}], {}]\"}\n{\"trace\": {\"sorting.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.175,
+        "started_at": "2026-11-18T08:06:55.850229Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "342ec212a754d81fe3cd42ac5ae743354839e9f3cc9e06d92e8ba777fc66d477",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      }
+    ],
+    "blobs": {
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "516e856da35faf63dc83cb94d321d5c6306d33d4c46d832a0c8dd3fb150b8f44": "import unittest; from sorting import sort_by_length\nclass TestSortByLength(unittest.TestCase):\n    def test_empty_input(self):\n        self.assertEqual(sort_by_length([]), [])\n\nif __name__ == '__main__':\n    unittest.main()",
+      "8b88c797ff48992fcd6857f4e7488f4406f7f08bdc1b08ce819302aaf986b1f7": "import unittest; from sorting import sort_by_length\nclass TestSortByLength(unittest.TestCase):\n    def test_single_word(self):\n        self.assertEqual(sort_by_length(['apple']), ['apple'])\n\nif __name__ == '__main__':\n    unittest.main()",
+      "7ecea7e343ad9d883f6aca68ef6aded05ea1680b3c81df9e49b8e9d8d0118d4f": "import unittest; from sorting import sort_by_length\nclass TestSortByLength(unittest.TestCase):\n    def test_multiple_same_length(self):\n        self.assertEqual(sort_by_length(['cat', 'dog']), ['cat', 'dog'])\n\nif __name__ == '__main__':\n    unittest.main()",
+      "6c07ee1fe2283fe21942128a213e021c52fc7bcd6d06a607aa5d9801840495ab": "import unittest; import random; from sorting import sort_by_length\nclass TestSortByLength(unittest.TestCase):\n    def test_fuzz(self):\n        for _ in range(500):\n            words = [random.choice(['a', 'b', 'c']) * i for i in range(1, 10)]\n            self.assertEqual(sort_by_length(words), sorted(words, key=lambda w: (len(w), w)))\n\nif __name__ == '__main__':\n    unittest.main()",
+      "f6c1cd6b3855f9ad853d6772714e2b7c3774a11818942e71c8e32e64f25a3078": "def sort_by_length(words):\n    return None\n",
+      "342ec212a754d81fe3cd42ac5ae743354839e9f3cc9e06d92e8ba777fc66d477": "{\"calls\": [{\"module\": \"sorting\", \"function\": \"sort_by_length\", \"args\": [[\"a\", \"bb\", \"ccc\"]], \"kwargs\": {}}, {\"module\": \"sorting\", \"function\": \"sort_by_length\", \"args\": [[], []], \"kwargs\": {}}, {\"module\": \"sorting\", \"function\": \"sort_by_length\", \"args\": [[\"\"], [\"a\"]], \"kwargs\": {}}, {\"module\": \"sorting\", \"function\": \"sort_by_length\", \"args\": [[\"abc\", \"def\", \"ghij\", \"klmno\"]], \"kwargs\": {}}, {\"module\": \"sorting\", \"function\": \"sort_by_length\", \"args\": [[[\"a\"], [\"bb\"], [\"ccc\"]]], \"kwargs\": {}}, {\"module\": \"sorting\", \"function\": \"sort_by_length\", \"args\": [[\"a\", \"bb\", \"ccc\"], {\"key\": \"len\"}], \"kwargs\": {}}], \"trace\": [\"sorting.py\"]}",
+      "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee": "import contextlib\nimport copy\nimport importlib\nimport io\nimport json\nimport os\nimport signal\nimport sys\n\nCALL_TIMEOUT_S = 5\n\n\nclass _Timeout(Exception):\n    pass\n\n\ndef _on_alarm(signum, frame):\n    raise _Timeout()\n\n\ndef _describe(value):\n    text = repr(value)\n    return text if len(text) <= 500 else text[:500] + \"...\"\n\n\ndef main():\n    with open(\"tribunal_chars/calls.json\", encoding=\"utf-8\") as handle:\n        spec = json.load(handle)\n    calls = spec[\"calls\"]\n    watch = set(spec.get(\"trace\", []))\n    executed = {}\n    names = {}\n\n    def watched(filename):\n        if filename not in names:\n            try:\n                rel = os.path.relpath(os.path.abspath(filename), os.getcwd()).replace(os.sep, \"/\")\n            except ValueError:\n                rel = \"\"\n            names[filename] = rel if rel in watch else \"\"\n        return names[filename]\n\n    def tracer(frame, event, arg):\n        rel = watched(frame.f_code.co_filename)\n        if not rel:\n            return None\n        lines = executed.setdefault(rel, set())\n\n        def local(frame, event, arg):\n            if event == \"line\":\n                lines.add(frame.f_lineno)\n            return local\n\n        return local\n\n    signal.signal(signal.SIGALRM, _on_alarm)\n    if watch:\n        sys.settrace(tracer)\n    try:\n        for index, call in enumerate(calls):\n            signal.alarm(CALL_TIMEOUT_S)\n            args = copy.deepcopy(call[\"args\"])\n            kwargs = copy.deepcopy(call[\"kwargs\"])\n            try:\n                module = importlib.import_module(call[\"module\"])\n                function = getattr(module, call[\"function\"])\n                with contextlib.redirect_stdout(io.StringIO()):\n                    value = function(*args, **kwargs)\n                record = {\"i\": index, \"ok\": True, \"value\": _describe(value)}\n            except _Timeout:\n                record = {\"i\": index, \"ok\": False, \"exc\": \"Timeout\", \"msg\": \"\"}\n            except BaseException as exc:\n                record = {\"i\": index, \"ok\": False, \"exc\": type(exc).__name__, \"msg\": str(exc)[:200]}\n            finally:\n                signal.alarm(0)\n            record[\"state\"] = _describe([args, kwargs])\n            print(json.dumps(record), flush=True)\n    finally:\n        sys.settrace(None)\n    trace = {name: sorted(lines) for name, lines in executed.items()}\n    print(json.dumps({\"trace\": trace}), flush=True)\n\n\nmain()\n"
+    },
+    "issued_at": "2026-11-18T08:06:56.027599Z"
+  },
+  "digest": "18cb43eb11a609afa7ff7dbf260e0d16b1d62704d63a60edc32a19026af4ae97",
+  "signature": "7xMjdPwhsPYKRMr1MA2eeNLOCWD0Ya8V0zCY8OxyiIuhcPEblIqu2TX08asW1yCNQsx9bI2I+KCGNhEDKV4VDA==",
+  "public_key": "woiCy9IUIYaZJ87l6X+N94xdNYU5FHQhx4ZZZeiFwOI="
+}

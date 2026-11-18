@@ -1,0 +1,310 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_a2f782b1fa59",
+    "submission_id": "sub_712eeb56e851",
+    "repo": "h2-truncate-boundary",
+    "base_sha": "2c74edc0858b409f5e5626ea85f04704ff1a35e0",
+    "head_sha": "8166832988f4ea5d2741fb16320372fd2507517b",
+    "verdict": "fail",
+    "rationale": "2 blocking issue(s):\n- Claim refuted: no behavior change\n- Probe broke the change: string exactly n",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "Behavior differs: truncate('hello', 5) returned 'hello' on base but returned 'he...' on head",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: no behavior change",
+        "detail": "Behavior differs: truncate('hello', 5) returned 'hello' on base but returned 'he...' on head",
+        "severity": "high",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe broke the change: string exactly n",
+        "detail": "Passes on base, fails on head.\nF\n======================================================================\nFAIL: test_exactly_n (tribunal_probes.probe_3.TestTruncate.test_exactly_n)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 4, in test_exactly_n\n    self.assertEqual(truncate('hello', 5), 'hello')\nAssertionError: 'he...' != 'hello'\n- he...\n+ hello\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "high",
+        "command_indexes": [
+          9,
+          10
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 15 input(s) compared, 1 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.276,
+        "started_at": "2026-11-18T08:37:32.116282Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.238,
+        "started_at": "2026-11-18T08:37:32.392651Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_trunc"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.261,
+        "started_at": "2026-11-18T08:37:36.993771Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_trunc"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.244,
+        "started_at": "2026-11-18T08:37:37.255592Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"''\"}\n{\"i\": 1, \"ok\": true, \"value\": \"'hello'\"}\n{\"i\": 2, \"ok\": true, \"value\": \"'hello'\"}\n{\"i\": 3, \"ok\": true, \"value\": \"'...'\"}\n{\"i\": 4, \"ok\": true, \"value\": \"'hell...'\"}\n{\"i\": 5, \"ok\": true, \"value\": \"'hello'\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"object of type 'NoneType' has no len()\"}\n{\"i\": 7, \"ok\": true, \"value\": \"'he...'\"}\n{\"i\": 8, \"ok\": true, \"value\": \"'hello world'\"}\n{\"i\": 9, \"ok\": true, \"value\": \"'hello world'\"}\n{\"i\": 10, \"ok\": true, \"value\": \"'hello, wo...'\"}\n{\"i\": 11, \"ok\": true, \"value\": \"'hello, world!'\"}\n{\"i\": 12, \"ok\": true, \"value\": \"'hello, world!'\"}\n{\"i\": 13, \"ok\": true, \"value\": \"'hello, w...'\"}\n{\"i\": 14, \"ok\": true, \"value\": \"'hello, ...'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.297,
+        "started_at": "2026-11-18T08:38:16.161913Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"''\"}\n{\"i\": 1, \"ok\": true, \"value\": \"'he...'\"}\n{\"i\": 2, \"ok\": true, \"value\": \"'hello'\"}\n{\"i\": 3, \"ok\": true, \"value\": \"'...'\"}\n{\"i\": 4, \"ok\": true, \"value\": \"'hell...'\"}\n{\"i\": 5, \"ok\": true, \"value\": \"'hello'\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"object of type 'NoneType' has no len()\"}\n{\"i\": 7, \"ok\": true, \"value\": \"'he...'\"}\n{\"i\": 8, \"ok\": true, \"value\": \"'hello world'\"}\n{\"i\": 9, \"ok\": true, \"value\": \"'hello world'\"}\n{\"i\": 10, \"ok\": true, \"value\": \"'hello, wo...'\"}\n{\"i\": 11, \"ok\": true, \"value\": \"'hello, world!'\"}\n{\"i\": 12, \"ok\": true, \"value\": \"'hello, world!'\"}\n{\"i\": 13, \"ok\": true, \"value\": \"'hello, w...'\"}\n{\"i\": 14, \"ok\": true, \"value\": \"'hello, ...'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.168,
+        "started_at": "2026-11-18T08:38:16.458866Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"''\"}\n{\"i\": 1, \"ok\": true, \"value\": \"'he...'\"}\n{\"i\": 2, \"ok\": true, \"value\": \"'hello'\"}\n{\"i\": 3, \"ok\": true, \"value\": \"'...'\"}\n{\"i\": 4, \"ok\": true, \"value\": \"'hell...'\"}\n{\"i\": 5, \"ok\": true, \"value\": \"'hello'\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"object of type 'NoneType' has no len()\"}\n{\"i\": 7, \"ok\": true, \"value\": \"'he...'\"}\n{\"i\": 8, \"ok\": true, \"value\": \"'hello world'\"}\n{\"i\": 9, \"ok\": true, \"value\": \"'hello world'\"}\n{\"i\": 10, \"ok\": true, \"value\": \"'hello, wo...'\"}\n{\"i\": 11, \"ok\": true, \"value\": \"'hello, world!'\"}\n{\"i\": 12, \"ok\": true, \"value\": \"'hello, world!'\"}\n{\"i\": 13, \"ok\": true, \"value\": \"'hello, w...'\"}\n{\"i\": 14, \"ok\": true, \"value\": \"'hello, ...'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.168,
+        "started_at": "2026-11-18T08:38:16.626761Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.329,
+        "started_at": "2026-11-18T08:38:40.604539Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.222,
+        "started_at": "2026-11-18T08:38:40.933899Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_exactly_n (tribunal_probes.probe_3.TestTruncate.test_exactly_n)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 4, in test_exactly_n\n    self.assertEqual(truncate('hello', 5), 'hello')\nAssertionError: 'he...' != 'hello'\n- he...\n+ hello\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.229,
+        "started_at": "2026-11-18T08:38:41.156638Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.256,
+        "started_at": "2026-11-18T08:38:41.386054Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.288s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.542,
+        "started_at": "2026-11-18T08:38:41.642044Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.231,
+        "started_at": "2026-11-18T08:38:42.185955Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_truncate (test_trunc.T.test_truncate)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_trunc.py\", line 8, in test_truncate\n    self.assertEqual(truncate(\"hi\", 10), \"hi\")\nAssertionError: 'hi...' != 'hi'\n- hi...\n+ hi\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.253,
+        "started_at": "2026-11-18T08:38:42.417192Z"
+      }
+    ],
+    "issued_at": "2026-11-18T08:38:42.670953Z"
+  },
+  "digest": "074d2b268e8c4e0dc6b075457afd3fa6c5af0e561c82e042d791d86274879218",
+  "signature": "/MsybVqyR0V8Rxwzpq7mmRw2Y+QmLZYFW5RfLTDN8JC97fre7Zq938U+8JohS47B1htP9RJKK668N1O+O+pVBA==",
+  "public_key": "veLapdXUYWIS6C+TYA+lFFuam+NaEoVd6nA6Xbx4MW4="
+}

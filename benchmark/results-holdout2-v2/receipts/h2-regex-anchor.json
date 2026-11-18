@@ -1,0 +1,419 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_69ba0f08c6f0",
+    "submission_id": "sub_2dedbf4684b0",
+    "repo": "h2-regex-anchor",
+    "base_sha": "c8ecc59bea9412fea00688edb0dca07c3eb15edd",
+    "head_sha": "d6af4a24f712873c588f65329eeb0cb06867d89e",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Claim refuted: no behavior change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "Behavior differs: is_hex('1G') returned False on base but returned True on head; is_hex('0x1F') returned False on base but returned True on head",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: no behavior change",
+        "detail": "Behavior differs: is_hex('1G') returned False on base but returned True on head; is_hex('0x1F') returned False on base but returned True on head",
+        "severity": "high",
+        "command_indexes": [
+          8,
+          9
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Single digit",
+        "detail": "F\n======================================================================\nFAIL: test_single_digit (tribunal_probes.probe_2.TestIsHex.test_single_digit)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 3, in test_single_digit\n    def test_single_digit(self): assert not is_hex('1')\n                                        ^^^^^^^^^^^^^^^\nAssertionError\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          12,
+          13
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Fuzz testing with random strings",
+        "detail": "F\n======================================================================\nFAIL: test_fuzz (tribunal_probes.probe_4.TestIsHex.test_fuzz)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 7, in test_fuzz\n    assert not is_hex(s) if any(c not in '0123456789abcdefABCDEF' for c in s) else is_hex(s)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          15,
+          16
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 6 input(s) compared, 2 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          8,
+          9
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 2/2 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.259,
+        "started_at": "2026-11-18T08:38:44.250970Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.215,
+        "started_at": "2026-11-18T08:38:44.510677Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import re; print(re.fullmatch(r'[0-9a-f]+', '123') is not None, re.match(r'[0-9a-f]+', '123') is not None)"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "True True\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.257,
+        "started_at": "2026-11-18T08:39:01.405403Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import re; print(re.fullmatch(r'[0-9a-f]+', '123') is not None, re.match(r'[0-9a-f]+', '123') is not None)"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "True True\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.141,
+        "started_at": "2026-11-18T08:39:01.663179Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import re; print(re.fullmatch(r'[0-9a-f]+', '12345g') is not None, re.match(r'[0-9a-f]+', '12345g') is not None)"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "False True\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.156,
+        "started_at": "2026-11-18T08:39:01.804533Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import re; print(re.fullmatch(r'[0-9a-f]+', '12345g') is not None, re.match(r'[0-9a-f]+', '12345g') is not None)"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "False True\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.173,
+        "started_at": "2026-11-18T08:39:01.960738Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import re; print(re.fullmatch(r'[0-9a-f]+', '') is not None, re.match(r'[0-9a-f]+', '') is not None)"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "False False\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.175,
+        "started_at": "2026-11-18T08:39:02.134336Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import re; print(re.fullmatch(r'[0-9a-f]+', '') is not None, re.match(r'[0-9a-f]+', '') is not None)"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "False False\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.189,
+        "started_at": "2026-11-18T08:39:02.309727Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"True\"}\n{\"i\": 1, \"ok\": true, \"value\": \"False\"}\n{\"i\": 2, \"ok\": true, \"value\": \"False\"}\n{\"i\": 3, \"ok\": true, \"value\": \"True\"}\n{\"i\": 4, \"ok\": true, \"value\": \"False\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"expected string or bytes-like object, got 'NoneType'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.235,
+        "started_at": "2026-11-18T08:39:23.033316Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"True\"}\n{\"i\": 1, \"ok\": true, \"value\": \"True\"}\n{\"i\": 2, \"ok\": true, \"value\": \"True\"}\n{\"i\": 3, \"ok\": true, \"value\": \"True\"}\n{\"i\": 4, \"ok\": true, \"value\": \"False\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"expected string or bytes-like object, got 'NoneType'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.162,
+        "started_at": "2026-11-18T08:39:23.269031Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"True\"}\n{\"i\": 1, \"ok\": true, \"value\": \"True\"}\n{\"i\": 2, \"ok\": true, \"value\": \"True\"}\n{\"i\": 3, \"ok\": true, \"value\": \"True\"}\n{\"i\": 4, \"ok\": true, \"value\": \"False\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"expected string or bytes-like object, got 'NoneType'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.173,
+        "started_at": "2026-11-18T08:39:23.431207Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.334,
+        "started_at": "2026-11-18T08:39:45.195392Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_single_digit (tribunal_probes.probe_2.TestIsHex.test_single_digit)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 3, in test_single_digit\n    def test_single_digit(self): assert not is_hex('1')\n                                        ^^^^^^^^^^^^^^^\nAssertionError\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.221,
+        "started_at": "2026-11-18T08:39:45.529275Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_single_digit (tribunal_probes.probe_2.TestIsHex.test_single_digit)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 3, in test_single_digit\n    def test_single_digit(self): assert not is_hex('1')\n                                        ^^^^^^^^^^^^^^^\nAssertionError\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.22,
+        "started_at": "2026-11-18T08:39:45.750534Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.264,
+        "started_at": "2026-11-18T08:39:45.970763Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_fuzz (tribunal_probes.probe_4.TestIsHex.test_fuzz)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 7, in test_fuzz\n    assert not is_hex(s) if any(c not in '0123456789abcdefABCDEF' for c in s) else is_hex(s)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.265,
+        "started_at": "2026-11-18T08:39:46.235080Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_fuzz (tribunal_probes.probe_4.TestIsHex.test_fuzz)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 7, in test_fuzz\n    assert not is_hex(s) if any(c not in '0123456789abcdefABCDEF' for c in s) else is_hex(s)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.277,
+        "started_at": "2026-11-18T08:39:46.500026Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.278,
+        "started_at": "2026-11-18T08:39:46.778747Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_is_hex (test_hexcheck.T.test_is_hex)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_hexcheck.py\", line 8, in test_is_hex\n    self.assertTrue(is_hex(\"deadbeef\"))\nAssertionError: None is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.274,
+        "started_at": "2026-11-18T08:39:47.057662Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_is_hex (test_hexcheck.T.test_is_hex)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_hexcheck.py\", line 8, in test_is_hex\n    self.assertTrue(is_hex(\"deadbeef\"))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.267,
+        "started_at": "2026-11-18T08:39:47.332627Z"
+      }
+    ],
+    "issued_at": "2026-11-18T08:39:47.601237Z"
+  },
+  "digest": "50ae6a760fbc32956eb77380bea842294feed5a0bf5e3b3581be9f0b5ce7f626",
+  "signature": "o8xltJMlfFIEnePTi+pMJslCWcFc2CC7A4509cM2Qsi6SffbQjTkyhIP7ycpa0DMkVD+ANUfm4hhUryAy/xYBg==",
+  "public_key": "veLapdXUYWIS6C+TYA+lFFuam+NaEoVd6nA6Xbx4MW4="
+}

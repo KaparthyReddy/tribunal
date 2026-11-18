@@ -1,0 +1,412 @@
+{
+  "body": {
+    "version": 2,
+    "receipt_id": "rcp_1ca84bc9ed59",
+    "submission_id": "sub_455fc16e2952",
+    "repo": "h2-clean-first-even",
+    "base_sha": "c2b532037b8bb949e8e4a587d16205ac0346ca53",
+    "head_sha": "865d6b7176ca29d29c07fca9736b76fc356cc534",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 865d6b7176ca. 16 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "13 input(s) gave the same results and argument state on both commits, and every changed line ran.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          13,
+          14
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Differential check: 13 input(s) compared, 0 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          13,
+          14
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 4/4 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.268,
+        "started_at": "2026-11-18T08:21:36.695374Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.212,
+        "started_at": "2026-11-18T08:21:36.963998Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.308,
+        "started_at": "2026-11-18T08:21:41.170714Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.241,
+        "started_at": "2026-11-18T08:21:41.479445Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.358,
+        "started_at": "2026-11-18T08:22:03.307167Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "246089613ba1c645e5084af611d06f1a17e91c253d1dbb961f4b092f2c00244f"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.218,
+        "started_at": "2026-11-18T08:22:03.665260Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "d7c6c50210f51a7b0fcd15376fe7f4d25834784bb80abfe4e726dc606897a9fd"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.237,
+        "started_at": "2026-11-18T08:22:03.883751Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "3f015ea9d15db3c5228113dd3a3d52c688b6b3e9009feccbbd98c47e5c9530dc"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.24,
+        "started_at": "2026-11-18T08:22:04.121575Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "f2742fda06cabcc944a079e452ec7e4ee87a7febd367e875bb485850c1ed7c0f"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.253,
+        "started_at": "2026-11-18T08:22:04.363193Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_first_even (test_evens.T.test_first_even)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_evens.py\", line 8, in test_first_even\n    self.assertEqual(first_even([1, 2, 3, 4]), 2)\nAssertionError: None != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.253,
+        "started_at": "2026-11-18T08:22:04.616747Z",
+        "side": "head",
+        "overlay": {
+          "evens.py": "8d13e770720d1d2bc66e67d45a1ef2ec47bf2626be60025bdf0c5e7beb8a3a1a"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_first_even (test_evens.T.test_first_even)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_evens.py\", line 8, in test_first_even\n    self.assertEqual(first_even([1, 2, 3, 4]), 2)\nAssertionError: 1 != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.253,
+        "started_at": "2026-11-18T08:22:04.869965Z",
+        "side": "head",
+        "overlay": {
+          "evens.py": "88512357ddafacceb67fcd54e71476152740774af91f2334d115be3e0dd6c316"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_first_even (test_evens.T.test_first_even)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_evens.py\", line 8, in test_first_even\n    self.assertEqual(first_even([1, 2, 3, 4]), 2)\nAssertionError: 1 != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.251,
+        "started_at": "2026-11-18T08:22:05.123812Z",
+        "side": "head",
+        "overlay": {
+          "evens.py": "9002c73467420f6b76f5d8f17bbf281f65a4cde6b1dfa8d41cda1ba486901455"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_first_even (test_evens.T.test_first_even)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_evens.py\", line 8, in test_first_even\n    self.assertEqual(first_even([1, 2, 3, 4]), 2)\nAssertionError: 3 != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.254,
+        "started_at": "2026-11-18T08:22:05.375288Z",
+        "side": "head",
+        "overlay": {
+          "evens.py": "f1be353660cef1facb012cd554478587f6f6be148ec746581f1fbe5cddb90f7f"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"2\", \"state\": \"[[[2, 4, 6]], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"None\", \"state\": \"[[[1, 3, 5]], {}]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\", \"state\": \"[[[], []], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"2\", \"state\": \"[[[1, 3, 5, 2]], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"0\", \"state\": \"[[[0]], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"-2\", \"state\": \"[[[-2, -4, -6]], {}]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"None\", \"state\": \"[[[1.0, 3.5, 5.1]], {}]\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"not all arguments converted during string formatting\", \"state\": \"[[['a', 'b', 'c']], {}]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"-2\", \"state\": \"[[[1, 3, 5, -2]], {}]\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"not all arguments converted during string formatting\", \"state\": \"[[['a', 2, 'b']], {}]\"}\n{\"i\": 10, \"ok\": true, \"value\": \"-2.0\", \"state\": \"[[[1, 3, 5, -2.0]], {}]\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"not all arguments converted during string formatting\", \"state\": \"[[['a', 2.0, 'b']], {}]\"}\n{\"i\": 12, \"ok\": true, \"value\": \"-2\", \"state\": \"[[[1, 3, 5, -2, 4]], {}]\"}\n{\"trace\": {\"evens.py\": [1, 2, 3, 4, 5, 6, 7]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.294,
+        "started_at": "2026-11-18T08:22:34.872614Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "6d0faf568ae7ea5b9d13d7253e8cd6aff1a8d8a3d898a30d7c5841562705c7e7",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"2\", \"state\": \"[[[2, 4, 6]], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"None\", \"state\": \"[[[1, 3, 5]], {}]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\", \"state\": \"[[[], []], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"2\", \"state\": \"[[[1, 3, 5, 2]], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"0\", \"state\": \"[[[0]], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"-2\", \"state\": \"[[[-2, -4, -6]], {}]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"None\", \"state\": \"[[[1.0, 3.5, 5.1]], {}]\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"not all arguments converted during string formatting\", \"state\": \"[[['a', 'b', 'c']], {}]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"-2\", \"state\": \"[[[1, 3, 5, -2]], {}]\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"not all arguments converted during string formatting\", \"state\": \"[[['a', 2, 'b']], {}]\"}\n{\"i\": 10, \"ok\": true, \"value\": \"-2.0\", \"state\": \"[[[1, 3, 5, -2.0]], {}]\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"not all arguments converted during string formatting\", \"state\": \"[[['a', 2.0, 'b']], {}]\"}\n{\"i\": 12, \"ok\": true, \"value\": \"-2\", \"state\": \"[[[1, 3, 5, -2, 4]], {}]\"}\n{\"trace\": {\"evens.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.155,
+        "started_at": "2026-11-18T08:22:35.166562Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "6d0faf568ae7ea5b9d13d7253e8cd6aff1a8d8a3d898a30d7c5841562705c7e7",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"2\", \"state\": \"[[[2, 4, 6]], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"None\", \"state\": \"[[[1, 3, 5]], {}]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\", \"state\": \"[[[], []], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"2\", \"state\": \"[[[1, 3, 5, 2]], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"0\", \"state\": \"[[[0]], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"-2\", \"state\": \"[[[-2, -4, -6]], {}]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"None\", \"state\": \"[[[1.0, 3.5, 5.1]], {}]\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"not all arguments converted during string formatting\", \"state\": \"[[['a', 'b', 'c']], {}]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"-2\", \"state\": \"[[[1, 3, 5, -2]], {}]\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"not all arguments converted during string formatting\", \"state\": \"[[['a', 2, 'b']], {}]\"}\n{\"i\": 10, \"ok\": true, \"value\": \"-2.0\", \"state\": \"[[[1, 3, 5, -2.0]], {}]\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"not all arguments converted during string formatting\", \"state\": \"[[['a', 2.0, 'b']], {}]\"}\n{\"i\": 12, \"ok\": true, \"value\": \"-2\", \"state\": \"[[[1, 3, 5, -2, 4]], {}]\"}\n{\"trace\": {\"evens.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.167,
+        "started_at": "2026-11-18T08:22:35.322052Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "6d0faf568ae7ea5b9d13d7253e8cd6aff1a8d8a3d898a30d7c5841562705c7e7",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      }
+    ],
+    "blobs": {
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "246089613ba1c645e5084af611d06f1a17e91c253d1dbb961f4b092f2c00244f": "import unittest; from evens import first_even\nclass TestFirstEven(unittest.TestCase):\n    def test_empty_list(self):\n        self.assertIsNone(first_even([]))\n\nif __name__ == '__main__':\n    unittest.main()",
+      "d7c6c50210f51a7b0fcd15376fe7f4d25834784bb80abfe4e726dc606897a9fd": "import unittest; from evens import first_even\nclass TestFirstEven(unittest.TestCase):\n    def test_single_odd_number(self):\n        self.assertIsNone(first_even([1]))\n\nif __name__ == '__main__':\n    unittest.main()",
+      "3f015ea9d15db3c5228113dd3a3d52c688b6b3e9009feccbbd98c47e5c9530dc": "import unittest; from evens import first_even\nclass TestFirstEven(unittest.TestCase):\n    def test_single_even_number(self):\n        self.assertEqual(first_even([2]), 2)\n\nif __name__ == '__main__':\n    unittest.main()",
+      "f2742fda06cabcc944a079e452ec7e4ee87a7febd367e875bb485850c1ed7c0f": "import unittest; from evens import first_even\nclass TestFirstEven(unittest.TestCase):\n    def test_mixed_list(self):\n        self.assertEqual(first_even([1, 3, 5, 2]), 2)\n\nif __name__ == '__main__':\n    unittest.main()",
+      "8d13e770720d1d2bc66e67d45a1ef2ec47bf2626be60025bdf0c5e7beb8a3a1a": "def first_even(xs):\n    return None\n",
+      "88512357ddafacceb67fcd54e71476152740774af91f2334d115be3e0dd6c316": "def first_even(xs):\n    return next((x for x in xs if x % 2 != 0), None)\n",
+      "9002c73467420f6b76f5d8f17bbf281f65a4cde6b1dfa8d41cda1ba486901455": "def first_even(xs):\n    return next((x for x in xs if x % 2 == 1), None)\n",
+      "f1be353660cef1facb012cd554478587f6f6be148ec746581f1fbe5cddb90f7f": "def first_even(xs):\n    return next((x for x in xs if x % 3 == 0), None)\n",
+      "6d0faf568ae7ea5b9d13d7253e8cd6aff1a8d8a3d898a30d7c5841562705c7e7": "{\"calls\": [{\"module\": \"evens\", \"function\": \"first_even\", \"args\": [[2, 4, 6]], \"kwargs\": {}}, {\"module\": \"evens\", \"function\": \"first_even\", \"args\": [[1, 3, 5]], \"kwargs\": {}}, {\"module\": \"evens\", \"function\": \"first_even\", \"args\": [[], []], \"kwargs\": {}}, {\"module\": \"evens\", \"function\": \"first_even\", \"args\": [[1, 3, 5, 2]], \"kwargs\": {}}, {\"module\": \"evens\", \"function\": \"first_even\", \"args\": [[0]], \"kwargs\": {}}, {\"module\": \"evens\", \"function\": \"first_even\", \"args\": [[-2, -4, -6]], \"kwargs\": {}}, {\"module\": \"evens\", \"function\": \"first_even\", \"args\": [[1.0, 3.5, 5.1]], \"kwargs\": {}}, {\"module\": \"evens\", \"function\": \"first_even\", \"args\": [[\"a\", \"b\", \"c\"]], \"kwargs\": {}}, {\"module\": \"evens\", \"function\": \"first_even\", \"args\": [[1, 3, 5, -2]], \"kwargs\": {}}, {\"module\": \"evens\", \"function\": \"first_even\", \"args\": [[\"a\", 2, \"b\"]], \"kwargs\": {}}, {\"module\": \"evens\", \"function\": \"first_even\", \"args\": [[1, 3, 5, -2.0]], \"kwargs\": {}}, {\"module\": \"evens\", \"function\": \"first_even\", \"args\": [[\"a\", 2.0, \"b\"]], \"kwargs\": {}}, {\"module\": \"evens\", \"function\": \"first_even\", \"args\": [[1, 3, 5, -2, 4]], \"kwargs\": {}}], \"trace\": [\"evens.py\"]}",
+      "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee": "import contextlib\nimport copy\nimport importlib\nimport io\nimport json\nimport os\nimport signal\nimport sys\n\nCALL_TIMEOUT_S = 5\n\n\nclass _Timeout(Exception):\n    pass\n\n\ndef _on_alarm(signum, frame):\n    raise _Timeout()\n\n\ndef _describe(value):\n    text = repr(value)\n    return text if len(text) <= 500 else text[:500] + \"...\"\n\n\ndef main():\n    with open(\"tribunal_chars/calls.json\", encoding=\"utf-8\") as handle:\n        spec = json.load(handle)\n    calls = spec[\"calls\"]\n    watch = set(spec.get(\"trace\", []))\n    executed = {}\n    names = {}\n\n    def watched(filename):\n        if filename not in names:\n            try:\n                rel = os.path.relpath(os.path.abspath(filename), os.getcwd()).replace(os.sep, \"/\")\n            except ValueError:\n                rel = \"\"\n            names[filename] = rel if rel in watch else \"\"\n        return names[filename]\n\n    def tracer(frame, event, arg):\n        rel = watched(frame.f_code.co_filename)\n        if not rel:\n            return None\n        lines = executed.setdefault(rel, set())\n\n        def local(frame, event, arg):\n            if event == \"line\":\n                lines.add(frame.f_lineno)\n            return local\n\n        return local\n\n    signal.signal(signal.SIGALRM, _on_alarm)\n    if watch:\n        sys.settrace(tracer)\n    try:\n        for index, call in enumerate(calls):\n            signal.alarm(CALL_TIMEOUT_S)\n            args = copy.deepcopy(call[\"args\"])\n            kwargs = copy.deepcopy(call[\"kwargs\"])\n            try:\n                module = importlib.import_module(call[\"module\"])\n                function = getattr(module, call[\"function\"])\n                with contextlib.redirect_stdout(io.StringIO()):\n                    value = function(*args, **kwargs)\n                record = {\"i\": index, \"ok\": True, \"value\": _describe(value)}\n            except _Timeout:\n                record = {\"i\": index, \"ok\": False, \"exc\": \"Timeout\", \"msg\": \"\"}\n            except BaseException as exc:\n                record = {\"i\": index, \"ok\": False, \"exc\": type(exc).__name__, \"msg\": str(exc)[:200]}\n            finally:\n                signal.alarm(0)\n            record[\"state\"] = _describe([args, kwargs])\n            print(json.dumps(record), flush=True)\n    finally:\n        sys.settrace(None)\n    trace = {name: sorted(lines) for name, lines in executed.items()}\n    print(json.dumps({\"trace\": trace}), flush=True)\n\n\nmain()\n"
+    },
+    "issued_at": "2026-11-18T08:22:35.491282Z"
+  },
+  "digest": "0007029a7a35433d3e481394b779ff0afb02c76d13302dca09b0d8479c3b389e",
+  "signature": "qoKNbGFnzA1IAW5c8g78nuMf1Oxln0ytq1BPOSorVMGGlXlmhQ38BIT7zXP/4MuAHD9xt5tQVMUCa9BJDWjWBA==",
+  "public_key": "woiCy9IUIYaZJ87l6X+N94xdNYU5FHQhx4ZZZeiFwOI="
+}

@@ -1,0 +1,358 @@
+{
+  "body": {
+    "version": 2,
+    "receipt_id": "rcp_55e7e710d01b",
+    "submission_id": "sub_b959fb7b4452",
+    "repo": "h2-mutates-argument",
+    "base_sha": "b36e884f0ed01530afc8af608503dfc1d66513c9",
+    "head_sha": "65868c0f91b016942ee542c29dd3d4dd7f894b7a",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "Behavior differs: sorted_copy([1, 3, 2]) leaves its arguments as [[[1, 3, 2]], {}] on base but [[[1, 2, 3]], {}] on head; sorted_copy([3.14, 2.71, 1.618]) leaves its arguments as [[[3.14, 2.71, 1.618]], {}] on base but [[[1.618, 2.71, 3.14]], {}] on head; sorted_copy(None) raised TypeError on base but raised AttributeError on head",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          10,
+          11
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: No behavior change",
+        "detail": "Behavior differs: sorted_copy([1, 3, 2]) leaves its arguments as [[[1, 3, 2]], {}] on base but [[[1, 2, 3]], {}] on head; sorted_copy([3.14, 2.71, 1.618]) leaves its arguments as [[[3.14, 2.71, 1.618]], {}] on base but [[[1.618, 2.71, 3.14]], {}] on head; sorted_copy(None) raised TypeError on base but raised AttributeError on head",
+        "severity": "high",
+        "command_indexes": [
+          10,
+          11
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 14 input(s) compared, 4 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          10,
+          11
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.278,
+        "started_at": "2026-11-18T08:19:46.073051Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.216,
+        "started_at": "2026-11-18T08:19:46.351107Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_copies.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.278,
+        "started_at": "2026-11-18T08:19:50.425163Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_copies.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.223,
+        "started_at": "2026-11-18T08:19:50.703890Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.325,
+        "started_at": "2026-11-18T08:20:17.044653Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "0b9553b82f36eec60a7ef1543e0eff2fc312333ee0263ef59e5338c871aafcb7"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.219,
+        "started_at": "2026-11-18T08:20:17.370072Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "a7ecb5b4c11514e2c6ddddaca273895bfffa095221aa2fd728de4c557890c437"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.227,
+        "started_at": "2026-11-18T08:20:17.589208Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "caa8e2125f968c5076b2fa384db5a5fd75dfde8dcf35b8109baf73655410e817"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.006s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.238,
+        "started_at": "2026-11-18T08:20:17.817013Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "82e51bc793a9bd1754c431000abcd4cc38270587c79f6b1a4a5a7b77526e949b"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.238,
+        "started_at": "2026-11-18T08:20:18.057292Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_sorted_copy (test_copies.T.test_sorted_copy)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_copies.py\", line 8, in test_sorted_copy\n    self.assertEqual(sorted_copy([3, 1, 2]), [1, 2, 3])\nAssertionError: None != [1, 2, 3]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.265,
+        "started_at": "2026-11-18T08:20:18.296051Z",
+        "side": "head",
+        "overlay": {
+          "copies.py": "873d880241130d32b1cf5987a14f626259c39aa6cbc3c241ea96b9993d139e20"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[1, 2, 3]\", \"state\": \"[[[1, 3, 2]], {}]\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() takes 1 positional argument but 2 were given\", \"state\": \"[[[], {}], {}]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() takes 1 positional argument but 2 were given\", \"state\": \"[[[[1, 2, 3]], {}], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[1, 1, 1]\", \"state\": \"[[[1, 1, 1]], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"[-3, -2, -1]\", \"state\": \"[[[-3, -2, -1]], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"[-1, 0, 1]\", \"state\": \"[[[-1, 0, 1]], {}]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"[1.618, 2.71, 3.14]\", \"state\": \"[[[3.14, 2.71, 1.618]], {}]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"['a', 'b', 'c']\", \"state\": \"[[['a', 'b', 'c']], {}]\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() got an unexpected keyword argument 'reverse'\", \"state\": \"[[[1, 2, 3]], {'reverse': True}]\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"'NoneType' object is not iterable\", \"state\": \"[[None], {}]\"}\n{\"i\": 10, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() got an unexpected keyword argument 'key'\", \"state\": \"[[[1, 2, 3]], {'key': 'lambda x: -x'}]\"}\n{\"i\": 11, \"ok\": true, \"value\": \"[]\", \"state\": \"[[''], {}]\"}\n{\"i\": 12, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() got an unexpected keyword argument 'reverse'\", \"state\": \"[[['a', 'b', 'c']], {'reverse': True}]\"}\n{\"i\": 13, \"ok\": true, \"value\": \"[1, 2, 3]\", \"state\": \"[[[1, 2, 3]], {}]\"}\n{\"trace\": {\"copies.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.277,
+        "started_at": "2026-11-18T08:20:46.937619Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "e3147a71c551555a860dfc88c31c709b7454bd97d6bedede44610e7509b73223",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[1, 2, 3]\", \"state\": \"[[[1, 2, 3]], {}]\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() takes 1 positional argument but 2 were given\", \"state\": \"[[[], {}], {}]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() takes 1 positional argument but 2 were given\", \"state\": \"[[[[1, 2, 3]], {}], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[1, 1, 1]\", \"state\": \"[[[1, 1, 1]], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"[-3, -2, -1]\", \"state\": \"[[[-3, -2, -1]], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"[-1, 0, 1]\", \"state\": \"[[[-1, 0, 1]], {}]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"[1.618, 2.71, 3.14]\", \"state\": \"[[[1.618, 2.71, 3.14]], {}]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"['a', 'b', 'c']\", \"state\": \"[[['a', 'b', 'c']], {}]\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() got an unexpected keyword argument 'reverse'\", \"state\": \"[[[1, 2, 3]], {'reverse': True}]\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"AttributeError\", \"msg\": \"'NoneType' object has no attribute 'sort'\", \"state\": \"[[None], {}]\"}\n{\"i\": 10, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() got an unexpected keyword argument 'key'\", \"state\": \"[[[1, 2, 3]], {'key': 'lambda x: -x'}]\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"AttributeError\", \"msg\": \"'str' object has no attribute 'sort'\", \"state\": \"[[''], {}]\"}\n{\"i\": 12, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() got an unexpected keyword argument 'reverse'\", \"state\": \"[[['a', 'b', 'c']], {'reverse': True}]\"}\n{\"i\": 13, \"ok\": true, \"value\": \"[1, 2, 3]\", \"state\": \"[[[1, 2, 3]], {}]\"}\n{\"trace\": {\"copies.py\": [1, 2, 3]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.157,
+        "started_at": "2026-11-18T08:20:47.215296Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "e3147a71c551555a860dfc88c31c709b7454bd97d6bedede44610e7509b73223",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[1, 2, 3]\", \"state\": \"[[[1, 2, 3]], {}]\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() takes 1 positional argument but 2 were given\", \"state\": \"[[[], {}], {}]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() takes 1 positional argument but 2 were given\", \"state\": \"[[[[1, 2, 3]], {}], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[1, 1, 1]\", \"state\": \"[[[1, 1, 1]], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"[-3, -2, -1]\", \"state\": \"[[[-3, -2, -1]], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"[-1, 0, 1]\", \"state\": \"[[[-1, 0, 1]], {}]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"[1.618, 2.71, 3.14]\", \"state\": \"[[[1.618, 2.71, 3.14]], {}]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"['a', 'b', 'c']\", \"state\": \"[[['a', 'b', 'c']], {}]\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() got an unexpected keyword argument 'reverse'\", \"state\": \"[[[1, 2, 3]], {'reverse': True}]\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"AttributeError\", \"msg\": \"'NoneType' object has no attribute 'sort'\", \"state\": \"[[None], {}]\"}\n{\"i\": 10, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() got an unexpected keyword argument 'key'\", \"state\": \"[[[1, 2, 3]], {'key': 'lambda x: -x'}]\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"AttributeError\", \"msg\": \"'str' object has no attribute 'sort'\", \"state\": \"[[''], {}]\"}\n{\"i\": 12, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() got an unexpected keyword argument 'reverse'\", \"state\": \"[[['a', 'b', 'c']], {'reverse': True}]\"}\n{\"i\": 13, \"ok\": true, \"value\": \"[1, 2, 3]\", \"state\": \"[[[1, 2, 3]], {}]\"}\n{\"trace\": {\"copies.py\": [1, 2, 3]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.167,
+        "started_at": "2026-11-18T08:20:47.373130Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "e3147a71c551555a860dfc88c31c709b7454bd97d6bedede44610e7509b73223",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      }
+    ],
+    "blobs": {
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "0b9553b82f36eec60a7ef1543e0eff2fc312333ee0263ef59e5338c871aafcb7": "import unittest; from copies import sorted_copy\n\nclass TestSortedCopy(unittest.TestCase):\n    def test_empty_list(self):\n        self.assertEqual(sorted_copy([]), [])\n\nif __name__ == '__main__':\n    unittest.main()",
+      "a7ecb5b4c11514e2c6ddddaca273895bfffa095221aa2fd728de4c557890c437": "import unittest; from copies import sorted_copy\n\nclass TestSortedCopy(unittest.TestCase):\n    def test_single_element(self):\n        self.assertEqual(sorted_copy([42]), [42])\n\nif __name__ == '__main__':\n    unittest.main()",
+      "caa8e2125f968c5076b2fa384db5a5fd75dfde8dcf35b8109baf73655410e817": "import unittest; from copies import sorted_copy\n\nclass TestSortedCopy(unittest.TestCase):\n    def test_duplicate_elements(self):\n        self.assertEqual(sorted_copy([3, 1, 2, 2]), [1, 2, 2, 3])\n\nif __name__ == '__main__':\n    unittest.main()",
+      "82e51bc793a9bd1754c431000abcd4cc38270587c79f6b1a4a5a7b77526e949b": "import unittest; import random; from copies import sorted_copy\n\nclass TestSortedCopy(unittest.TestCase):\n    def test_fuzz_random_integers(self):\n        rng = random.Random(1234)\n        for _ in range(500):\n            xs = [rng.randint(-100, 100) for _ in range(rng.randint(0, 100))]\n            self.assertEqual(sorted_copy(xs), sorted(xs))\n\nif __name__ == '__main__':\n    unittest.main()",
+      "873d880241130d32b1cf5987a14f626259c39aa6cbc3c241ea96b9993d139e20": "def sorted_copy(xs):\n    xs.sort()\n    return None\n",
+      "e3147a71c551555a860dfc88c31c709b7454bd97d6bedede44610e7509b73223": "{\"calls\": [{\"module\": \"copies\", \"function\": \"sorted_copy\", \"args\": [[1, 3, 2]], \"kwargs\": {}}, {\"module\": \"copies\", \"function\": \"sorted_copy\", \"args\": [[], {}], \"kwargs\": {}}, {\"module\": \"copies\", \"function\": \"sorted_copy\", \"args\": [[[1, 2, 3]], {}], \"kwargs\": {}}, {\"module\": \"copies\", \"function\": \"sorted_copy\", \"args\": [[1, 1, 1]], \"kwargs\": {}}, {\"module\": \"copies\", \"function\": \"sorted_copy\", \"args\": [[-3, -2, -1]], \"kwargs\": {}}, {\"module\": \"copies\", \"function\": \"sorted_copy\", \"args\": [[-1, 0, 1]], \"kwargs\": {}}, {\"module\": \"copies\", \"function\": \"sorted_copy\", \"args\": [[3.14, 2.71, 1.618]], \"kwargs\": {}}, {\"module\": \"copies\", \"function\": \"sorted_copy\", \"args\": [[\"a\", \"b\", \"c\"]], \"kwargs\": {}}, {\"module\": \"copies\", \"function\": \"sorted_copy\", \"args\": [[1, 2, 3]], \"kwargs\": {\"reverse\": true}}, {\"module\": \"copies\", \"function\": \"sorted_copy\", \"args\": [null], \"kwargs\": {}}, {\"module\": \"copies\", \"function\": \"sorted_copy\", \"args\": [[1, 2, 3]], \"kwargs\": {\"key\": \"lambda x: -x\"}}, {\"module\": \"copies\", \"function\": \"sorted_copy\", \"args\": [\"\"], \"kwargs\": {}}, {\"module\": \"copies\", \"function\": \"sorted_copy\", \"args\": [[\"a\", \"b\", \"c\"]], \"kwargs\": {\"reverse\": true}}, {\"module\": \"copies\", \"function\": \"sorted_copy\", \"args\": [[1, 2, 3]], \"kwargs\": {}}], \"trace\": [\"copies.py\"]}",
+      "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee": "import contextlib\nimport copy\nimport importlib\nimport io\nimport json\nimport os\nimport signal\nimport sys\n\nCALL_TIMEOUT_S = 5\n\n\nclass _Timeout(Exception):\n    pass\n\n\ndef _on_alarm(signum, frame):\n    raise _Timeout()\n\n\ndef _describe(value):\n    text = repr(value)\n    return text if len(text) <= 500 else text[:500] + \"...\"\n\n\ndef main():\n    with open(\"tribunal_chars/calls.json\", encoding=\"utf-8\") as handle:\n        spec = json.load(handle)\n    calls = spec[\"calls\"]\n    watch = set(spec.get(\"trace\", []))\n    executed = {}\n    names = {}\n\n    def watched(filename):\n        if filename not in names:\n            try:\n                rel = os.path.relpath(os.path.abspath(filename), os.getcwd()).replace(os.sep, \"/\")\n            except ValueError:\n                rel = \"\"\n            names[filename] = rel if rel in watch else \"\"\n        return names[filename]\n\n    def tracer(frame, event, arg):\n        rel = watched(frame.f_code.co_filename)\n        if not rel:\n            return None\n        lines = executed.setdefault(rel, set())\n\n        def local(frame, event, arg):\n            if event == \"line\":\n                lines.add(frame.f_lineno)\n            return local\n\n        return local\n\n    signal.signal(signal.SIGALRM, _on_alarm)\n    if watch:\n        sys.settrace(tracer)\n    try:\n        for index, call in enumerate(calls):\n            signal.alarm(CALL_TIMEOUT_S)\n            args = copy.deepcopy(call[\"args\"])\n            kwargs = copy.deepcopy(call[\"kwargs\"])\n            try:\n                module = importlib.import_module(call[\"module\"])\n                function = getattr(module, call[\"function\"])\n                with contextlib.redirect_stdout(io.StringIO()):\n                    value = function(*args, **kwargs)\n                record = {\"i\": index, \"ok\": True, \"value\": _describe(value)}\n            except _Timeout:\n                record = {\"i\": index, \"ok\": False, \"exc\": \"Timeout\", \"msg\": \"\"}\n            except BaseException as exc:\n                record = {\"i\": index, \"ok\": False, \"exc\": type(exc).__name__, \"msg\": str(exc)[:200]}\n            finally:\n                signal.alarm(0)\n            record[\"state\"] = _describe([args, kwargs])\n            print(json.dumps(record), flush=True)\n    finally:\n        sys.settrace(None)\n    trace = {name: sorted(lines) for name, lines in executed.items()}\n    print(json.dumps({\"trace\": trace}), flush=True)\n\n\nmain()\n"
+    },
+    "issued_at": "2026-11-18T08:20:47.541508Z"
+  },
+  "digest": "f9594d318fb5fb07dc101e13e249aae0b904eeb88a5b6e46b54291ad51355a39",
+  "signature": "ZVMbCAlZLD7v3N0YFw4WPZbJGuZxxxJ2RInhPjVvavbwhFYLw1c6ARcMMCosT/pHTTvxvPJi3Lps4GvVgab/BQ==",
+  "public_key": "woiCy9IUIYaZJ87l6X+N94xdNYU5FHQhx4ZZZeiFwOI="
+}

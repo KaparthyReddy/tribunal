@@ -1,0 +1,413 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_34b9d26fa85e",
+    "submission_id": "sub_0176498431d0",
+    "repo": "h2-clean-first-even",
+    "base_sha": "86721d2134557969ea145ddc8fe85d052dd832b1",
+    "head_sha": "33603a7594bdffe9784b5a70d9ce01f2bbbe03c4",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 33603a7594bd. 20 sandboxed command(s) run, 1 of 2 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "uses next() in first_even",
+        "kind": "other"
+      },
+      {
+        "id": "c2",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The test suite passing and the assertions in specific cases do not provide evidence that `next()` is used in the `first_even` function. These tests only verify the correctness of the function but do not inspect its implementation.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      {
+        "claim_id": "c2",
+        "status": "supported",
+        "explanation": "The evidence shows that both the base and head versions of the code produce identical test results, with the same number of tests run and no errors or failures reported.",
+        "command_indexes": [
+          0,
+          1,
+          6,
+          7
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Claim not verified: uses next() in first_even",
+        "detail": "The test suite passing and the assertions in specific cases do not provide evidence that `next()` is used in the `first_even` function. These tests only verify the correctness of the function but do not inspect its implementation.",
+        "severity": "low",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 16 input(s) compared, 0 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          8,
+          9
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 4/4 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.291,
+        "started_at": "2026-11-18T08:44:28.432183Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.24,
+        "started_at": "2026-11-18T08:44:28.723265Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import evens; assert evens.first_even([1, 3, 5]) is None"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.168,
+        "started_at": "2026-11-18T08:44:38.599103Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import evens; assert evens.first_even([1, 3, 5]) is None"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.148,
+        "started_at": "2026-11-18T08:44:38.767826Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import evens; assert evens.first_even([2, 4, 6]) == 2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.15,
+        "started_at": "2026-11-18T08:44:38.916436Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import evens; assert evens.first_even([2, 4, 6]) == 2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.152,
+        "started_at": "2026-11-18T08:44:39.066682Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.288,
+        "started_at": "2026-11-18T08:44:51.438688Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.234,
+        "started_at": "2026-11-18T08:44:51.727260Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"2\"}\n{\"i\": 1, \"ok\": true, \"value\": \"None\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 3, \"ok\": true, \"value\": \"2\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 6, \"ok\": true, \"value\": \"None\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 10, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 12, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 13, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 14, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 15, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.307,
+        "started_at": "2026-11-18T08:45:41.771080Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"2\"}\n{\"i\": 1, \"ok\": true, \"value\": \"None\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 3, \"ok\": true, \"value\": \"2\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 6, \"ok\": true, \"value\": \"None\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 10, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 12, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 13, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 14, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 15, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.182,
+        "started_at": "2026-11-18T08:45:42.079068Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"2\"}\n{\"i\": 1, \"ok\": true, \"value\": \"None\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 3, \"ok\": true, \"value\": \"2\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 6, \"ok\": true, \"value\": \"None\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 10, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 12, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 13, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 14, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n{\"i\": 15, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"first_even() takes 1 positional argument but 2 were given\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.228,
+        "started_at": "2026-11-18T08:45:42.261165Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.319,
+        "started_at": "2026-11-18T08:46:03.824578Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.251,
+        "started_at": "2026-11-18T08:46:04.143888Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.31,
+        "started_at": "2026-11-18T08:46:04.395154Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.283,
+        "started_at": "2026-11-18T08:46:04.705683Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.311,
+        "started_at": "2026-11-18T08:46:04.991929Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_first_even (test_evens.T.test_first_even)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_evens.py\", line 8, in test_first_even\n    self.assertEqual(first_even([1, 2, 3, 4]), 2)\nAssertionError: None != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.356,
+        "started_at": "2026-11-18T08:46:05.303912Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_first_even (test_evens.T.test_first_even)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_evens.py\", line 8, in test_first_even\n    self.assertEqual(first_even([1, 2, 3, 4]), 2)\nAssertionError: 1 != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.35,
+        "started_at": "2026-11-18T08:46:05.661074Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_first_even (test_evens.T.test_first_even)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_evens.py\", line 8, in test_first_even\n    self.assertEqual(first_even([1, 2, 3, 4]), 2)\nAssertionError: 1 != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.342,
+        "started_at": "2026-11-18T08:46:06.011374Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_first_even (test_evens.T.test_first_even)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_evens.py\", line 8, in test_first_even\n    self.assertEqual(first_even([1, 2, 3, 4]), 2)\nAssertionError: 3 != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.301,
+        "started_at": "2026-11-18T08:46:06.354489Z"
+      }
+    ],
+    "issued_at": "2026-11-18T08:46:06.657612Z"
+  },
+  "digest": "4a9ef9ad6e1cd0483005aee8dbaaa7216f9a7f9272e3654d2c07c7b906a973b0",
+  "signature": "rAUsGgS4m5hxatLK8vcptF5Py1QT6AtUHN1phEKfvZykz8w6zO6njDiuAlfLWxSQgSZG4Y4OcwTfa1Sq+XxWAg==",
+  "public_key": "veLapdXUYWIS6C+TYA+lFFuam+NaEoVd6nA6Xbx4MW4="
+}

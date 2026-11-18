@@ -1,0 +1,188 @@
+{
+  "body": {
+    "version": 2,
+    "receipt_id": "rcp_3772aad5044a",
+    "submission_id": "sub_65e4e62a7e07",
+    "repo": "h2-new-word-count",
+    "base_sha": "d19c75148d8760f4c2a2b156b0bbcd9b7c50a0cf",
+    "head_sha": "78fdc1632db201f52156cdca1bac76c60c792a73",
+    "verdict": "inconclusive",
+    "rationale": "2 item(s) need human review:\n- No test reaches changed code: word_count (text_utils.py)\n- Surviving mutant at text_utils.py:6 (return value -> None)",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "adds_tests for word_count",
+        "kind": "adds_tests"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The evidence only shows that the tests ran successfully, but it does not demonstrate whether new tests for `word_count` were added.",
+        "command_indexes": [
+          0,
+          1,
+          2
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "blast_radius",
+        "title": "No test reaches changed code: word_count (text_utils.py)",
+        "detail": "0 dependent function(s) within depth 4.",
+        "severity": "medium",
+        "command_indexes": []
+      },
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at text_utils.py:6 (return value -> None)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          4
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim not verified: adds_tests for word_count",
+        "detail": "The evidence only shows that the tests ran successfully, but it does not demonstrate whether new tests for `word_count` were added.",
+        "severity": "low",
+        "command_indexes": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe generation failed",
+        "detail": "probes must be a list",
+        "severity": "low",
+        "command_indexes": []
+      },
+      {
+        "source": "characterize",
+        "title": "Structural check: no existing function changed",
+        "detail": "Only new or unreferenced removed functions changed (word_count).",
+        "severity": "info",
+        "command_indexes": []
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 0/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.331,
+        "started_at": "2026-11-18T08:17:49.862962Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.253,
+        "started_at": "2026-11-18T08:17:50.194150Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_text_utils"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.293,
+        "started_at": "2026-11-18T08:17:53.888662Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.349,
+        "started_at": "2026-11-18T08:18:16.169120Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.237,
+        "started_at": "2026-11-18T08:18:16.518553Z",
+        "side": "head",
+        "overlay": {
+          "text_utils.py": "2532fbbb2298a3f5f4258e612412cf86e8c430fb558af0c7cad7a49bedd484f5"
+        },
+        "timeout_s": 60
+      }
+    ],
+    "blobs": {
+      "2532fbbb2298a3f5f4258e612412cf86e8c430fb558af0c7cad7a49bedd484f5": "def shout(s):\n    return s.upper()\n\ndef word_count(text):\n    return None\n"
+    },
+    "issued_at": "2026-11-18T08:18:16.759329Z"
+  },
+  "digest": "0bf682598c85bc1d79ad6170bb93ad76d0390b4a3d02e3079eb1c71f387f27a3",
+  "signature": "Rw4XsdaBtFtBQHwkvbxplN8MDrJffd+xbFfvAa6ij2NU4WNHbOYIKtx6ld8lIdeycHUkVlZ05X2qx8GyTu2nDQ==",
+  "public_key": "woiCy9IUIYaZJ87l6X+N94xdNYU5FHQhx4ZZZeiFwOI="
+}

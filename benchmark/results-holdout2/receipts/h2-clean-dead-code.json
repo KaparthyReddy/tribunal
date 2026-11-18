@@ -1,0 +1,308 @@
+{
+  "body": {
+    "version": 2,
+    "receipt_id": "rcp_c1b2c2310e90",
+    "submission_id": "sub_921da13f155e",
+    "repo": "h2-clean-dead-code",
+    "base_sha": "961fe9ec6a112a004b462c880e99aa702b917158",
+    "head_sha": "430816b7a1b331dedab053ba811b25a5a6acfdd8",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 430816b7a1b3. 12 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "Only new or unreferenced removed functions changed (_legacy_total).",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Structural check: no existing function changed",
+        "detail": "Only new or unreferenced removed functions changed (_legacy_total).",
+        "severity": "info",
+        "command_indexes": []
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.275,
+        "started_at": "2026-11-18T08:25:15.741706Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.211,
+        "started_at": "2026-11-18T08:25:16.017297Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_totals.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.309,
+        "started_at": "2026-11-18T08:25:25.440712Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_totals.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.224,
+        "started_at": "2026-11-18T08:25:25.750060Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "grep",
+          "-r",
+          "_legacy_total",
+          "."
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.116,
+        "started_at": "2026-11-18T08:25:25.973955Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "diff",
+          "--git",
+          "totals.py.orig",
+          "totals.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 2,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "diff: unrecognized option '--git'\ndiff: Try 'diff --help' for more information.\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.128,
+        "started_at": "2026-11-18T08:25:26.090414Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "diff",
+          "--git",
+          "totals.py.orig",
+          "totals.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 2,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "diff: unrecognized option '--git'\ndiff: Try 'diff --help' for more information.\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.128,
+        "started_at": "2026-11-18T08:25:26.218800Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.377,
+        "started_at": "2026-11-18T08:25:55.570513Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "5926d6dca06eafcd847d4226f051fdcb617012d0c784181f380c0298eccd47fd"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.223,
+        "started_at": "2026-11-18T08:25:55.948489Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "a895676fda58e17ed698a49817bda8b2dcf2c06a91a77361111b1128cffd91ee"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.233,
+        "started_at": "2026-11-18T08:25:56.171872Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "b3b873cbdaf60f55fafd67cedd48789dac30623c46d9c635a9da1b678a638c49"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.259,
+        "started_at": "2026-11-18T08:25:56.406390Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_total (test_totals.T.test_total)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_totals.py\", line 8, in test_total\n    self.assertEqual(total([1, 2]), 3)\nAssertionError: None != 3\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.274,
+        "started_at": "2026-11-18T08:25:56.666262Z",
+        "side": "head",
+        "overlay": {
+          "totals.py": "fa19155953f4055bd9e5561648282f0f68274b832185b59a6b5d24371962cefd"
+        },
+        "timeout_s": 60
+      }
+    ],
+    "blobs": {
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "5926d6dca06eafcd847d4226f051fdcb617012d0c784181f380c0298eccd47fd": "import unittest; from totals import total\nclass TestTotal(unittest.TestCase):\n    def test_empty(self): assert total([]) == 0\nif __name__ == '__main__': unittest.main()",
+      "a895676fda58e17ed698a49817bda8b2dcf2c06a91a77361111b1128cffd91ee": "import unittest; from totals import total\nclass TestTotal(unittest.TestCase):\n    def test_single_element(self): assert total([5]) == 5\nif __name__ == '__main__': unittest.main()",
+      "b3b873cbdaf60f55fafd67cedd48789dac30623c46d9c635a9da1b678a638c49": "import unittest; from totals import total\nclass TestTotal(unittest.TestCase):\n    def test_multiple_elements(self): assert total([1, 2, 3, 4]) == 10\nif __name__ == '__main__': unittest.main()",
+      "fa19155953f4055bd9e5561648282f0f68274b832185b59a6b5d24371962cefd": "def total(xs):\n    return None\n"
+    },
+    "issued_at": "2026-11-18T08:25:56.943470Z"
+  },
+  "digest": "711acb89cfa03f2b3973a6c5184c795fc1acc6036580963838adf27f1f6979cf",
+  "signature": "av4SpiZIbo94REPskHfjBqyEp4bUKc4ATCoSUuUVtwltOFOZFczCN9tHzDcSD6/2x0Gh36o40Y3wqNEs3SuhBw==",
+  "public_key": "woiCy9IUIYaZJ87l6X+N94xdNYU5FHQhx4ZZZeiFwOI="
+}

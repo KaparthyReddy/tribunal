@@ -1,0 +1,355 @@
+{
+  "body": {
+    "version": 2,
+    "receipt_id": "rcp_e046543d298e",
+    "submission_id": "sub_d6868c0fbcd7",
+    "repo": "h2-default-arg",
+    "base_sha": "6a776c354259338c89eae8c56aa731fce629a16c",
+    "head_sha": "304bdcd8c9e7dbdb3516dff674d22e70c5186f7a",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 304bdcd8c9e7. 13 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "9 input(s) gave the same results and argument state on both commits, and every changed line ran.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          10,
+          11
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Differential check: 9 input(s) compared, 0 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          10,
+          11
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Test gap, behavior unchanged: surviving mutant at paging.py:1 (20 -> 21)",
+        "detail": "Behavior was identical on every compared input and the changed code ran, so this is a gap in the tests, not an error in the change.",
+        "severity": "info",
+        "command_indexes": [
+          9
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 0/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.285,
+        "started_at": "2026-11-18T08:05:27.475737Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.224,
+        "started_at": "2026-11-18T08:05:27.760772Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.278,
+        "started_at": "2026-11-18T08:05:31.118042Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.232,
+        "started_at": "2026-11-18T08:05:31.396153Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.368,
+        "started_at": "2026-11-18T08:05:52.160048Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "64be5f38b1eedae1efbf0800d9bcc11755cf4ba6bb4b0e7fe6220925155cdbba"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.233,
+        "started_at": "2026-11-18T08:05:52.528358Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "8b16db4cb7ce1977f52ed07d651fdd28918feb2a356e3c36c78580679b33ab9f"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.246,
+        "started_at": "2026-11-18T08:05:52.761995Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "16a6774d045797e4d13c15622248e60ce63662920e777f8dc1733bf7f116e3cb"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.246,
+        "started_at": "2026-11-18T08:05:53.008681Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "00b9d2b4d9c225e3b3cb647d4b95ddad641e47f657c53f6123727eedb85ac2b4"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.246,
+        "started_at": "2026-11-18T08:05:53.256677Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.232,
+        "started_at": "2026-11-18T08:05:53.503474Z",
+        "side": "head",
+        "overlay": {
+          "paging.py": "d07cc677afe60fe77a47e9c664973a9a1a5502d549da9916ed53f37dc839e10a"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[1, 2, 3, 4, 5]\", \"state\": \"[[[1, 2, 3, 4, 5], 0], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[]\", \"state\": \"[[[1, 2, 3, 4, 5], 1], {}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"[1, 2, 3, 4, 5]\", \"state\": \"[[[1, 2, 3, 4, 5], 0, 10], {}]\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"paginate() missing 2 required positional arguments: 'items' and 'page'\", \"state\": \"[[], {}]\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"paginate() missing 1 required positional argument: 'page'\", \"state\": \"[[[]], {}]\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"paginate() missing 1 required positional argument: 'page'\", \"state\": \"[[1], {}]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"[]\", \"state\": \"[[[], 0], {}]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"[]\", \"state\": \"[[[1, 2, 3, 4, 5], -1], {}]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"[1, 2, 3, 4, 5]\", \"state\": \"[[[1, 2, 3, 4, 5], 0, 5], {}]\"}\n{\"trace\": {\"paging.py\": [1, 2, 3]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.289,
+        "started_at": "2026-11-18T08:06:10.356284Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "9263448f884628472211e533bd585d0bc51c6b0783ca341f0b0cf611ae9cd30f",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[1, 2, 3, 4, 5]\", \"state\": \"[[[1, 2, 3, 4, 5], 0], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[]\", \"state\": \"[[[1, 2, 3, 4, 5], 1], {}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"[1, 2, 3, 4, 5]\", \"state\": \"[[[1, 2, 3, 4, 5], 0, 10], {}]\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"paginate() missing 2 required positional arguments: 'items' and 'page'\", \"state\": \"[[], {}]\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"paginate() missing 1 required positional argument: 'page'\", \"state\": \"[[[]], {}]\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"paginate() missing 1 required positional argument: 'page'\", \"state\": \"[[1], {}]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"[]\", \"state\": \"[[[], 0], {}]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"[]\", \"state\": \"[[[1, 2, 3, 4, 5], -1], {}]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"[1, 2, 3, 4, 5]\", \"state\": \"[[[1, 2, 3, 4, 5], 0, 5], {}]\"}\n{\"trace\": {\"paging.py\": [1, 2, 3]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.156,
+        "started_at": "2026-11-18T08:06:10.645335Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "9263448f884628472211e533bd585d0bc51c6b0783ca341f0b0cf611ae9cd30f",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[1, 2, 3, 4, 5]\", \"state\": \"[[[1, 2, 3, 4, 5], 0], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[]\", \"state\": \"[[[1, 2, 3, 4, 5], 1], {}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"[1, 2, 3, 4, 5]\", \"state\": \"[[[1, 2, 3, 4, 5], 0, 10], {}]\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"paginate() missing 2 required positional arguments: 'items' and 'page'\", \"state\": \"[[], {}]\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"paginate() missing 1 required positional argument: 'page'\", \"state\": \"[[[]], {}]\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"paginate() missing 1 required positional argument: 'page'\", \"state\": \"[[1], {}]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"[]\", \"state\": \"[[[], 0], {}]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"[]\", \"state\": \"[[[1, 2, 3, 4, 5], -1], {}]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"[1, 2, 3, 4, 5]\", \"state\": \"[[[1, 2, 3, 4, 5], 0, 5], {}]\"}\n{\"trace\": {\"paging.py\": [1, 2, 3]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.174,
+        "started_at": "2026-11-18T08:06:10.801380Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "9263448f884628472211e533bd585d0bc51c6b0783ca341f0b0cf611ae9cd30f",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      }
+    ],
+    "blobs": {
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "64be5f38b1eedae1efbf0800d9bcc11755cf4ba6bb4b0e7fe6220925155cdbba": "import unittest; from paging import paginate\n\nclass TestPaginate(unittest.TestCase):\n    def test_default_size(self):\n        self.assertEqual(paginate([1, 2, 3, 4, 5], 0), [1, 2, 3, 4, 5])\n\nif __name__ == '__main__':\n    unittest.main()",
+      "8b16db4cb7ce1977f52ed07d651fdd28918feb2a356e3c36c78580679b33ab9f": "import unittest; from paging import paginate\n\nclass TestPaginate(unittest.TestCase):\n    def test_zero_page(self):\n        self.assertEqual(paginate([1, 2, 3], 0), [1, 2, 3])\n\nif __name__ == '__main__':\n    unittest.main()",
+      "16a6774d045797e4d13c15622248e60ce63662920e777f8dc1733bf7f116e3cb": "import unittest; from paging import paginate\n\nclass TestPaginate(unittest.TestCase):\n    def test_negative_page(self):\n        self.assertEqual(paginate([1, 2, 3], -1), [])\n\nif __name__ == '__main__':\n    unittest.main()",
+      "00b9d2b4d9c225e3b3cb647d4b95ddad641e47f657c53f6123727eedb85ac2b4": "import unittest; from paging import paginate\n\nclass TestPaginate(unittest.TestCase):\n    def test_large_page(self):\n        self.assertEqual(paginate([1, 2, 3], 10), [])\n\nif __name__ == '__main__':\n    unittest.main()",
+      "d07cc677afe60fe77a47e9c664973a9a1a5502d549da9916ed53f37dc839e10a": "def paginate(items, page, size=21):\n    start = page * size\n    return items[start:start + size]\n",
+      "9263448f884628472211e533bd585d0bc51c6b0783ca341f0b0cf611ae9cd30f": "{\"calls\": [{\"module\": \"paging\", \"function\": \"paginate\", \"args\": [[1, 2, 3, 4, 5], 0], \"kwargs\": {}}, {\"module\": \"paging\", \"function\": \"paginate\", \"args\": [[1, 2, 3, 4, 5], 1], \"kwargs\": {}}, {\"module\": \"paging\", \"function\": \"paginate\", \"args\": [[1, 2, 3, 4, 5], 0, 10], \"kwargs\": {}}, {\"module\": \"paging\", \"function\": \"paginate\", \"args\": [], \"kwargs\": {}}, {\"module\": \"paging\", \"function\": \"paginate\", \"args\": [[]], \"kwargs\": {}}, {\"module\": \"paging\", \"function\": \"paginate\", \"args\": [1], \"kwargs\": {}}, {\"module\": \"paging\", \"function\": \"paginate\", \"args\": [[], 0], \"kwargs\": {}}, {\"module\": \"paging\", \"function\": \"paginate\", \"args\": [[1, 2, 3, 4, 5], -1], \"kwargs\": {}}, {\"module\": \"paging\", \"function\": \"paginate\", \"args\": [[1, 2, 3, 4, 5], 0, 5], \"kwargs\": {}}], \"trace\": [\"paging.py\"]}",
+      "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee": "import contextlib\nimport copy\nimport importlib\nimport io\nimport json\nimport os\nimport signal\nimport sys\n\nCALL_TIMEOUT_S = 5\n\n\nclass _Timeout(Exception):\n    pass\n\n\ndef _on_alarm(signum, frame):\n    raise _Timeout()\n\n\ndef _describe(value):\n    text = repr(value)\n    return text if len(text) <= 500 else text[:500] + \"...\"\n\n\ndef main():\n    with open(\"tribunal_chars/calls.json\", encoding=\"utf-8\") as handle:\n        spec = json.load(handle)\n    calls = spec[\"calls\"]\n    watch = set(spec.get(\"trace\", []))\n    executed = {}\n    names = {}\n\n    def watched(filename):\n        if filename not in names:\n            try:\n                rel = os.path.relpath(os.path.abspath(filename), os.getcwd()).replace(os.sep, \"/\")\n            except ValueError:\n                rel = \"\"\n            names[filename] = rel if rel in watch else \"\"\n        return names[filename]\n\n    def tracer(frame, event, arg):\n        rel = watched(frame.f_code.co_filename)\n        if not rel:\n            return None\n        lines = executed.setdefault(rel, set())\n\n        def local(frame, event, arg):\n            if event == \"line\":\n                lines.add(frame.f_lineno)\n            return local\n\n        return local\n\n    signal.signal(signal.SIGALRM, _on_alarm)\n    if watch:\n        sys.settrace(tracer)\n    try:\n        for index, call in enumerate(calls):\n            signal.alarm(CALL_TIMEOUT_S)\n            args = copy.deepcopy(call[\"args\"])\n            kwargs = copy.deepcopy(call[\"kwargs\"])\n            try:\n                module = importlib.import_module(call[\"module\"])\n                function = getattr(module, call[\"function\"])\n                with contextlib.redirect_stdout(io.StringIO()):\n                    value = function(*args, **kwargs)\n                record = {\"i\": index, \"ok\": True, \"value\": _describe(value)}\n            except _Timeout:\n                record = {\"i\": index, \"ok\": False, \"exc\": \"Timeout\", \"msg\": \"\"}\n            except BaseException as exc:\n                record = {\"i\": index, \"ok\": False, \"exc\": type(exc).__name__, \"msg\": str(exc)[:200]}\n            finally:\n                signal.alarm(0)\n            record[\"state\"] = _describe([args, kwargs])\n            print(json.dumps(record), flush=True)\n    finally:\n        sys.settrace(None)\n    trace = {name: sorted(lines) for name, lines in executed.items()}\n    print(json.dumps({\"trace\": trace}), flush=True)\n\n\nmain()\n"
+    },
+    "issued_at": "2026-11-18T08:06:10.976888Z"
+  },
+  "digest": "6e636628ce61b6075831c93589fd5d051c68d15b16404e85ed715692ba496e8f",
+  "signature": "0ynwdrkmFQgF92BLgndobDQxhVlIT2TFc3JkzWqcujMT6CYHfuoRvPIUsxcyJbzjuoONQuEuqxfYpPOvutDfCw==",
+  "public_key": "woiCy9IUIYaZJ87l6X+N94xdNYU5FHQhx4ZZZeiFwOI="
+}

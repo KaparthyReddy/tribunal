@@ -1,0 +1,235 @@
+{
+  "body": {
+    "version": 2,
+    "receipt_id": "rcp_2c0cf92706ba",
+    "submission_id": "sub_ae5ade1619a3",
+    "repo": "h2-method-overdraft",
+    "base_sha": "2bc0d59ca4fb2e66700e47d66e43a366c5ed1d66",
+    "head_sha": "c25cd531a830d6ec063944835ccbb356a8a636aa",
+    "verdict": "inconclusive",
+    "rationale": "1 item(s) need human review:\n- Critical claim not verified: No behavior change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "A model's judgment cannot support this kind of claim; it needs a fixed rule. The evidence shows that both the base and head versions of the code produce identical test results, indicating no behavior change.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Claim not verified: No behavior change",
+        "detail": "A model's judgment cannot support this kind of claim; it needs a fixed rule. The evidence shows that both the base and head versions of the code produce identical test results, indicating no behavior change.",
+        "severity": "low",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check skipped: changed code is outside its reach",
+        "detail": "Account.withdraw (account.py)",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.266,
+        "started_at": "2026-11-18T08:08:30.702032Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.224,
+        "started_at": "2026-11-18T08:08:30.968302Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_account.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.253,
+        "started_at": "2026-11-18T08:08:34.617096Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_account.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.251,
+        "started_at": "2026-11-18T08:08:34.870669Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.509,
+        "started_at": "2026-11-18T08:15:42.245789Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "ac61e3b6e9580e5d91b620962ebe2e8e9082990195270557e4e7792631a5d012"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.32,
+        "started_at": "2026-11-18T08:15:42.761048Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "d6456545a37e814a0d8f6adf6144d8d6782b21659b55e37bb6edab2a50b6c968"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.274,
+        "started_at": "2026-11-18T08:15:43.081824Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "c1c3889776b76cf988f46d7296ca854343d4bec5dd301d19741772f8de96fdd3"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.239,
+        "started_at": "2026-11-18T08:15:43.356644Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "ac61e3b6e9580e5d91b620962ebe2e8e9082990195270557e4e7792631a5d012"
+        },
+        "timeout_s": 30
+      }
+    ],
+    "blobs": {
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "ac61e3b6e9580e5d91b620962ebe2e8e9082990195270557e4e7792631a5d012": "import unittest; from account import Account\nclass TestAccountWithdraw(unittest.TestCase):\n    def test_zero_withdrawal(self):\n        acc = Account(100)\n        self.assertEqual(acc.withdraw(0), 100)\nif __name__ == '__main__': unittest.main()",
+      "d6456545a37e814a0d8f6adf6144d8d6782b21659b55e37bb6edab2a50b6c968": "import unittest; from account import Account\nclass TestAccountWithdraw(unittest.TestCase):\n    def test_negative_withdrawal(self):\n        acc = Account(100)\n        self.assertEqual(acc.withdraw(-50), 150)\nif __name__ == '__main__': unittest.main()",
+      "c1c3889776b76cf988f46d7296ca854343d4bec5dd301d19741772f8de96fdd3": "import unittest; from account import Account\nclass TestAccountWithdraw(unittest.TestCase):\n    def test_large_withdrawal(self):\n        acc = Account(100000)\n        self.assertEqual(acc.withdraw(99999), 1)\nif __name__ == '__main__': unittest.main()"
+    },
+    "issued_at": "2026-11-18T08:15:43.608261Z"
+  },
+  "digest": "9e03d7c8bbb99edef18ab6bef4bd4845b9d3e8d388f701eaa0a0aedf7d8f98ca",
+  "signature": "18XvnBIRwIBpH+GeVKSd7irZE3qFedEcNys4FYLunNvnflIhwerx0VberGAeykjOc588ceGW9cL7Fe/dUIrYDw==",
+  "public_key": "woiCy9IUIYaZJ87l6X+N94xdNYU5FHQhx4ZZZeiFwOI="
+}

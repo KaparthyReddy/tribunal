@@ -1,0 +1,391 @@
+{
+  "body": {
+    "version": 2,
+    "receipt_id": "rcp_3cfe9d224514",
+    "submission_id": "sub_705c1975345f",
+    "repo": "h2-truncate-boundary",
+    "base_sha": "0f14e72892a5c05a6e638e0eb7a3167edcceddf9",
+    "head_sha": "bd94885565234c7a20d75c4edf27e01d7c9ce094",
+    "verdict": "fail",
+    "rationale": "2 blocking issue(s):\n- Claim refuted: no behavior change\n- Probe broke the change: string exactly n",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "Behavior differs: truncate('abc', 3) returned 'abc' on base but returned '...' on head",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          11,
+          12
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: no behavior change",
+        "detail": "Behavior differs: truncate('abc', 3) returned 'abc' on base but returned '...' on head",
+        "severity": "high",
+        "command_indexes": [
+          11,
+          12
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe broke the change: string exactly n",
+        "detail": "Passes on base, fails on head.\nF\n======================================================================\nFAIL: test_exactly_n (tribunal_probes.probe_3.TestTruncate.test_exactly_n)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 4, in test_exactly_n\n    self.assertEqual(truncate('hello', 5), 'hello')\nAssertionError: 'he...' != 'hello'\n- he...\n+ hello\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "high",
+        "command_indexes": [
+          6,
+          7
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 10 input(s) compared, 1 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          11,
+          12
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.378,
+        "started_at": "2026-11-18T08:15:47.876429Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.248,
+        "started_at": "2026-11-18T08:15:48.254520Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_trunc"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.307,
+        "started_at": "2026-11-18T08:15:51.911899Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_trunc"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.23,
+        "started_at": "2026-11-18T08:15:52.219494Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.414,
+        "started_at": "2026-11-18T08:16:15.528128Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "cc6dc24e8f5b0d39a5a544d9be0050604f5618b1868f88561ff8c00e8ef633b5"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.335,
+        "started_at": "2026-11-18T08:16:15.943015Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "5913e69a3cca1adb84a5f7cdb6460b02ce21d057cb309dd4dc778641c7b8d046"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_exactly_n (tribunal_probes.probe_3.TestTruncate.test_exactly_n)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 4, in test_exactly_n\n    self.assertEqual(truncate('hello', 5), 'hello')\nAssertionError: 'he...' != 'hello'\n- he...\n+ hello\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.275,
+        "started_at": "2026-11-18T08:16:16.278601Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "3e0785b68f769698250b454974859a771f95e1bcdb1fac36ce51a7d9e10afeda"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.266,
+        "started_at": "2026-11-18T08:16:16.554069Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "3e0785b68f769698250b454974859a771f95e1bcdb1fac36ce51a7d9e10afeda"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.254s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.551,
+        "started_at": "2026-11-18T08:16:16.820579Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "775edf9205b97d2981bf2ec020d77d9649de18271a65fd3b82499cedf1f70a3a"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.23,
+        "started_at": "2026-11-18T08:16:17.374044Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_truncate (test_trunc.T.test_truncate)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_trunc.py\", line 8, in test_truncate\n    self.assertEqual(truncate(\"hi\", 10), \"hi\")\nAssertionError: 'hi...' != 'hi'\n- hi...\n+ hi\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.223,
+        "started_at": "2026-11-18T08:16:17.604774Z",
+        "side": "head",
+        "overlay": {
+          "trunc.py": "b48203f93359133c65bfe1497668e6117dae9cb11b1c561d3d89c5530f45b5c2"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"'abc'\", \"state\": \"[['abc', 4], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"'abc'\", \"state\": \"[['abc', 3], {}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"'ab...'\", \"state\": \"[['abc', 2], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"'abc'\", \"state\": \"[['abc', 5], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"'abc'\", \"state\": \"[['abc', 10], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"''\", \"state\": \"[['', 5], {}]\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"object of type 'NoneType' has no len()\", \"state\": \"[[None, 5], {}]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"'...'\", \"state\": \"[['abc', 0], {}]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"'...'\", \"state\": \"[['abc', -1], {}]\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"object of type 'NoneType' has no len()\", \"state\": \"[[None, None], {}]\"}\n{\"trace\": {\"trunc.py\": [1, 2, 3, 4]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.34,
+        "started_at": "2026-11-18T08:16:36.036052Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "f9f1fc06072bf03abbe679bc1333cc21416aad1211801cf703f753209f12a138",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"'abc'\", \"state\": \"[['abc', 4], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"'...'\", \"state\": \"[['abc', 3], {}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"'ab...'\", \"state\": \"[['abc', 2], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"'abc'\", \"state\": \"[['abc', 5], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"'abc'\", \"state\": \"[['abc', 10], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"''\", \"state\": \"[['', 5], {}]\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"object of type 'NoneType' has no len()\", \"state\": \"[[None, 5], {}]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"'...'\", \"state\": \"[['abc', 0], {}]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"'...'\", \"state\": \"[['abc', -1], {}]\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"object of type 'NoneType' has no len()\", \"state\": \"[[None, None], {}]\"}\n{\"trace\": {\"trunc.py\": [1, 2, 3, 4]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.183,
+        "started_at": "2026-11-18T08:16:36.376833Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "f9f1fc06072bf03abbe679bc1333cc21416aad1211801cf703f753209f12a138",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"'abc'\", \"state\": \"[['abc', 4], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"'...'\", \"state\": \"[['abc', 3], {}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"'ab...'\", \"state\": \"[['abc', 2], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"'abc'\", \"state\": \"[['abc', 5], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"'abc'\", \"state\": \"[['abc', 10], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"''\", \"state\": \"[['', 5], {}]\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"object of type 'NoneType' has no len()\", \"state\": \"[[None, 5], {}]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"'...'\", \"state\": \"[['abc', 0], {}]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"'...'\", \"state\": \"[['abc', -1], {}]\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"object of type 'NoneType' has no len()\", \"state\": \"[[None, None], {}]\"}\n{\"trace\": {\"trunc.py\": [1, 2, 3, 4]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.197,
+        "started_at": "2026-11-18T08:16:36.559690Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "f9f1fc06072bf03abbe679bc1333cc21416aad1211801cf703f753209f12a138",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      }
+    ],
+    "blobs": {
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "cc6dc24e8f5b0d39a5a544d9be0050604f5618b1868f88561ff8c00e8ef633b5": "import unittest; from trunc import truncate\nclass TestTruncate(unittest.TestCase):\n    def test_empty_string(self):\n        self.assertEqual(truncate('', 5), '')\nif __name__ == '__main__':\n    unittest.main()",
+      "5913e69a3cca1adb84a5f7cdb6460b02ce21d057cb309dd4dc778641c7b8d046": "import unittest; from trunc import truncate\nclass TestTruncate(unittest.TestCase):\n    def test_shorter_than_n(self):\n        self.assertEqual(truncate('hello', 10), 'hello')\nif __name__ == '__main__':\n    unittest.main()",
+      "3e0785b68f769698250b454974859a771f95e1bcdb1fac36ce51a7d9e10afeda": "import unittest; from trunc import truncate\nclass TestTruncate(unittest.TestCase):\n    def test_exactly_n(self):\n        self.assertEqual(truncate('hello', 5), 'hello')\nif __name__ == '__main__':\n    unittest.main()",
+      "775edf9205b97d2981bf2ec020d77d9649de18271a65fd3b82499cedf1f70a3a": "import unittest; import random; from trunc import truncate\nclass TestTruncate(unittest.TestCase):\n    def test_fuzzing(self):\n        for _ in range(500):\n            s = ''.join(random.Random(1234).choice('abcdefghijklmnopqrstuvwxyz') for _ in range(100))\n            n = random.randint(0, 100)\n            self.assertEqual(truncate(s, n), truncate(s, n))\nif __name__ == '__main__':\n    unittest.main()",
+      "b48203f93359133c65bfe1497668e6117dae9cb11b1c561d3d89c5530f45b5c2": "def truncate(s, n):\n    if len(s) >= n:\n        return s\n    return s[:n - 3] + '...'\n",
+      "f9f1fc06072bf03abbe679bc1333cc21416aad1211801cf703f753209f12a138": "{\"calls\": [{\"module\": \"trunc\", \"function\": \"truncate\", \"args\": [\"abc\", 4], \"kwargs\": {}}, {\"module\": \"trunc\", \"function\": \"truncate\", \"args\": [\"abc\", 3], \"kwargs\": {}}, {\"module\": \"trunc\", \"function\": \"truncate\", \"args\": [\"abc\", 2], \"kwargs\": {}}, {\"module\": \"trunc\", \"function\": \"truncate\", \"args\": [\"abc\", 5], \"kwargs\": {}}, {\"module\": \"trunc\", \"function\": \"truncate\", \"args\": [\"abc\", 10], \"kwargs\": {}}, {\"module\": \"trunc\", \"function\": \"truncate\", \"args\": [\"\", 5], \"kwargs\": {}}, {\"module\": \"trunc\", \"function\": \"truncate\", \"args\": [null, 5], \"kwargs\": {}}, {\"module\": \"trunc\", \"function\": \"truncate\", \"args\": [\"abc\", 0], \"kwargs\": {}}, {\"module\": \"trunc\", \"function\": \"truncate\", \"args\": [\"abc\", -1], \"kwargs\": {}}, {\"module\": \"trunc\", \"function\": \"truncate\", \"args\": [null, null], \"kwargs\": {}}], \"trace\": [\"trunc.py\"]}",
+      "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee": "import contextlib\nimport copy\nimport importlib\nimport io\nimport json\nimport os\nimport signal\nimport sys\n\nCALL_TIMEOUT_S = 5\n\n\nclass _Timeout(Exception):\n    pass\n\n\ndef _on_alarm(signum, frame):\n    raise _Timeout()\n\n\ndef _describe(value):\n    text = repr(value)\n    return text if len(text) <= 500 else text[:500] + \"...\"\n\n\ndef main():\n    with open(\"tribunal_chars/calls.json\", encoding=\"utf-8\") as handle:\n        spec = json.load(handle)\n    calls = spec[\"calls\"]\n    watch = set(spec.get(\"trace\", []))\n    executed = {}\n    names = {}\n\n    def watched(filename):\n        if filename not in names:\n            try:\n                rel = os.path.relpath(os.path.abspath(filename), os.getcwd()).replace(os.sep, \"/\")\n            except ValueError:\n                rel = \"\"\n            names[filename] = rel if rel in watch else \"\"\n        return names[filename]\n\n    def tracer(frame, event, arg):\n        rel = watched(frame.f_code.co_filename)\n        if not rel:\n            return None\n        lines = executed.setdefault(rel, set())\n\n        def local(frame, event, arg):\n            if event == \"line\":\n                lines.add(frame.f_lineno)\n            return local\n\n        return local\n\n    signal.signal(signal.SIGALRM, _on_alarm)\n    if watch:\n        sys.settrace(tracer)\n    try:\n        for index, call in enumerate(calls):\n            signal.alarm(CALL_TIMEOUT_S)\n            args = copy.deepcopy(call[\"args\"])\n            kwargs = copy.deepcopy(call[\"kwargs\"])\n            try:\n                module = importlib.import_module(call[\"module\"])\n                function = getattr(module, call[\"function\"])\n                with contextlib.redirect_stdout(io.StringIO()):\n                    value = function(*args, **kwargs)\n                record = {\"i\": index, \"ok\": True, \"value\": _describe(value)}\n            except _Timeout:\n                record = {\"i\": index, \"ok\": False, \"exc\": \"Timeout\", \"msg\": \"\"}\n            except BaseException as exc:\n                record = {\"i\": index, \"ok\": False, \"exc\": type(exc).__name__, \"msg\": str(exc)[:200]}\n            finally:\n                signal.alarm(0)\n            record[\"state\"] = _describe([args, kwargs])\n            print(json.dumps(record), flush=True)\n    finally:\n        sys.settrace(None)\n    trace = {name: sorted(lines) for name, lines in executed.items()}\n    print(json.dumps({\"trace\": trace}), flush=True)\n\n\nmain()\n"
+    },
+    "issued_at": "2026-11-18T08:16:36.759946Z"
+  },
+  "digest": "21db2543385f5ee46fff281f43cb2e0fb079fbab2027d910c569a526a9201e2f",
+  "signature": "qhw4GncE5VPpXygdBXqv2HxjRf17RJxkKu4P+D7/GDlQCUSf63HX22AusSCtpSdtUzPsKMlD3aQI0e/Vdu+XCQ==",
+  "public_key": "woiCy9IUIYaZJ87l6X+N94xdNYU5FHQhx4ZZZeiFwOI="
+}

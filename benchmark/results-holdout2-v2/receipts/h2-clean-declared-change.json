@@ -1,0 +1,271 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_a568acab3e25",
+    "submission_id": "sub_e77fc9e44369",
+    "repo": "h2-clean-declared-change",
+    "base_sha": "f81c9f87061ce352f509f8c517e4d18a471a019e",
+    "head_sha": "d875e0e300f1526879ad5e50a46f00eeffbda72e",
+    "verdict": "pass",
+    "rationale": "No blocking issues at d875e0e300f1. 13 sandboxed command(s) run, 0 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "changes the greeting from 'Hello' to 'Hi'",
+        "kind": "other"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The evidence does not directly demonstrate that the greeting has been changed from 'Hello' to 'Hi'. The test suite results are inconclusive regarding the actual content of `greet.py`. The grep command output for 'Hello, ' in both base and head states, but it does not confirm or refute the presence of 'Hi'.",
+        "command_indexes": [
+          4,
+          5
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Claim not verified: changes the greeting from 'Hello' to 'Hi'",
+        "detail": "The evidence does not directly demonstrate that the greeting has been changed from 'Hello' to 'Hi'. The test suite results are inconclusive regarding the actual content of `greet.py`. The grep command output for 'Hello, ' in both base and head states, but it does not confirm or refute the presence of 'Hi'.",
+        "severity": "low",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 2/2 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.342,
+        "started_at": "2026-11-18T08:47:10.379721Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.261,
+        "started_at": "2026-11-18T08:47:10.722447Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_greet.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.293,
+        "started_at": "2026-11-18T08:47:22.377614Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_greet.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.227,
+        "started_at": "2026-11-18T08:47:22.670820Z"
+      },
+      {
+        "argv": [
+          "grep",
+          "-r",
+          "\"Hello, \"",
+          "greet.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "    return \"Hello, \" + name\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.114,
+        "started_at": "2026-11-18T08:47:22.898344Z"
+      },
+      {
+        "argv": [
+          "grep",
+          "-r",
+          "\"Hello, \"",
+          "greet.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.183,
+        "started_at": "2026-11-18T08:47:23.012628Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.373,
+        "started_at": "2026-11-18T08:47:55.341181Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.241,
+        "started_at": "2026-11-18T08:47:55.714495Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.252,
+        "started_at": "2026-11-18T08:47:55.955354Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.264,
+        "started_at": "2026-11-18T08:47:56.207844Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.294,
+        "started_at": "2026-11-18T08:47:56.473712Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_greeting (test_greet.T.test_greeting)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_greet.py\", line 8, in test_greeting\n    self.assertEqual(greeting(\"Ann\"), \"Hi, Ann\")\nAssertionError: None != 'Hi, Ann'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.29,
+        "started_at": "2026-11-18T08:47:56.768356Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_greeting (test_greet.T.test_greeting)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_greet.py\", line 8, in test_greeting\n    self.assertEqual(greeting(\"Ann\"), \"Hi, Ann\")\n                     ^^^^^^^^^^^^^^^\n  File \"/work/greet.py\", line 2, in greeting\n    return 'Hi, ' - name\n           ~~~~~~~^~~~~~\nTypeError: unsupported operand type(s) for -: 'str' and 'str'\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.299,
+        "started_at": "2026-11-18T08:47:57.059317Z"
+      }
+    ],
+    "issued_at": "2026-11-18T08:47:57.359450Z"
+  },
+  "digest": "1112bfe55592c5507fb00cb460c8b1b1a6038a48f8ee701ec4fb794527a14002",
+  "signature": "LFS8Q5qlPWa7f4MqU3BITmvPYaJAMTWeDbcAQcFyquKzXh+mXMLbuO6zmu/Ybs8qbXW5F5/u7JuhiApYgRc8AQ==",
+  "public_key": "veLapdXUYWIS6C+TYA+lFFuam+NaEoVd6nA6Xbx4MW4="
+}

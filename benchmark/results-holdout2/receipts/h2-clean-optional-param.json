@@ -1,0 +1,534 @@
+{
+  "body": {
+    "version": 2,
+    "receipt_id": "rcp_6e78c78c6cb1",
+    "submission_id": "sub_988e6f72bb79",
+    "repo": "h2-clean-optional-param",
+    "base_sha": "aded0d302a9f73ad83a35b46c239a9b1b4217f15",
+    "head_sha": "ebc0601d62a304b85a01db9d44d9842ffb62bb03",
+    "verdict": "pass",
+    "rationale": "No blocking issues at ebc0601d62a3. 19 sandboxed command(s) run, 1 of 2 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "adds an optional upper parameter to label",
+        "kind": "other"
+      },
+      {
+        "id": "c2",
+        "text": "Existing calls are unchanged.",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The test suite passing does not provide evidence of the addition or modification of an optional upper parameter to label.",
+        "command_indexes": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "claim_id": "c2",
+        "status": "supported",
+        "explanation": "1 input(s) gave the same results and argument state on both commits, and every changed line ran.",
+        "command_indexes": [
+          1,
+          4,
+          16,
+          17
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Claim not verified: adds an optional upper parameter to label",
+        "detail": "The test suite passing does not provide evidence of the addition or modification of an optional upper parameter to label.",
+        "severity": "low",
+        "command_indexes": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: None input",
+        "detail": "E\n======================================================================\nERROR: test_none (tribunal_probes.probe_2.T.test_none)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_none\n    label(None)\n  File \"/work/labels.py\", line 2, in label\n    cleaned = name.strip()\n              ^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'strip'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          6,
+          7
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: negative index",
+        "detail": "F\n======================================================================\nFAIL: test_negative_index (tribunal_probes.probe_3.T.test_negative_index)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 7, in test_negative_index\n    self.assertEqual(label('a' * 10, upper=idx), 'a' * 10)\nAssertionError: 'AAAAAAAAAA' != 'aaaaaaaaaa'\n- AAAAAAAAAA\n+ aaaaaaaaaa\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          8,
+          9
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: unicode input",
+        "detail": "F\n======================================================================\nFAIL: test_unicode (tribunal_probes.probe_4.T.test_unicode)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 8, in test_unicode\n    self.assertEqual(label(name, upper=False), name)\nAssertionError: '' != '\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c'\n+ \f+ \f+ \f+ \f+ \f+ \f+ \f+ \f+ \f+ \f+ \n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          10,
+          11
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 1 input(s) compared, 0 differ",
+        "detail": "2 input(s) use a signature that exists only on the new version and were not compared.",
+        "severity": "info",
+        "command_indexes": [
+          16,
+          17
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 3/3 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.267,
+        "started_at": "2026-11-18T08:24:18.425737Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.235,
+        "started_at": "2026-11-18T08:24:18.692625Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.302,
+        "started_at": "2026-11-18T08:24:23.769466Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_labels"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.288,
+        "started_at": "2026-11-18T08:24:33.303266Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_labels"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.23,
+        "started_at": "2026-11-18T08:24:33.591597Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.326,
+        "started_at": "2026-11-18T08:24:59.378942Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "7c70f86f836e131376d82acb204ddd19ac39fae61260495c44e3b3b50b6a5ee3"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_none (tribunal_probes.probe_2.T.test_none)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_none\n    label(None)\n  File \"/work/labels.py\", line 2, in label\n    cleaned = name.strip()\n              ^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'strip'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.23,
+        "started_at": "2026-11-18T08:24:59.705678Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "0551846a8eeeffaf0fed3742e0e366271fd6678837d22758fd42ae6432304415"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_none (tribunal_probes.probe_2.T.test_none)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_none\n    label(None)\n  File \"/work/labels.py\", line 2, in label\n    return name.strip()\n           ^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'strip'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.234,
+        "started_at": "2026-11-18T08:24:59.935559Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "0551846a8eeeffaf0fed3742e0e366271fd6678837d22758fd42ae6432304415"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_negative_index (tribunal_probes.probe_3.T.test_negative_index)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 7, in test_negative_index\n    self.assertEqual(label('a' * 10, upper=idx), 'a' * 10)\nAssertionError: 'AAAAAAAAAA' != 'aaaaaaaaaa'\n- AAAAAAAAAA\n+ aaaaaaaaaa\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.253,
+        "started_at": "2026-11-18T08:25:00.170041Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "c1aa3dc1b718f7790fd594d04657d5269d14ed7909c39b9e31164814ddc990b0"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_negative_index (tribunal_probes.probe_3.T.test_negative_index)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 7, in test_negative_index\n    self.assertEqual(label('a' * 10, upper=idx), 'a' * 10)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: label() got an unexpected keyword argument 'upper'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.259,
+        "started_at": "2026-11-18T08:25:00.423586Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "c1aa3dc1b718f7790fd594d04657d5269d14ed7909c39b9e31164814ddc990b0"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_unicode (tribunal_probes.probe_4.T.test_unicode)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 8, in test_unicode\n    self.assertEqual(label(name, upper=False), name)\nAssertionError: '' != '\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c'\n+ \f+ \f+ \f+ \f+ \f+ \f+ \f+ \f+ \f+ \f+ \n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.273,
+        "started_at": "2026-11-18T08:25:00.683021Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "f9843a4a97fe558eba051f36672f4bd17625875cecd1ac6dcacf838de70b9a3a"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_unicode (tribunal_probes.probe_4.T.test_unicode)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 8, in test_unicode\n    self.assertEqual(label(name, upper=False), name)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: label() got an unexpected keyword argument 'upper'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.276,
+        "started_at": "2026-11-18T08:25:00.956532Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "f9843a4a97fe558eba051f36672f4bd17625875cecd1ac6dcacf838de70b9a3a"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.259,
+        "started_at": "2026-11-18T08:25:01.234872Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F.\n======================================================================\nFAIL: test_label (test_labels.T.test_label)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_labels.py\", line 8, in test_label\n    self.assertEqual(label(\" a \"), \"a\")\nAssertionError: None != 'a'\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.259,
+        "started_at": "2026-11-18T08:25:01.494482Z",
+        "side": "head",
+        "overlay": {
+          "labels.py": "2b626c55e2b74e627cabd92883a1d394406152b74ff54ab6a661711f118230e1"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F.\n======================================================================\nFAIL: test_label (test_labels.T.test_label)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_labels.py\", line 8, in test_label\n    self.assertEqual(label(\" a \"), \"a\")\nAssertionError: 'A' != 'a'\n- A\n+ a\n\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.26,
+        "started_at": "2026-11-18T08:25:01.754544Z",
+        "side": "head",
+        "overlay": {
+          "labels.py": "d569116a256c4b6842c74afc67ba353337d3390423f590a415a0b978225e03b3"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".F\n======================================================================\nFAIL: test_upper (test_labels.T.test_upper)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_labels.py\", line 11, in test_upper\n    self.assertEqual(label(\" a \", upper=True), \"A\")\nAssertionError: None != 'A'\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.251,
+        "started_at": "2026-11-18T08:25:02.015939Z",
+        "side": "head",
+        "overlay": {
+          "labels.py": "b956296eb1dfab61557bd043857a623bcac67d5955328e5ef72bed1d7280620e"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"label() got an unexpected keyword argument 'upper'\", \"state\": \"[[' a '], {'upper': False}]\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"label() got an unexpected keyword argument 'upper'\", \"state\": \"[[' a '], {'upper': True}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"'a'\", \"state\": \"[['a'], {}]\"}\n{\"trace\": {\"labels.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.231,
+        "started_at": "2026-11-18T08:25:10.034646Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "3cd108ff8e6d33318eeb628ea4db296add251a89fae42f10bd2b60244fe37694",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"'a'\", \"state\": \"[[' a '], {'upper': False}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"'A'\", \"state\": \"[[' a '], {'upper': True}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"'a'\", \"state\": \"[['a'], {}]\"}\n{\"trace\": {\"labels.py\": [1, 2, 3, 4, 5]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.164,
+        "started_at": "2026-11-18T08:25:10.265787Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "3cd108ff8e6d33318eeb628ea4db296add251a89fae42f10bd2b60244fe37694",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"'a'\", \"state\": \"[[' a '], {'upper': False}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"'A'\", \"state\": \"[[' a '], {'upper': True}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"'a'\", \"state\": \"[['a'], {}]\"}\n{\"trace\": {\"labels.py\": [1, 2, 3, 4, 5]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.163,
+        "started_at": "2026-11-18T08:25:10.430373Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "3cd108ff8e6d33318eeb628ea4db296add251a89fae42f10bd2b60244fe37694",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      }
+    ],
+    "blobs": {
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "7c70f86f836e131376d82acb204ddd19ac39fae61260495c44e3b3b50b6a5ee3": "from labels import label; from unittest import TestCase\nclass T(TestCase):\n    def test_empty(self):\n        self.assertEqual(label(''), '')\n        self.assertEqual(label('', upper=True), '')",
+      "0551846a8eeeffaf0fed3742e0e366271fd6678837d22758fd42ae6432304415": "from labels import label; from unittest import TestCase\nclass T(TestCase):\n    def test_none(self):\n        with self.assertRaises(TypeError):\n            label(None)\n        with self.assertRaises(TypeError):\n            label(None, upper=True)",
+      "c1aa3dc1b718f7790fd594d04657d5269d14ed7909c39b9e31164814ddc990b0": "from labels import label; from unittest import TestCase\nimport random\nclass T(TestCase):\n    def test_negative_index(self):\n        for _ in range(500):\n            idx = random.Random(1234).randint(-10, -1)\n            self.assertEqual(label('a' * 10, upper=idx), 'a' * 10)",
+      "f9843a4a97fe558eba051f36672f4bd17625875cecd1ac6dcacf838de70b9a3a": "from labels import label; from unittest import TestCase\nimport random\nimport string\nclass T(TestCase):\n    def test_unicode(self):\n        for _ in range(500):\n            name = ''.join(random.Random(1234).choice(string.printable) for _ in range(10))\n            self.assertEqual(label(name, upper=False), name)\n            self.assertEqual(label(name, upper=True), name.upper())",
+      "2b626c55e2b74e627cabd92883a1d394406152b74ff54ab6a661711f118230e1": "def label(name, upper=False):\n    cleaned = name.strip()\n    if upper:\n        return cleaned.upper()\n    return None\n",
+      "d569116a256c4b6842c74afc67ba353337d3390423f590a415a0b978225e03b3": "def label(name, upper=True):\n    cleaned = name.strip()\n    if upper:\n        return cleaned.upper()\n    return cleaned\n",
+      "b956296eb1dfab61557bd043857a623bcac67d5955328e5ef72bed1d7280620e": "def label(name, upper=False):\n    cleaned = name.strip()\n    if upper:\n        return None\n    return cleaned\n",
+      "3cd108ff8e6d33318eeb628ea4db296add251a89fae42f10bd2b60244fe37694": "{\"calls\": [{\"module\": \"labels\", \"function\": \"label\", \"args\": [\" a \"], \"kwargs\": {\"upper\": false}}, {\"module\": \"labels\", \"function\": \"label\", \"args\": [\" a \"], \"kwargs\": {\"upper\": true}}, {\"module\": \"labels\", \"function\": \"label\", \"args\": [\"a\"], \"kwargs\": {}}], \"trace\": [\"labels.py\"]}",
+      "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee": "import contextlib\nimport copy\nimport importlib\nimport io\nimport json\nimport os\nimport signal\nimport sys\n\nCALL_TIMEOUT_S = 5\n\n\nclass _Timeout(Exception):\n    pass\n\n\ndef _on_alarm(signum, frame):\n    raise _Timeout()\n\n\ndef _describe(value):\n    text = repr(value)\n    return text if len(text) <= 500 else text[:500] + \"...\"\n\n\ndef main():\n    with open(\"tribunal_chars/calls.json\", encoding=\"utf-8\") as handle:\n        spec = json.load(handle)\n    calls = spec[\"calls\"]\n    watch = set(spec.get(\"trace\", []))\n    executed = {}\n    names = {}\n\n    def watched(filename):\n        if filename not in names:\n            try:\n                rel = os.path.relpath(os.path.abspath(filename), os.getcwd()).replace(os.sep, \"/\")\n            except ValueError:\n                rel = \"\"\n            names[filename] = rel if rel in watch else \"\"\n        return names[filename]\n\n    def tracer(frame, event, arg):\n        rel = watched(frame.f_code.co_filename)\n        if not rel:\n            return None\n        lines = executed.setdefault(rel, set())\n\n        def local(frame, event, arg):\n            if event == \"line\":\n                lines.add(frame.f_lineno)\n            return local\n\n        return local\n\n    signal.signal(signal.SIGALRM, _on_alarm)\n    if watch:\n        sys.settrace(tracer)\n    try:\n        for index, call in enumerate(calls):\n            signal.alarm(CALL_TIMEOUT_S)\n            args = copy.deepcopy(call[\"args\"])\n            kwargs = copy.deepcopy(call[\"kwargs\"])\n            try:\n                module = importlib.import_module(call[\"module\"])\n                function = getattr(module, call[\"function\"])\n                with contextlib.redirect_stdout(io.StringIO()):\n                    value = function(*args, **kwargs)\n                record = {\"i\": index, \"ok\": True, \"value\": _describe(value)}\n            except _Timeout:\n                record = {\"i\": index, \"ok\": False, \"exc\": \"Timeout\", \"msg\": \"\"}\n            except BaseException as exc:\n                record = {\"i\": index, \"ok\": False, \"exc\": type(exc).__name__, \"msg\": str(exc)[:200]}\n            finally:\n                signal.alarm(0)\n            record[\"state\"] = _describe([args, kwargs])\n            print(json.dumps(record), flush=True)\n    finally:\n        sys.settrace(None)\n    trace = {name: sorted(lines) for name, lines in executed.items()}\n    print(json.dumps({\"trace\": trace}), flush=True)\n\n\nmain()\n"
+    },
+    "issued_at": "2026-11-18T08:25:10.595857Z"
+  },
+  "digest": "d01170dbaae64f4863ab7f60599533b51e0bd6c97483559180a612811571f9d3",
+  "signature": "SAD4S7DqLjIhRzhjw9lqNi517cnh1UbRB8Dd0MaPD3u5Gy0x9Ciz5Y4DH/+DC4KuAuPY6zNNou8Fu0mSHUgFCg==",
+  "public_key": "woiCy9IUIYaZJ87l6X+N94xdNYU5FHQhx4ZZZeiFwOI="
+}

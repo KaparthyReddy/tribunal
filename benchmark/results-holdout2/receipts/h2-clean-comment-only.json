@@ -1,0 +1,224 @@
+{
+  "body": {
+    "version": 2,
+    "receipt_id": "rcp_d9a89142f520",
+    "submission_id": "sub_2fdfb1e7feaa",
+    "repo": "h2-clean-comment-only",
+    "base_sha": "8c856482e3f05d1db7f968f16c3d635c6888c97b",
+    "head_sha": "8697f1f33abd73832fcd7f7cdb7f5ae75173a49e",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 8697f1f33abd. 8 sandboxed command(s) run, 1 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "No non-test code changed apart from docstrings, comments and formatting, so the syntax trees are identical.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Static check: no runtime change",
+        "detail": "No non-test code changed apart from docstrings, comments and formatting, so the syntax trees are identical.",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.297,
+        "started_at": "2026-11-18T08:26:01.636451Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.265,
+        "started_at": "2026-11-18T08:26:01.933695Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_areas.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.272,
+        "started_at": "2026-11-18T08:26:06.394005Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_areas.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.235,
+        "started_at": "2026-11-18T08:26:06.665917Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.354,
+        "started_at": "2026-11-18T08:26:34.770952Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "7044db568c61020b1a5a08f72ad4a7879954ef2934c5d7b4f4252100ea3db1a2"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.224,
+        "started_at": "2026-11-18T08:26:35.125660Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "001537da300f4ec839f374f24023208877e7eebe83ede2f70d79b49d179e86f6"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.24,
+        "started_at": "2026-11-18T08:26:35.350257Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "7c0f8a67b45270d174c66dedc1ae406be1c1e2c84c5eea338886980e70a97001"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.006s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.274,
+        "started_at": "2026-11-18T08:26:35.590477Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "fcfb2bb2174c1bfdb5b18da04d862f615d309ba71bce556f099669704faadda9"
+        },
+        "timeout_s": 30
+      }
+    ],
+    "blobs": {
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "7044db568c61020b1a5a08f72ad4a7879954ef2934c5d7b4f4252100ea3db1a2": "import unittest; from areas import area\nclass TestArea(unittest.TestCase):\n    def test_empty(self):\n        self.assertEqual(area(0, 0), 0)\n\nif __name__ == '__main__':\n    unittest.main()",
+      "001537da300f4ec839f374f24023208877e7eebe83ede2f70d79b49d179e86f6": "import unittest; from areas import area\nclass TestArea(unittest.TestCase):\n    def test_negative(self):\n        self.assertEqual(area(-1, -1), 1)\n\nif __name__ == '__main__':\n    unittest.main()",
+      "7c0f8a67b45270d174c66dedc1ae406be1c1e2c84c5eea338886980e70a97001": "import unittest; from areas import area\nclass TestArea(unittest.TestCase):\n    def test_large(self):\n        self.assertEqual(area(2**63-1, 2**63-1), (2**63-1) * (2**63-1))\n\nif __name__ == '__main__':\n    unittest.main()",
+      "fcfb2bb2174c1bfdb5b18da04d862f615d309ba71bce556f099669704faadda9": "import unittest; from areas import area; import random, itertools\nclass TestArea(unittest.TestCase):\n    def test_fuzz(self):\n        for _ in itertools.repeat(None, 500):\n            w = random.Random(1234).randint(-1000, 1000)\n            h = random.Random(1234).randint(-1000, 1000)\n            self.assertEqual(area(w, h), w * h)\n\nif __name__ == '__main__':\n    unittest.main()"
+    },
+    "issued_at": "2026-11-18T08:26:35.866996Z"
+  },
+  "digest": "75d4dd693fa89d4cb171aeb91dfdf01c8429086ad2fbae5f2e8014dd1df98ff9",
+  "signature": "byowzCpEzVc1o1QkOM8xtqbXEJMfxjF1mhydeE7YPmXdkQvYz9fFeWc3noO5YsNoEhbxpKA1tmxJS9rTXsImDQ==",
+  "public_key": "woiCy9IUIYaZJ87l6X+N94xdNYU5FHQhx4ZZZeiFwOI="
+}

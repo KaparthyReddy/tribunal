@@ -1,0 +1,234 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_f25e4162d068",
+    "submission_id": "sub_2ce49649f346",
+    "repo": "h2-clean-palindrome-fix",
+    "base_sha": "2245672f345638c2a4185472e2ac07b124520910",
+    "head_sha": "b77d3e0eb2f544252c471ad0849d043f1698e81f",
+    "verdict": "inconclusive",
+    "rationale": "1 item(s) need human review:\n- Critical claim not verified: fixes is_palindrome returning False for mixed-case palindromes",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "fixes is_palindrome returning False for mixed-case palindromes",
+        "kind": "fixes"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The test suite passing does not provide evidence that the fix specifically addresses mixed-case palindromes. Additional targeted tests are needed to confirm this claim.",
+        "command_indexes": [
+          0,
+          1,
+          2
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Claim not verified: fixes is_palindrome returning False for mixed-case palindromes",
+        "detail": "The test suite passing does not provide evidence that the fix specifically addresses mixed-case palindromes. Additional targeted tests are needed to confirm this claim.",
+        "severity": "low",
+        "command_indexes": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Skeptic produced no valid probes",
+        "detail": "",
+        "severity": "low",
+        "command_indexes": []
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 10 input(s) compared, 3 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          3,
+          4
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 3/3 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.278,
+        "started_at": "2026-11-18T08:46:09.107217Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.227,
+        "started_at": "2026-11-18T08:46:09.385193Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.322,
+        "started_at": "2026-11-18T08:46:15.980897Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"True\"}\n{\"i\": 1, \"ok\": true, \"value\": \"False\"}\n{\"i\": 2, \"ok\": true, \"value\": \"False\"}\n{\"i\": 3, \"ok\": true, \"value\": \"False\"}\n{\"i\": 4, \"ok\": true, \"value\": \"True\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"'NoneType' object is not subscriptable\"}\n{\"i\": 6, \"ok\": true, \"value\": \"True\"}\n{\"i\": 7, \"ok\": true, \"value\": \"False\"}\n{\"i\": 8, \"ok\": true, \"value\": \"False\"}\n{\"i\": 9, \"ok\": true, \"value\": \"False\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.266,
+        "started_at": "2026-11-18T08:46:47.589067Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"True\"}\n{\"i\": 1, \"ok\": true, \"value\": \"False\"}\n{\"i\": 2, \"ok\": true, \"value\": \"True\"}\n{\"i\": 3, \"ok\": true, \"value\": \"True\"}\n{\"i\": 4, \"ok\": true, \"value\": \"True\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"AttributeError\", \"msg\": \"'NoneType' object has no attribute 'lower'\"}\n{\"i\": 6, \"ok\": true, \"value\": \"True\"}\n{\"i\": 7, \"ok\": true, \"value\": \"False\"}\n{\"i\": 8, \"ok\": true, \"value\": \"False\"}\n{\"i\": 9, \"ok\": true, \"value\": \"False\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.169,
+        "started_at": "2026-11-18T08:46:47.855493Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"True\"}\n{\"i\": 1, \"ok\": true, \"value\": \"False\"}\n{\"i\": 2, \"ok\": true, \"value\": \"True\"}\n{\"i\": 3, \"ok\": true, \"value\": \"True\"}\n{\"i\": 4, \"ok\": true, \"value\": \"True\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"AttributeError\", \"msg\": \"'NoneType' object has no attribute 'lower'\"}\n{\"i\": 6, \"ok\": true, \"value\": \"True\"}\n{\"i\": 7, \"ok\": true, \"value\": \"False\"}\n{\"i\": 8, \"ok\": true, \"value\": \"False\"}\n{\"i\": 9, \"ok\": true, \"value\": \"False\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.183,
+        "started_at": "2026-11-18T08:46:48.025348Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.336,
+        "started_at": "2026-11-18T08:47:07.126284Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "FF\n======================================================================\nFAIL: test_is_palindrome (test_palindrome.T.test_is_palindrome)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_palindrome.py\", line 8, in test_is_palindrome\n    self.assertTrue(is_palindrome(\"abba\"))\nAssertionError: None is not true\n\n======================================================================\nFAIL: test_mixed_case (test_palindrome.T.test_mixed_case)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_palindrome.py\", line 12, in test_mixed_case\n    self.assertTrue(is_palindrome(\"Aba\"))\nAssertionError: None is not true\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=2)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.263,
+        "started_at": "2026-11-18T08:47:07.463398Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "FF\n======================================================================\nFAIL: test_is_palindrome (test_palindrome.T.test_is_palindrome)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_palindrome.py\", line 8, in test_is_palindrome\n    self.assertTrue(is_palindrome(\"abba\"))\nAssertionError: False is not true\n\n======================================================================\nFAIL: test_mixed_case (test_palindrome.T.test_mixed_case)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_palindrome.py\", line 12, in test_mixed_case\n    self.assertTrue(is_palindrome(\"Aba\"))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 2 tests in 0.001s\n\nFAILED (failures=2)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.272,
+        "started_at": "2026-11-18T08:47:07.727408Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "FF\n======================================================================\nFAIL: test_is_palindrome (test_palindrome.T.test_is_palindrome)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_palindrome.py\", line 8, in test_is_palindrome\n    self.assertTrue(is_palindrome(\"abba\"))\nAssertionError: False is not true\n\n======================================================================\nFAIL: test_mixed_case (test_palindrome.T.test_mixed_case)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_palindrome.py\", line 12, in test_mixed_case\n    self.assertTrue(is_palindrome(\"Aba\"))\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=2)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.3,
+        "started_at": "2026-11-18T08:47:08.000415Z"
+      }
+    ],
+    "issued_at": "2026-11-18T08:47:08.302307Z"
+  },
+  "digest": "5ac90c2f30960fff164f61fa315940289ece37fffd93ebfe345af6fddfa116d4",
+  "signature": "ePOvYvAOFoDYQQGwh/SlCQxmkZmEdCTBKetceNKf1YuogRhDoftONehkQXq2bGMEI8+3gIwwot5/s7RXG6HiCA==",
+  "public_key": "veLapdXUYWIS6C+TYA+lFFuam+NaEoVd6nA6Xbx4MW4="
+}

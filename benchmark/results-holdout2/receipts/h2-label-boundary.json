@@ -1,0 +1,455 @@
+{
+  "body": {
+    "version": 2,
+    "receipt_id": "rcp_e2a07ea39e55",
+    "submission_id": "sub_3039c903f7ac",
+    "repo": "h2-label-boundary",
+    "base_sha": "8dd78ce01bd685e35f344275169a25e277a90921",
+    "head_sha": "58dc5e7e106619b2c2e132eee4ccb7513e94885d",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change. 1 additional item(s) need review.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change.",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "Behavior differs: shipping_label(10) returned 'light' on base but returned 'heavy' on head",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          13,
+          14
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: No behavior change.",
+        "detail": "Behavior differs: shipping_label(10) returned 'light' on base but returned 'heavy' on head",
+        "severity": "high",
+        "command_indexes": [
+          13,
+          14
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at shipping.py:4 (10 -> 11)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          12
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Test edge cases",
+        "detail": "F\n======================================================================\nFAIL: test_edge_cases (tribunal_probes.probe_1.TestShippingLabel.test_edge_cases)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 8, in test_edge_cases\n    self.assertEqual(shipping_label(100), 'freight')\nAssertionError: 'heavy' != 'freight'\n- heavy\n+ freight\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Test empty and None inputs",
+        "detail": "E\n======================================================================\nERROR: test_empty_and_none_inputs (tribunal_probes.probe_4.TestShippingLabel.test_empty_and_none_inputs)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 5, in test_empty_and_none_inputs\n    self.assertEqual(shipping_label(None), 'light')\n                     ^^^^^^^^^^^^^^^^^^^^\n  File \"/work/shipping.py\", line 2, in shipping_label\n    if weight > 100:\n       ^^^^^^^^^^^^\nTypeError: '>' not supported between instances of 'NoneType' and 'int'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          8,
+          9
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 5 input(s) compared, 1 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          13,
+          14
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/2 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.273,
+        "started_at": "2026-11-18T08:18:20.615045Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.231,
+        "started_at": "2026-11-18T08:18:20.888611Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_shipping.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.269,
+        "started_at": "2026-11-18T08:18:25.025958Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_shipping.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.22,
+        "started_at": "2026-11-18T08:18:25.295332Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_edge_cases (tribunal_probes.probe_1.TestShippingLabel.test_edge_cases)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 8, in test_edge_cases\n    self.assertEqual(shipping_label(100), 'freight')\nAssertionError: 'heavy' != 'freight'\n- heavy\n+ freight\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.368,
+        "started_at": "2026-11-18T08:19:30.577994Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "42ffc8c8e7f91c95b7f9b2c8bcad12a8b4d188e014f6ede1fd73e93e819ab148"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_edge_cases (tribunal_probes.probe_1.TestShippingLabel.test_edge_cases)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 7, in test_edge_cases\n    self.assertEqual(shipping_label(10), 'heavy')\nAssertionError: 'light' != 'heavy'\n- light\n+ heavy\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.249,
+        "started_at": "2026-11-18T08:19:30.946262Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "42ffc8c8e7f91c95b7f9b2c8bcad12a8b4d188e014f6ede1fd73e93e819ab148"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.251,
+        "started_at": "2026-11-18T08:19:31.195309Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "da57aef98c3ccb0b8afdc9fc48a5fe50d0038bea4c7f7c6a28e708bdfe076d14"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.242,
+        "started_at": "2026-11-18T08:19:31.446800Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "57e7f110ed2bb6e9c24f9a1af06bf377af538c22eb1f54c3b0f305771567c92f"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_empty_and_none_inputs (tribunal_probes.probe_4.TestShippingLabel.test_empty_and_none_inputs)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 5, in test_empty_and_none_inputs\n    self.assertEqual(shipping_label(None), 'light')\n                     ^^^^^^^^^^^^^^^^^^^^\n  File \"/work/shipping.py\", line 2, in shipping_label\n    if weight > 100:\n       ^^^^^^^^^^^^\nTypeError: '>' not supported between instances of 'NoneType' and 'int'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.261,
+        "started_at": "2026-11-18T08:19:31.689244Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "a355343226a10b5fa263c742eb0a071d1de315360c79939221855a9acf81cd17"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_empty_and_none_inputs (tribunal_probes.probe_4.TestShippingLabel.test_empty_and_none_inputs)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_4.py\", line 5, in test_empty_and_none_inputs\n    self.assertEqual(shipping_label(None), 'light')\n                     ^^^^^^^^^^^^^^^^^^^^\n  File \"/work/shipping.py\", line 2, in shipping_label\n    if weight > 100:\n       ^^^^^^^^^^^^\nTypeError: '>' not supported between instances of 'NoneType' and 'int'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.251,
+        "started_at": "2026-11-18T08:19:31.950439Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "a355343226a10b5fa263c742eb0a071d1de315360c79939221855a9acf81cd17"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.259,
+        "started_at": "2026-11-18T08:19:32.204147Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_shipping_label (test_shipping.T.test_shipping_label)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_shipping.py\", line 9, in test_shipping_label\n    self.assertEqual(shipping_label(50), \"heavy\")\nAssertionError: 'light' != 'heavy'\n- light\n+ heavy\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.244,
+        "started_at": "2026-11-18T08:19:32.463829Z",
+        "side": "head",
+        "overlay": {
+          "shipping.py": "e49e244a9d5753cf96ea5176119ccb550f189bf0dff62b6bcb5b1bb9f24e108c"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.229,
+        "started_at": "2026-11-18T08:19:32.708078Z",
+        "side": "head",
+        "overlay": {
+          "shipping.py": "94bdf158dffa45e8efa02d5102d2302f9a7494fcac9a5c839a2fa48f6e80af0c"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"'freight'\", \"state\": \"[[101], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"'light'\", \"state\": \"[[9], {}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"'light'\", \"state\": \"[[10], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"'light'\", \"state\": \"[[5], {}]\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"shipping_label() missing 1 required positional argument: 'weight'\", \"state\": \"[[], {}]\"}\n{\"trace\": {\"shipping.py\": [1, 2, 3, 4, 6]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.22,
+        "started_at": "2026-11-18T08:19:41.838063Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "1cdd8ecbcb3edf644d28ca087e5e36e9758305e71f4bb51f7ebf8c18cae85e61",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"'freight'\", \"state\": \"[[101], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"'light'\", \"state\": \"[[9], {}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"'heavy'\", \"state\": \"[[10], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"'light'\", \"state\": \"[[5], {}]\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"shipping_label() missing 1 required positional argument: 'weight'\", \"state\": \"[[], {}]\"}\n{\"trace\": {\"shipping.py\": [1, 2, 3, 4, 5, 6]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.16,
+        "started_at": "2026-11-18T08:19:42.058096Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "1cdd8ecbcb3edf644d28ca087e5e36e9758305e71f4bb51f7ebf8c18cae85e61",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"'freight'\", \"state\": \"[[101], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"'light'\", \"state\": \"[[9], {}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"'heavy'\", \"state\": \"[[10], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"'light'\", \"state\": \"[[5], {}]\"}\n{\"i\": 4, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"shipping_label() missing 1 required positional argument: 'weight'\", \"state\": \"[[], {}]\"}\n{\"trace\": {\"shipping.py\": [1, 2, 3, 4, 5, 6]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.174,
+        "started_at": "2026-11-18T08:19:42.218593Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "1cdd8ecbcb3edf644d28ca087e5e36e9758305e71f4bb51f7ebf8c18cae85e61",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      }
+    ],
+    "blobs": {
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "42ffc8c8e7f91c95b7f9b2c8bcad12a8b4d188e014f6ede1fd73e93e819ab148": "import unittest\nfrom shipping import shipping_label\nclass TestShippingLabel(unittest.TestCase):\n    def test_edge_cases(self):\n        self.assertEqual(shipping_label(0), 'light')\n        self.assertEqual(shipping_label(9), 'light')\n        self.assertEqual(shipping_label(10), 'heavy')\n        self.assertEqual(shipping_label(100), 'freight')\n        self.assertEqual(shipping_label(101), 'freight')\nif __name__ == '__main__':\n    unittest.main()",
+      "da57aef98c3ccb0b8afdc9fc48a5fe50d0038bea4c7f7c6a28e708bdfe076d14": "import unittest\nfrom shipping import shipping_label\nimport random\nimport string\n\nclass TestShippingLabelFuzz(unittest.TestCase):\n    def test_fuzz(self):\n        rng = random.Random(1234)\n        for _ in range(500):\n            weight = rng.randint(-100, 200)\n            label = shipping_label(weight)\n            if weight > 100:\n                self.assertEqual(label, 'freight')\n            elif weight >= 10:\n                self.assertEqual(label, 'heavy')\n            else:\n                self.assertEqual(label, 'light')\nif __name__ == '__main__':\n    unittest.main()",
+      "57e7f110ed2bb6e9c24f9a1af06bf377af538c22eb1f54c3b0f305771567c92f": "import unittest\nfrom shipping import shipping_label\nclass TestShippingLabelNegative(unittest.TestCase):\n    def test_negative_weights(self):\n        self.assertEqual(shipping_label(-1), 'light')\n        self.assertEqual(shipping_label(-10), 'light')\nif __name__ == '__main__':\n    unittest.main()",
+      "a355343226a10b5fa263c742eb0a071d1de315360c79939221855a9acf81cd17": "import unittest\nfrom shipping import shipping_label\nclass TestShippingLabel(unittest.TestCase):\n    def test_empty_and_none_inputs(self):\n        self.assertEqual(shipping_label(None), 'light')\n        self.assertEqual(shipping_label(''), 'light')\nif __name__ == '__main__':\n    unittest.main()",
+      "e49e244a9d5753cf96ea5176119ccb550f189bf0dff62b6bcb5b1bb9f24e108c": "def shipping_label(weight):\n    if weight > 100:\n        return 'freight'\n    if weight < 10:\n        return 'heavy'\n    return 'light'\n",
+      "94bdf158dffa45e8efa02d5102d2302f9a7494fcac9a5c839a2fa48f6e80af0c": "def shipping_label(weight):\n    if weight > 100:\n        return 'freight'\n    if weight >= 11:\n        return 'heavy'\n    return 'light'\n",
+      "1cdd8ecbcb3edf644d28ca087e5e36e9758305e71f4bb51f7ebf8c18cae85e61": "{\"calls\": [{\"module\": \"shipping\", \"function\": \"shipping_label\", \"args\": [101], \"kwargs\": {}}, {\"module\": \"shipping\", \"function\": \"shipping_label\", \"args\": [9], \"kwargs\": {}}, {\"module\": \"shipping\", \"function\": \"shipping_label\", \"args\": [10], \"kwargs\": {}}, {\"module\": \"shipping\", \"function\": \"shipping_label\", \"args\": [5], \"kwargs\": {}}, {\"module\": \"shipping\", \"function\": \"shipping_label\", \"args\": [], \"kwargs\": {}}], \"trace\": [\"shipping.py\"]}",
+      "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee": "import contextlib\nimport copy\nimport importlib\nimport io\nimport json\nimport os\nimport signal\nimport sys\n\nCALL_TIMEOUT_S = 5\n\n\nclass _Timeout(Exception):\n    pass\n\n\ndef _on_alarm(signum, frame):\n    raise _Timeout()\n\n\ndef _describe(value):\n    text = repr(value)\n    return text if len(text) <= 500 else text[:500] + \"...\"\n\n\ndef main():\n    with open(\"tribunal_chars/calls.json\", encoding=\"utf-8\") as handle:\n        spec = json.load(handle)\n    calls = spec[\"calls\"]\n    watch = set(spec.get(\"trace\", []))\n    executed = {}\n    names = {}\n\n    def watched(filename):\n        if filename not in names:\n            try:\n                rel = os.path.relpath(os.path.abspath(filename), os.getcwd()).replace(os.sep, \"/\")\n            except ValueError:\n                rel = \"\"\n            names[filename] = rel if rel in watch else \"\"\n        return names[filename]\n\n    def tracer(frame, event, arg):\n        rel = watched(frame.f_code.co_filename)\n        if not rel:\n            return None\n        lines = executed.setdefault(rel, set())\n\n        def local(frame, event, arg):\n            if event == \"line\":\n                lines.add(frame.f_lineno)\n            return local\n\n        return local\n\n    signal.signal(signal.SIGALRM, _on_alarm)\n    if watch:\n        sys.settrace(tracer)\n    try:\n        for index, call in enumerate(calls):\n            signal.alarm(CALL_TIMEOUT_S)\n            args = copy.deepcopy(call[\"args\"])\n            kwargs = copy.deepcopy(call[\"kwargs\"])\n            try:\n                module = importlib.import_module(call[\"module\"])\n                function = getattr(module, call[\"function\"])\n                with contextlib.redirect_stdout(io.StringIO()):\n                    value = function(*args, **kwargs)\n                record = {\"i\": index, \"ok\": True, \"value\": _describe(value)}\n            except _Timeout:\n                record = {\"i\": index, \"ok\": False, \"exc\": \"Timeout\", \"msg\": \"\"}\n            except BaseException as exc:\n                record = {\"i\": index, \"ok\": False, \"exc\": type(exc).__name__, \"msg\": str(exc)[:200]}\n            finally:\n                signal.alarm(0)\n            record[\"state\"] = _describe([args, kwargs])\n            print(json.dumps(record), flush=True)\n    finally:\n        sys.settrace(None)\n    trace = {name: sorted(lines) for name, lines in executed.items()}\n    print(json.dumps({\"trace\": trace}), flush=True)\n\n\nmain()\n"
+    },
+    "issued_at": "2026-11-18T08:19:42.394512Z"
+  },
+  "digest": "0dd4b1b06ab746ed6038b7a2d0afbeef081a78e039d2ba96c20d670e2fa45f6c",
+  "signature": "HBBjTNc1vCmV/znRaJcXzv7ozLWr4nT/exFeGavSRxvnloJ1qsZ/pZ+PnKQkV5eaojOEFztaCclZOslVuuUgAg==",
+  "public_key": "woiCy9IUIYaZJ87l6X+N94xdNYU5FHQhx4ZZZeiFwOI="
+}

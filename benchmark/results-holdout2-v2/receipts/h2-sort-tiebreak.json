@@ -1,0 +1,277 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_66f4d2889ba3",
+    "submission_id": "sub_a9f6d0bc9f8e",
+    "repo": "h2-sort-tiebreak",
+    "base_sha": "5b637f10b66180b9acfe919b295439f17cfdc53c",
+    "head_sha": "7c7d055141da41fa3fa49c0360795184cd174757",
+    "verdict": "inconclusive",
+    "rationale": "1 item(s) need human review:\n- Critical claim not verified: No behavior change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The test suite results show that the code passes all tests, but they do not provide information about the behavior of specific functions or methods outside of unit testing. The command outputs indicate different errors for sorting functionality, which may suggest a change in behavior, but this is not directly supported by the provided evidence.",
+        "command_indexes": [
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Claim not verified: No behavior change",
+        "detail": "The test suite results show that the code passes all tests, but they do not provide information about the behavior of specific functions or methods outside of unit testing. The command outputs indicate different errors for sorting functionality, which may suggest a change in behavior, but this is not directly supported by the provided evidence.",
+        "severity": "low",
+        "command_indexes": [
+          2,
+          3
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 9 input(s) compared, 0 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.301,
+        "started_at": "2026-11-18T08:34:31.022390Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.243,
+        "started_at": "2026-11-18T08:34:31.324064Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import sorting; import random; words = [random.randbytes(10).decode() for _ in range(10)]; print(sorting.sort_by_length(words))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xda in position 1: invalid continuation byte\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.183,
+        "started_at": "2026-11-18T08:34:35.981920Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import sorting; import random; words = [random.randbytes(10).decode() for _ in range(10)]; print(sorting.sort_by_length(words))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xe5 in position 3: invalid continuation byte\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.132,
+        "started_at": "2026-11-18T08:34:36.165465Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"['a', 'bb', 'ccc']\"}\n{\"i\": 1, \"ok\": true, \"value\": \"['hello', 'world', 'python']\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\"}\n{\"i\": 4, \"ok\": true, \"value\": \"['a', 'ab', 'abc', 'abcd']\"}\n{\"i\": 5, \"ok\": true, \"value\": \"[['a'], ['bb'], ['ccc']]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"['a', 'b', 'c', 'd', 'e']\"}\n{\"i\": 7, \"ok\": true, \"value\": \"[[''], ['a'], ['bb'], ['ccc']]\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.314,
+        "started_at": "2026-11-18T08:34:59.933380Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"['a', 'bb', 'ccc']\"}\n{\"i\": 1, \"ok\": true, \"value\": \"['hello', 'world', 'python']\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\"}\n{\"i\": 4, \"ok\": true, \"value\": \"['a', 'ab', 'abc', 'abcd']\"}\n{\"i\": 5, \"ok\": true, \"value\": \"[['a'], ['bb'], ['ccc']]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"['a', 'b', 'c', 'd', 'e']\"}\n{\"i\": 7, \"ok\": true, \"value\": \"[[''], ['a'], ['bb'], ['ccc']]\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.145,
+        "started_at": "2026-11-18T08:35:00.247784Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"['a', 'bb', 'ccc']\"}\n{\"i\": 1, \"ok\": true, \"value\": \"['hello', 'world', 'python']\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\"}\n{\"i\": 4, \"ok\": true, \"value\": \"['a', 'ab', 'abc', 'abcd']\"}\n{\"i\": 5, \"ok\": true, \"value\": \"[['a'], ['bb'], ['ccc']]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"['a', 'b', 'c', 'd', 'e']\"}\n{\"i\": 7, \"ok\": true, \"value\": \"[[''], ['a'], ['bb'], ['ccc']]\"}\n{\"i\": 8, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sort_by_length() takes 1 positional argument but 2 were given\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.162,
+        "started_at": "2026-11-18T08:35:00.393437Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.318,
+        "started_at": "2026-11-18T08:35:19.804159Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.219,
+        "started_at": "2026-11-18T08:35:20.122626Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.223,
+        "started_at": "2026-11-18T08:35:20.342224Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.247,
+        "started_at": "2026-11-18T08:35:20.565475Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.239,
+        "started_at": "2026-11-18T08:35:20.814360Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_sort_by_length (test_sorting.T.test_sort_by_length)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_sorting.py\", line 8, in test_sort_by_length\n    self.assertEqual(sort_by_length([\"ccc\", \"a\", \"bb\"]), [\"a\", \"bb\", \"ccc\"])\nAssertionError: None != ['a', 'bb', 'ccc']\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.251,
+        "started_at": "2026-11-18T08:35:21.054431Z"
+      }
+    ],
+    "issued_at": "2026-11-18T08:35:21.306123Z"
+  },
+  "digest": "534ef2b95abefef188ba19358d53040327cc238b614462f378e5cf59aecdd08a",
+  "signature": "ku1iJ+wH1vRw3YFT9h36Y+cB0Alh/s3KLBuKxqS4cXtTgbQG9WOlaGcedjh3Tu22gqV5X2SDlRc4DW6JRfkbBQ==",
+  "public_key": "veLapdXUYWIS6C+TYA+lFFuam+NaEoVd6nA6Xbx4MW4="
+}

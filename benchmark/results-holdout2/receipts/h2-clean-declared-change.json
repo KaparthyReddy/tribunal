@@ -1,0 +1,416 @@
+{
+  "body": {
+    "version": 2,
+    "receipt_id": "rcp_f4f3ae26183c",
+    "submission_id": "sub_1fcfb6eeb6f9",
+    "repo": "h2-clean-declared-change",
+    "base_sha": "e6288acd82356d9270c94196be1009e6506bfa76",
+    "head_sha": "30076c27f7ff1268a29f8bb5d38ea0550138679d",
+    "verdict": "pass",
+    "rationale": "No blocking issues at 30076c27f7ff. 16 sandboxed command(s) run, 0 of 1 claim(s) supported.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "Changes the greeting from 'Hello' to 'Hi'.",
+        "kind": "other"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The evidence does not directly demonstrate that the greeting was changed from 'Hello' to 'Hi'. The test suite results are inconclusive regarding the change in the greeting. Additionally, while `grep` shows the removal of 'Hello', it does not confirm the addition of 'Hi'.",
+        "command_indexes": [
+          4,
+          5
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Claim not verified: Changes the greeting from 'Hello' to 'Hi'.",
+        "detail": "The evidence does not directly demonstrate that the greeting was changed from 'Hello' to 'Hi'. The test suite results are inconclusive regarding the change in the greeting. Additionally, while `grep` shows the removal of 'Hello', it does not confirm the addition of 'Hi'.",
+        "severity": "low",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 1 input(s) compared, 0 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          13,
+          14
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 2/2 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.299,
+        "started_at": "2026-11-18T08:23:29.122395Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.241,
+        "started_at": "2026-11-18T08:23:29.421968Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_greet.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.269,
+        "started_at": "2026-11-18T08:23:39.275005Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_greet.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.218,
+        "started_at": "2026-11-18T08:23:39.544052Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "grep",
+          "-r",
+          "\"Hello, \"",
+          "greet.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "    return \"Hello, \" + name\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.116,
+        "started_at": "2026-11-18T08:23:39.762157Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "grep",
+          "-r",
+          "\"Hello, \"",
+          "greet.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.116,
+        "started_at": "2026-11-18T08:23:39.878774Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.349,
+        "started_at": "2026-11-18T08:24:06.809709Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "d0c59a4aa5cf5a92d362dcb9461f09a3303222434db668ae2a12d08a3c12a266"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.235,
+        "started_at": "2026-11-18T08:24:07.158910Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "2eb3b86b38be1caa0abc71817c1870136e5d9f98d24d1a2058a3e773022ac708"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.247,
+        "started_at": "2026-11-18T08:24:07.394386Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "495736022e0ae8a976365921a79c76a37e2b5bb76b3ef67467645e812696f298"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.268,
+        "started_at": "2026-11-18T08:24:07.642043Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "fbdd4168411026bb0b4d41c9ff42f7bf6c576d53139a2ce1f7b13433b6ea6a3f"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.334,
+        "started_at": "2026-11-18T08:24:07.912097Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_greeting (test_greet.T.test_greeting)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_greet.py\", line 8, in test_greeting\n    self.assertEqual(greeting(\"Ann\"), \"Hi, Ann\")\nAssertionError: None != 'Hi, Ann'\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.302,
+        "started_at": "2026-11-18T08:24:08.246527Z",
+        "side": "head",
+        "overlay": {
+          "greet.py": "15ee8e9ff714d29def763ce64b730ddd50db9589a723f1201a63978a5477381e"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: test_greeting (test_greet.T.test_greeting)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_greet.py\", line 8, in test_greeting\n    self.assertEqual(greeting(\"Ann\"), \"Hi, Ann\")\n                     ^^^^^^^^^^^^^^^\n  File \"/work/greet.py\", line 2, in greeting\n    return 'Hi, ' - name\n           ~~~~~~~^~~~~~\nTypeError: unsupported operand type(s) for -: 'str' and 'str'\n\n----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.285,
+        "started_at": "2026-11-18T08:24:08.549326Z",
+        "side": "head",
+        "overlay": {
+          "greet.py": "df643356d7eb5536737b5fba4bb35f63ea4ebe1ab70791e987e56664eeea5f50"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"can only concatenate str (not \\\"list\\\") to str\", \"state\": \"[[['Ann']], {}]\"}\n{\"trace\": {\"greet.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.217,
+        "started_at": "2026-11-18T08:24:12.580323Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "00d1168df1bef76593c614255f193a956cf2ace194ccfa2513af2928b81f4b95",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"can only concatenate str (not \\\"list\\\") to str\", \"state\": \"[[['Ann']], {}]\"}\n{\"trace\": {\"greet.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.177,
+        "started_at": "2026-11-18T08:24:12.797256Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "00d1168df1bef76593c614255f193a956cf2ace194ccfa2513af2928b81f4b95",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"can only concatenate str (not \\\"list\\\") to str\", \"state\": \"[[['Ann']], {}]\"}\n{\"trace\": {\"greet.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.162,
+        "started_at": "2026-11-18T08:24:12.974803Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "00d1168df1bef76593c614255f193a956cf2ace194ccfa2513af2928b81f4b95",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      }
+    ],
+    "blobs": {
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "d0c59a4aa5cf5a92d362dcb9461f09a3303222434db668ae2a12d08a3c12a266": "import unittest; from greet import greeting\nclass T(unittest.TestCase):\n    def test_empty_string(self):\n        self.assertEqual(greeting(''), 'Hi, ')\nif __name__ == '__main__':\n    unittest.main()",
+      "2eb3b86b38be1caa0abc71817c1870136e5d9f98d24d1a2058a3e773022ac708": "import unittest; from greet import greeting\nclass T(unittest.TestCase):\n    def test_none_input(self):\n        with self.assertRaises(TypeError):\n            greeting(None)\nif __name__ == '__main__':\n    unittest.main()",
+      "495736022e0ae8a976365921a79c76a37e2b5bb76b3ef67467645e812696f298": "import unittest; from greet import greeting\nclass T(unittest.TestCase):\n    def test_zero_length_name(self):\n        self.assertEqual(greeting('A'), 'Hi, A')\nif __name__ == '__main__':\n    unittest.main()",
+      "fbdd4168411026bb0b4d41c9ff42f7bf6c576d53139a2ce1f7b13433b6ea6a3f": "import unittest; from greet import greeting\nimport random; rng = random.Random(1234)\nclass T(unittest.TestCase):\n    def test_unicode_input(self):\n        for _ in range(500):\n            name = ''.join(rng.choices('abcdefghijklmnopqrstuvwxyz', k=10))\n            self.assertEqual(greeting(name), f'Hi, {name}')\nif __name__ == '__main__':\n    unittest.main()",
+      "15ee8e9ff714d29def763ce64b730ddd50db9589a723f1201a63978a5477381e": "def greeting(name):\n    return None\n",
+      "df643356d7eb5536737b5fba4bb35f63ea4ebe1ab70791e987e56664eeea5f50": "def greeting(name):\n    return 'Hi, ' - name\n",
+      "00d1168df1bef76593c614255f193a956cf2ace194ccfa2513af2928b81f4b95": "{\"calls\": [{\"module\": \"greet\", \"function\": \"greeting\", \"args\": [[\"Ann\"]], \"kwargs\": {}}], \"trace\": [\"greet.py\"]}",
+      "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee": "import contextlib\nimport copy\nimport importlib\nimport io\nimport json\nimport os\nimport signal\nimport sys\n\nCALL_TIMEOUT_S = 5\n\n\nclass _Timeout(Exception):\n    pass\n\n\ndef _on_alarm(signum, frame):\n    raise _Timeout()\n\n\ndef _describe(value):\n    text = repr(value)\n    return text if len(text) <= 500 else text[:500] + \"...\"\n\n\ndef main():\n    with open(\"tribunal_chars/calls.json\", encoding=\"utf-8\") as handle:\n        spec = json.load(handle)\n    calls = spec[\"calls\"]\n    watch = set(spec.get(\"trace\", []))\n    executed = {}\n    names = {}\n\n    def watched(filename):\n        if filename not in names:\n            try:\n                rel = os.path.relpath(os.path.abspath(filename), os.getcwd()).replace(os.sep, \"/\")\n            except ValueError:\n                rel = \"\"\n            names[filename] = rel if rel in watch else \"\"\n        return names[filename]\n\n    def tracer(frame, event, arg):\n        rel = watched(frame.f_code.co_filename)\n        if not rel:\n            return None\n        lines = executed.setdefault(rel, set())\n\n        def local(frame, event, arg):\n            if event == \"line\":\n                lines.add(frame.f_lineno)\n            return local\n\n        return local\n\n    signal.signal(signal.SIGALRM, _on_alarm)\n    if watch:\n        sys.settrace(tracer)\n    try:\n        for index, call in enumerate(calls):\n            signal.alarm(CALL_TIMEOUT_S)\n            args = copy.deepcopy(call[\"args\"])\n            kwargs = copy.deepcopy(call[\"kwargs\"])\n            try:\n                module = importlib.import_module(call[\"module\"])\n                function = getattr(module, call[\"function\"])\n                with contextlib.redirect_stdout(io.StringIO()):\n                    value = function(*args, **kwargs)\n                record = {\"i\": index, \"ok\": True, \"value\": _describe(value)}\n            except _Timeout:\n                record = {\"i\": index, \"ok\": False, \"exc\": \"Timeout\", \"msg\": \"\"}\n            except BaseException as exc:\n                record = {\"i\": index, \"ok\": False, \"exc\": type(exc).__name__, \"msg\": str(exc)[:200]}\n            finally:\n                signal.alarm(0)\n            record[\"state\"] = _describe([args, kwargs])\n            print(json.dumps(record), flush=True)\n    finally:\n        sys.settrace(None)\n    trace = {name: sorted(lines) for name, lines in executed.items()}\n    print(json.dumps({\"trace\": trace}), flush=True)\n\n\nmain()\n"
+    },
+    "issued_at": "2026-11-18T08:24:13.139235Z"
+  },
+  "digest": "9716176f48989807eb82818f70f07688e6734d42873660e9eabf8923d2fd5fe3",
+  "signature": "UK+kHwiFUBxUlq84AxYendikrB37je+TrLgjnn/GKFg6tUYkVqBhF9IiJd2KuGdP2GgD9Y+rlQYKeZ9HAfUsBQ==",
+  "public_key": "woiCy9IUIYaZJ87l6X+N94xdNYU5FHQhx4ZZZeiFwOI="
+}

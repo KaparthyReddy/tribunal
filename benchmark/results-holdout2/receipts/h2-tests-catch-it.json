@@ -1,0 +1,403 @@
+{
+  "body": {
+    "version": 2,
+    "receipt_id": "rcp_8536c1e83106",
+    "submission_id": "sub_10ac9e8d6768",
+    "repo": "h2-tests-catch-it",
+    "base_sha": "abe83f9e80a6f426530492827f94c054d5a348da",
+    "head_sha": "d8a6412ccd85c958a0c2fdfc7efd82e4de9ee223",
+    "verdict": "fail",
+    "rationale": "4 blocking issue(s):\n- Regression: test command passes on base but fails on head\n- Claim refuted: No behavior change\n- Probe broke the change: Discount with zero percentage\n- Probe broke the change: Discount with full percentage",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "The test command passes on base but fails on head, so behavior changed.",
+        "command_indexes": [
+          0,
+          1
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "auditor",
+        "title": "Regression: test command passes on base but fails on head",
+        "detail": "`python -m unittest` exits 0 on the base commit and non-zero on head.",
+        "severity": "high",
+        "command_indexes": [
+          0,
+          1
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim refuted: No behavior change",
+        "detail": "The test command passes on base but fails on head, so behavior changed.",
+        "severity": "high",
+        "command_indexes": [
+          0,
+          1
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe broke the change: Discount with zero percentage",
+        "detail": "Passes on base, fails on head.\nF\n======================================================================\nFAIL: test_zero_percentage (tribunal_probes.probe_1.TestDiscount.test_zero_percentage)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 5, in test_zero_percentage\n    self.assertEqual(discount(100, 0), 100)\nAssertionError: 0.0 != 100\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "high",
+        "command_indexes": [
+          2,
+          3
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe broke the change: Discount with full percentage",
+        "detail": "Passes on base, fails on head.\nF\n======================================================================\nFAIL: test_full_percentage (tribunal_probes.probe_2.TestDiscount.test_full_percentage)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_full_percentage\n    self.assertEqual(discount(100, 100), 0)\nAssertionError: 100.0 != 0\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "high",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Discount with negative percentage",
+        "detail": "F\n======================================================================\nFAIL: test_negative_percentage (tribunal_probes.probe_3.TestDiscount.test_negative_percentage)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 5, in test_negative_percentage\n    self.assertEqual(discount(100, -10), 90)\nAssertionError: -10.0 != 90\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          6,
+          7
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation testing skipped: test command does not pass on head",
+        "detail": "",
+        "severity": "low",
+        "command_indexes": [
+          9
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 8 input(s) compared, 4 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          10,
+          11
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.27,
+        "started_at": "2026-11-18T08:20:51.148192Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_discount (test_pricing.T.test_discount)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_pricing.py\", line 8, in test_discount\n    self.assertEqual(discount(200, 10), 180)\nAssertionError: 20.0 != 180\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.214,
+        "started_at": "2026-11-18T08:20:51.418838Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_zero_percentage (tribunal_probes.probe_1.TestDiscount.test_zero_percentage)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_1.py\", line 5, in test_zero_percentage\n    self.assertEqual(discount(100, 0), 100)\nAssertionError: 0.0 != 100\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.319,
+        "started_at": "2026-11-18T08:21:13.386296Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "d91e70a8569dd0584127872c0790e95d7a3ccd2e0921e810c48e8234a0be14dd"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.22,
+        "started_at": "2026-11-18T08:21:13.705997Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "d91e70a8569dd0584127872c0790e95d7a3ccd2e0921e810c48e8234a0be14dd"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_full_percentage (tribunal_probes.probe_2.TestDiscount.test_full_percentage)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_2.py\", line 5, in test_full_percentage\n    self.assertEqual(discount(100, 100), 0)\nAssertionError: 100.0 != 0\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.236,
+        "started_at": "2026-11-18T08:21:13.926492Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "a66dae4432b2bb2abf1232fb20d84425382dd4326a483ff062476c85002bfa71"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.246,
+        "started_at": "2026-11-18T08:21:14.163073Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "a66dae4432b2bb2abf1232fb20d84425382dd4326a483ff062476c85002bfa71"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_negative_percentage (tribunal_probes.probe_3.TestDiscount.test_negative_percentage)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 5, in test_negative_percentage\n    self.assertEqual(discount(100, -10), 90)\nAssertionError: -10.0 != 90\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.256,
+        "started_at": "2026-11-18T08:21:14.409153Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "5a9d813f65c4302923f895af13df72e3214e5618c3288d257d5e8310c7182ffb"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_negative_percentage (tribunal_probes.probe_3.TestDiscount.test_negative_percentage)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/tribunal_probes/probe_3.py\", line 5, in test_negative_percentage\n    self.assertEqual(discount(100, -10), 90)\nAssertionError: 110.0 != 90\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.274,
+        "started_at": "2026-11-18T08:21:14.665904Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "5a9d813f65c4302923f895af13df72e3214e5618c3288d257d5e8310c7182ffb"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.006s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.283,
+        "started_at": "2026-11-18T08:21:14.940732Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "0f0b889e3fce60f68d74a66a4bd4e0788f0c2c3acc90ac6721a16b87ac96e785"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_discount (test_pricing.T.test_discount)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_pricing.py\", line 8, in test_discount\n    self.assertEqual(discount(200, 10), 180)\nAssertionError: 20.0 != 180\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.257,
+        "started_at": "2026-11-18T08:21:15.225998Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"100.0\", \"state\": \"[[100, 0], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"50.0\", \"state\": \"[[100, 50], {}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"0.0\", \"state\": \"[[100, 100], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"0.0\", \"state\": \"[[0, 50], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"-50.0\", \"state\": \"[[-100, 50], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"150.0\", \"state\": \"[[100, -50], {}]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"74.5\", \"state\": \"[[100, 25.5], {}]\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"discount() got multiple values for argument 'price'\", \"state\": \"[[100, 0], {'price': 100, 'pct': 0}]\"}\n{\"trace\": {\"pricing.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.285,
+        "started_at": "2026-11-18T08:21:32.408421Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "b41e19bca4779468961a108bcb857b87450dd130327b9a184cd10dc44ea46d02",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"0.0\", \"state\": \"[[100, 0], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"50.0\", \"state\": \"[[100, 50], {}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"100.0\", \"state\": \"[[100, 100], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"0.0\", \"state\": \"[[0, 50], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"-50.0\", \"state\": \"[[-100, 50], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"-50.0\", \"state\": \"[[100, -50], {}]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"25.5\", \"state\": \"[[100, 25.5], {}]\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"discount() got multiple values for argument 'price'\", \"state\": \"[[100, 0], {'price': 100, 'pct': 0}]\"}\n{\"trace\": {\"pricing.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.156,
+        "started_at": "2026-11-18T08:21:32.693444Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "b41e19bca4779468961a108bcb857b87450dd130327b9a184cd10dc44ea46d02",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"0.0\", \"state\": \"[[100, 0], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"50.0\", \"state\": \"[[100, 50], {}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"100.0\", \"state\": \"[[100, 100], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"0.0\", \"state\": \"[[0, 50], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"-50.0\", \"state\": \"[[-100, 50], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"-50.0\", \"state\": \"[[100, -50], {}]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"25.5\", \"state\": \"[[100, 25.5], {}]\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"discount() got multiple values for argument 'price'\", \"state\": \"[[100, 0], {'price': 100, 'pct': 0}]\"}\n{\"trace\": {\"pricing.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.165,
+        "started_at": "2026-11-18T08:21:32.849568Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "b41e19bca4779468961a108bcb857b87450dd130327b9a184cd10dc44ea46d02",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      }
+    ],
+    "blobs": {
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "d91e70a8569dd0584127872c0790e95d7a3ccd2e0921e810c48e8234a0be14dd": "import unittest\nfrom pricing import discount\nclass TestDiscount(unittest.TestCase):\n    def test_zero_percentage(self):\n        self.assertEqual(discount(100, 0), 100)\nif __name__ == '__main__':\n    unittest.main()",
+      "a66dae4432b2bb2abf1232fb20d84425382dd4326a483ff062476c85002bfa71": "import unittest\nfrom pricing import discount\nclass TestDiscount(unittest.TestCase):\n    def test_full_percentage(self):\n        self.assertEqual(discount(100, 100), 0)\nif __name__ == '__main__':\n    unittest.main()",
+      "5a9d813f65c4302923f895af13df72e3214e5618c3288d257d5e8310c7182ffb": "import unittest\nfrom pricing import discount\nclass TestDiscount(unittest.TestCase):\n    def test_negative_percentage(self):\n        self.assertEqual(discount(100, -10), 90)\nif __name__ == '__main__':\n    unittest.main()",
+      "0f0b889e3fce60f68d74a66a4bd4e0788f0c2c3acc90ac6721a16b87ac96e785": "import unittest\nfrom pricing import discount\nimport random\nimport itertools\nclass TestDiscount(unittest.TestCase):\n    def test_fuzz_discount(self):\n        for _ in itertools.repeat(None, 500):\n            price = random.Random(1234).randint(-1000, 1000)\n            pct = random.Random(1234).randint(-1000, 1000)\n            self.assertEqual(discount(price, pct), price * pct / 100)\nif __name__ == '__main__':\n    unittest.main()",
+      "b41e19bca4779468961a108bcb857b87450dd130327b9a184cd10dc44ea46d02": "{\"calls\": [{\"module\": \"pricing\", \"function\": \"discount\", \"args\": [100, 0], \"kwargs\": {}}, {\"module\": \"pricing\", \"function\": \"discount\", \"args\": [100, 50], \"kwargs\": {}}, {\"module\": \"pricing\", \"function\": \"discount\", \"args\": [100, 100], \"kwargs\": {}}, {\"module\": \"pricing\", \"function\": \"discount\", \"args\": [0, 50], \"kwargs\": {}}, {\"module\": \"pricing\", \"function\": \"discount\", \"args\": [-100, 50], \"kwargs\": {}}, {\"module\": \"pricing\", \"function\": \"discount\", \"args\": [100, -50], \"kwargs\": {}}, {\"module\": \"pricing\", \"function\": \"discount\", \"args\": [100, 25.5], \"kwargs\": {}}, {\"module\": \"pricing\", \"function\": \"discount\", \"args\": [100, 0], \"kwargs\": {\"price\": 100, \"pct\": 0}}], \"trace\": [\"pricing.py\"]}",
+      "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee": "import contextlib\nimport copy\nimport importlib\nimport io\nimport json\nimport os\nimport signal\nimport sys\n\nCALL_TIMEOUT_S = 5\n\n\nclass _Timeout(Exception):\n    pass\n\n\ndef _on_alarm(signum, frame):\n    raise _Timeout()\n\n\ndef _describe(value):\n    text = repr(value)\n    return text if len(text) <= 500 else text[:500] + \"...\"\n\n\ndef main():\n    with open(\"tribunal_chars/calls.json\", encoding=\"utf-8\") as handle:\n        spec = json.load(handle)\n    calls = spec[\"calls\"]\n    watch = set(spec.get(\"trace\", []))\n    executed = {}\n    names = {}\n\n    def watched(filename):\n        if filename not in names:\n            try:\n                rel = os.path.relpath(os.path.abspath(filename), os.getcwd()).replace(os.sep, \"/\")\n            except ValueError:\n                rel = \"\"\n            names[filename] = rel if rel in watch else \"\"\n        return names[filename]\n\n    def tracer(frame, event, arg):\n        rel = watched(frame.f_code.co_filename)\n        if not rel:\n            return None\n        lines = executed.setdefault(rel, set())\n\n        def local(frame, event, arg):\n            if event == \"line\":\n                lines.add(frame.f_lineno)\n            return local\n\n        return local\n\n    signal.signal(signal.SIGALRM, _on_alarm)\n    if watch:\n        sys.settrace(tracer)\n    try:\n        for index, call in enumerate(calls):\n            signal.alarm(CALL_TIMEOUT_S)\n            args = copy.deepcopy(call[\"args\"])\n            kwargs = copy.deepcopy(call[\"kwargs\"])\n            try:\n                module = importlib.import_module(call[\"module\"])\n                function = getattr(module, call[\"function\"])\n                with contextlib.redirect_stdout(io.StringIO()):\n                    value = function(*args, **kwargs)\n                record = {\"i\": index, \"ok\": True, \"value\": _describe(value)}\n            except _Timeout:\n                record = {\"i\": index, \"ok\": False, \"exc\": \"Timeout\", \"msg\": \"\"}\n            except BaseException as exc:\n                record = {\"i\": index, \"ok\": False, \"exc\": type(exc).__name__, \"msg\": str(exc)[:200]}\n            finally:\n                signal.alarm(0)\n            record[\"state\"] = _describe([args, kwargs])\n            print(json.dumps(record), flush=True)\n    finally:\n        sys.settrace(None)\n    trace = {name: sorted(lines) for name, lines in executed.items()}\n    print(json.dumps({\"trace\": trace}), flush=True)\n\n\nmain()\n"
+    },
+    "issued_at": "2026-11-18T08:21:33.016251Z"
+  },
+  "digest": "68b047ca83bd132fe2686cf73310cca358831b7c884383d8fcd3f72494a0e0df",
+  "signature": "udRZoCgOcB0aYK4t84oX5j29qu54SgLA+TOgmS3qMx2vxzdPRYuR/wzklWaSUGK3fed6r0P0Oj7RyIfaGicqBQ==",
+  "public_key": "woiCy9IUIYaZJ87l6X+N94xdNYU5FHQhx4ZZZeiFwOI="
+}

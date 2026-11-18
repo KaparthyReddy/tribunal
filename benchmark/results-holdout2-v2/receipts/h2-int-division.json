@@ -1,0 +1,445 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_447c9358269e",
+    "submission_id": "sub_36fd3f68ed18",
+    "repo": "h2-int-division",
+    "base_sha": "7edb1e8055c01f378b89edc1c36e083f9385c965",
+    "head_sha": "c19b27e6a2f0a6de4281dc9f40646e4b005e41c1",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "Use integer division in average to avoid floating point noise.",
+        "kind": "performance"
+      },
+      {
+        "id": "c2",
+        "text": "No behavior change.",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The test suite results and code execution do not provide evidence that integer division was used or that it affects the performance in terms of avoiding floating point noise.",
+        "command_indexes": [
+          2,
+          3
+        ]
+      },
+      {
+        "claim_id": "c2",
+        "status": "refuted",
+        "explanation": "Behavior differs: average([1, 2, 3, 4]) returned 2.5 on base but returned 2 on head; average([1.0, 2.0, 3.0, 4.0]) returned 2.5 on base but returned 2.0 on head; average([1.1, 2.2, 3.3, 4.4]) returned 2.75 on base but returned 2.0 on head",
+        "command_indexes": [
+          0,
+          1,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: No behavior change.",
+        "detail": "Behavior differs: average([1, 2, 3, 4]) returned 2.5 on base but returned 2 on head; average([1.0, 2.0, 3.0, 4.0]) returned 2.5 on base but returned 2.0 on head; average([1.1, 2.2, 3.3, 4.4]) returned 2.75 on base but returned 2.0 on head",
+        "severity": "high",
+        "command_indexes": [
+          6,
+          7
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim not verified: Use integer division in average to avoid floating point noise.",
+        "detail": "The test suite results and code execution do not provide evidence that integer division was used or that it affects the performance in terms of avoiding floating point noise.",
+        "severity": "low",
+        "command_indexes": [
+          2,
+          3
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: empty list",
+        "detail": "E\n======================================================================\nERROR: probe_1 (unittest.loader._FailedTest.probe_1)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_1\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_1.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          9,
+          10
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: single element",
+        "detail": "E\n======================================================================\nERROR: probe_2 (unittest.loader._FailedTest.probe_2)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_2\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_2.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          11,
+          12
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: all zeros",
+        "detail": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          13,
+          14
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: mixed values",
+        "detail": "E\n======================================================================\nERROR: probe_4 (unittest.loader._FailedTest.probe_4)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_4\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_4.py\", line 1, in <module>\n    import unittest; from pkg.averages import average; import random\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          15,
+          16
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 10 input(s) compared, 8 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          6,
+          7
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.278,
+        "started_at": "2026-11-18T08:35:23.933286Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.219,
+        "started_at": "2026-11-18T08:35:24.211478Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import averages; print(averages.average([1.5, 2.5]))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "2.0\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.189,
+        "started_at": "2026-11-18T08:35:28.925350Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import averages; print(averages.average([1.5, 2.5]))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "2.0\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.124,
+        "started_at": "2026-11-18T08:35:29.114383Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import averages; print(averages.average([1.5, 2.5]))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "2.0\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.178,
+        "started_at": "2026-11-18T08:35:38.820067Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import averages; print(averages.average([1.5, 2.5]))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "2.0\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.138,
+        "started_at": "2026-11-18T08:35:38.998425Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"2.5\"}\n{\"i\": 1, \"ok\": true, \"value\": \"2.5\"}\n{\"i\": 2, \"ok\": true, \"value\": \"2.75\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"average() takes 1 positional argument but 2 were given\"}\n{\"i\": 4, \"ok\": true, \"value\": \"100.0\"}\n{\"i\": 5, \"ok\": true, \"value\": \"-2.5\"}\n{\"i\": 6, \"ok\": true, \"value\": \"3.0\"}\n{\"i\": 7, \"ok\": true, \"value\": \"3.0\"}\n{\"i\": 8, \"ok\": true, \"value\": \"3.5\"}\n{\"i\": 9, \"ok\": true, \"value\": \"3.5\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.239,
+        "started_at": "2026-11-18T08:36:07.845206Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"2\"}\n{\"i\": 1, \"ok\": true, \"value\": \"2.0\"}\n{\"i\": 2, \"ok\": true, \"value\": \"2.0\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"average() takes 1 positional argument but 2 were given\"}\n{\"i\": 4, \"ok\": true, \"value\": \"100\"}\n{\"i\": 5, \"ok\": true, \"value\": \"-3\"}\n{\"i\": 6, \"ok\": true, \"value\": \"3.0\"}\n{\"i\": 7, \"ok\": true, \"value\": \"3\"}\n{\"i\": 8, \"ok\": true, \"value\": \"3.0\"}\n{\"i\": 9, \"ok\": true, \"value\": \"3\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.151,
+        "started_at": "2026-11-18T08:36:08.084159Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"2\"}\n{\"i\": 1, \"ok\": true, \"value\": \"2.0\"}\n{\"i\": 2, \"ok\": true, \"value\": \"2.0\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"average() takes 1 positional argument but 2 were given\"}\n{\"i\": 4, \"ok\": true, \"value\": \"100\"}\n{\"i\": 5, \"ok\": true, \"value\": \"-3\"}\n{\"i\": 6, \"ok\": true, \"value\": \"3.0\"}\n{\"i\": 7, \"ok\": true, \"value\": \"3\"}\n{\"i\": 8, \"ok\": true, \"value\": \"3.0\"}\n{\"i\": 9, \"ok\": true, \"value\": \"3\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.167,
+        "started_at": "2026-11-18T08:36:08.235714Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_1 (unittest.loader._FailedTest.probe_1)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_1\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_1.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.307,
+        "started_at": "2026-11-18T08:36:28.471359Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_1 (unittest.loader._FailedTest.probe_1)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_1\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_1.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.218,
+        "started_at": "2026-11-18T08:36:28.779059Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_2 (unittest.loader._FailedTest.probe_2)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_2\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_2.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.23,
+        "started_at": "2026-11-18T08:36:28.997180Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_2 (unittest.loader._FailedTest.probe_2)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_2\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_2.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.252,
+        "started_at": "2026-11-18T08:36:29.227522Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.253,
+        "started_at": "2026-11-18T08:36:29.479875Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.259,
+        "started_at": "2026-11-18T08:36:29.733509Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_4 (unittest.loader._FailedTest.probe_4)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_4\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_4.py\", line 1, in <module>\n    import unittest; from pkg.averages import average; import random\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.265,
+        "started_at": "2026-11-18T08:36:29.993227Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_4 (unittest.loader._FailedTest.probe_4)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_4\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_4.py\", line 1, in <module>\n    import unittest; from pkg.averages import average; import random\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.261,
+        "started_at": "2026-11-18T08:36:30.258575Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.263,
+        "started_at": "2026-11-18T08:36:30.521067Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_average (test_averages.T.test_average)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_averages.py\", line 8, in test_average\n    self.assertEqual(average([2, 4, 6]), 4)\nAssertionError: None != 4\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.251,
+        "started_at": "2026-11-18T08:36:30.784792Z"
+      }
+    ],
+    "issued_at": "2026-11-18T08:36:31.037058Z"
+  },
+  "digest": "870779617c1491863efd774e27094ed4e2f1875017e56a8e07623c8830f79196",
+  "signature": "nwz2cgiSC6o5t/YyVj1P6s7A6k0WwcUvCsmdYra9B7qvD37Yn8Mi2CNYYuzNlDueJ/xXOG1ks9XO21QWe9xmAw==",
+  "public_key": "veLapdXUYWIS6C+TYA+lFFuam+NaEoVd6nA6Xbx4MW4="
+}

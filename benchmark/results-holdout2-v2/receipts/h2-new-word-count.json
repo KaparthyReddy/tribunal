@@ -1,0 +1,161 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_7d4eca97c629",
+    "submission_id": "sub_232af9be5a48",
+    "repo": "h2-new-word-count",
+    "base_sha": "7ff05162030ae36c68958ebebcae712138741241",
+    "head_sha": "90cfabf776c84a1843eee0e8c855df34426e8e27",
+    "verdict": "inconclusive",
+    "rationale": "2 item(s) need human review:\n- No test reaches changed code: word_count (text_utils.py)\n- Surviving mutant at text_utils.py:6 (return value -> None)",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "adds_tests_for_word_count",
+        "kind": "adds_tests"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The evidence only shows that the tests ran successfully, but it does not demonstrate whether new tests for word count have been added or if existing tests cover the specific functionality claimed.",
+        "command_indexes": [
+          0,
+          1,
+          2
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "blast_radius",
+        "title": "No test reaches changed code: word_count (text_utils.py)",
+        "detail": "0 dependent function(s) within depth 4.",
+        "severity": "medium",
+        "command_indexes": []
+      },
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at text_utils.py:6 (return value -> None)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          4
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim not verified: adds_tests_for_word_count",
+        "detail": "The evidence only shows that the tests ran successfully, but it does not demonstrate whether new tests for word count have been added or if existing tests cover the specific functionality claimed.",
+        "severity": "low",
+        "command_indexes": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe generation failed",
+        "detail": "probes must be a list",
+        "severity": "low",
+        "command_indexes": []
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 0/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.265,
+        "started_at": "2026-11-18T08:39:49.223639Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.222,
+        "started_at": "2026-11-18T08:39:49.489243Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_text_utils"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.26,
+        "started_at": "2026-11-18T08:39:53.837163Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.331,
+        "started_at": "2026-11-18T08:40:20.709991Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.221,
+        "started_at": "2026-11-18T08:40:21.042043Z"
+      }
+    ],
+    "issued_at": "2026-11-18T08:40:21.264062Z"
+  },
+  "digest": "6c591e0681a15b676f861fd1a295843aef1ff65fe637b0a635b82c28fbb5ee88",
+  "signature": "qtvdRU+F0hF6nYBQiyaK3fXKZQjq6gbwNdM+x9rQq0ZkQ96kjZReDOe/dcxTCqIHsyjKp1l8SPIOKgGew/hzDQ==",
+  "public_key": "veLapdXUYWIS6C+TYA+lFFuam+NaEoVd6nA6Xbx4MW4="
+}

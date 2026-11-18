@@ -1,0 +1,278 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_68aa062691cf",
+    "submission_id": "sub_136bb55470d0",
+    "repo": "h2-default-arg",
+    "base_sha": "111546abbcc2ff125991dea25b0cf38b48bf9d00",
+    "head_sha": "6246f1bc0c7f88ccd3fdb1f41c45c0aaa39bb0cb",
+    "verdict": "inconclusive",
+    "rationale": "1 item(s) need human review:\n- Surviving mutant at paging.py:1 (20 -> 21)",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "no behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "supported",
+        "explanation": "The evidence shows that both the base and head versions of the code produce identical test results, with the same number of tests run and no failures or errors reported.",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "skeptic",
+        "title": "Surviving mutant at paging.py:1 (20 -> 21)",
+        "detail": "The test command still passes after this mutation, so tests do not detect it.",
+        "severity": "medium",
+        "command_indexes": [
+          12
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 8 input(s) compared, 0 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 0/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.285,
+        "started_at": "2026-11-18T08:33:47.768104Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.222,
+        "started_at": "2026-11-18T08:33:48.053466Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.277,
+        "started_at": "2026-11-18T08:33:51.375560Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.243,
+        "started_at": "2026-11-18T08:33:51.652454Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"['x', 'y', 'z']\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"['a']\"}\n{\"i\": 7, \"ok\": true, \"value\": \"[]\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.281,
+        "started_at": "2026-11-18T08:34:10.353156Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"['x', 'y', 'z']\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"['a']\"}\n{\"i\": 7, \"ok\": true, \"value\": \"[]\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.168,
+        "started_at": "2026-11-18T08:34:10.634746Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"['x', 'y', 'z']\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"['a']\"}\n{\"i\": 7, \"ok\": true, \"value\": \"[]\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.181,
+        "started_at": "2026-11-18T08:34:10.803288Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.398,
+        "started_at": "2026-11-18T08:34:27.847193Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.261,
+        "started_at": "2026-11-18T08:34:28.245813Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.278,
+        "started_at": "2026-11-18T08:34:28.507414Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.261,
+        "started_at": "2026-11-18T08:34:28.786133Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.244,
+        "started_at": "2026-11-18T08:34:29.049002Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.301,
+        "started_at": "2026-11-18T08:34:29.294014Z"
+      }
+    ],
+    "issued_at": "2026-11-18T08:34:29.596492Z"
+  },
+  "digest": "fdaca58e02e23ac46aec3ebdda42c516fa013883b9f45cf93f0988e1b519116d",
+  "signature": "8PDbzLscdmCqNiazhhN5Bjn2mih7ELcurAeBpIH3Ri37HW5JOp/8cWqkmKpVI4bWSOnlY8Fj/wIqJSTJpVNoAg==",
+  "public_key": "veLapdXUYWIS6C+TYA+lFFuam+NaEoVd6nA6Xbx4MW4="
+}

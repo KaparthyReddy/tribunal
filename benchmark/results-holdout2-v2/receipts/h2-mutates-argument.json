@@ -1,0 +1,359 @@
+{
+  "body": {
+    "version": 1,
+    "receipt_id": "rcp_0e64d3449709",
+    "submission_id": "sub_18a2739cba8c",
+    "repo": "h2-mutates-argument",
+    "base_sha": "5374f301d6cf01829fb84e3075117c31688ff435",
+    "head_sha": "2ff4b49269d691a93f0087d3172f1ecacbb6a655",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "Avoids allocating a new list in sorted_copy",
+        "kind": "performance"
+      },
+      {
+        "id": "c2",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The evidence does not provide direct proof of whether a new list is allocated or not. The test suite passing and output comparison do not address memory allocation behavior.",
+        "command_indexes": [
+          0,
+          1,
+          3,
+          4
+        ]
+      },
+      {
+        "claim_id": "c2",
+        "status": "refuted",
+        "explanation": "Behavior differs: sorted_copy(None) raised TypeError on base but raised AttributeError on head; sorted_copy('') returned [] on base but raised AttributeError on head",
+        "command_indexes": [
+          0,
+          1,
+          5,
+          6,
+          7,
+          8
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: No behavior change",
+        "detail": "Behavior differs: sorted_copy(None) raised TypeError on base but raised AttributeError on head; sorted_copy('') returned [] on base but raised AttributeError on head",
+        "severity": "high",
+        "command_indexes": [
+          7,
+          8
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim not verified: Avoids allocating a new list in sorted_copy",
+        "detail": "The evidence does not provide direct proof of whether a new list is allocated or not. The test suite passing and output comparison do not address memory allocation behavior.",
+        "severity": "low",
+        "command_indexes": [
+          0,
+          1,
+          3,
+          4
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 12 input(s) compared, 2 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          7,
+          8
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.268,
+        "started_at": "2026-11-18T08:42:05.202263Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.218,
+        "started_at": "2026-11-18T08:42:05.470998Z"
+      },
+      {
+        "argv": [
+          "valgrind",
+          "--leak-check=full",
+          "./copies"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 127,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "docker: Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: exec: \"valgrind\": executable file not found in $PATH\n\nRun 'docker run --help' for more information\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.151,
+        "started_at": "2026-11-18T08:42:13.054279Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import copies; print(copies.sorted_copy([1, 2, 3]))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "[1, 2, 3]\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.122,
+        "started_at": "2026-11-18T08:42:13.205216Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import copies; print(copies.sorted_copy([1, 2, 3]))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "[1, 2, 3]\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.114,
+        "started_at": "2026-11-18T08:42:13.327832Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_copies.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.487,
+        "started_at": "2026-11-18T08:42:25.326786Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_copies.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.275,
+        "started_at": "2026-11-18T08:42:25.814660Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() takes 1 positional argument but 2 were given\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[1]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"[[1, 2, 3]]\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"'NoneType' object is not iterable\"}\n{\"i\": 6, \"ok\": true, \"value\": \"[-3, -2, -1]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"['a', 'b', 'c']\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() got an unexpected keyword argument 'reverse'\"}\n{\"i\": 10, \"ok\": true, \"value\": \"[]\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() got an unexpected keyword argument 'reverse'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.35,
+        "started_at": "2026-11-18T08:43:03.506311Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() takes 1 positional argument but 2 were given\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[1]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"[[1, 2, 3]]\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"AttributeError\", \"msg\": \"'NoneType' object has no attribute 'sort'\"}\n{\"i\": 6, \"ok\": true, \"value\": \"[-3, -2, -1]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"['a', 'b', 'c']\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() got an unexpected keyword argument 'reverse'\"}\n{\"i\": 10, \"ok\": false, \"exc\": \"AttributeError\", \"msg\": \"'str' object has no attribute 'sort'\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() got an unexpected keyword argument 'reverse'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.17,
+        "started_at": "2026-11-18T08:43:03.856545Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() takes 1 positional argument but 2 were given\"}\n{\"i\": 3, \"ok\": true, \"value\": \"[1]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"[[1, 2, 3]]\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"AttributeError\", \"msg\": \"'NoneType' object has no attribute 'sort'\"}\n{\"i\": 6, \"ok\": true, \"value\": \"[-3, -2, -1]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"[1, 2, 3]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"['a', 'b', 'c']\"}\n{\"i\": 9, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() got an unexpected keyword argument 'reverse'\"}\n{\"i\": 10, \"ok\": false, \"exc\": \"AttributeError\", \"msg\": \"'str' object has no attribute 'sort'\"}\n{\"i\": 11, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"sorted_copy() got an unexpected keyword argument 'reverse'\"}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.186,
+        "started_at": "2026-11-18T08:43:04.026740Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.372,
+        "started_at": "2026-11-18T08:43:32.271989Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.224,
+        "started_at": "2026-11-18T08:43:32.644113Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.248,
+        "started_at": "2026-11-18T08:43:32.868492Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.008s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.269,
+        "started_at": "2026-11-18T08:43:33.117030Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.287,
+        "started_at": "2026-11-18T08:43:33.388662Z"
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_sorted_copy (test_copies.T.test_sorted_copy)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_copies.py\", line 8, in test_sorted_copy\n    self.assertEqual(sorted_copy([3, 1, 2]), [1, 2, 3])\nAssertionError: None != [1, 2, 3]\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.279,
+        "started_at": "2026-11-18T08:43:33.676820Z"
+      }
+    ],
+    "issued_at": "2026-11-18T08:43:33.957255Z"
+  },
+  "digest": "376ef5e01854e38f8bb903760342ca028251ed00668281fd2a1a07653321c1c9",
+  "signature": "nbUtw13MtOqgW/Ac+rnLN6K+e0MsfOWH8AJF08eXFvdbRpBOLamNXkhfvRT4O+J0JuZJrBfw4sTppCrkhXQeDg==",
+  "public_key": "veLapdXUYWIS6C+TYA+lFFuam+NaEoVd6nA6Xbx4MW4="
+}

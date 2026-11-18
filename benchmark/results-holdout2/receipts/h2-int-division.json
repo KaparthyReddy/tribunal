@@ -1,0 +1,550 @@
+{
+  "body": {
+    "version": 2,
+    "receipt_id": "rcp_8df3876f7c8b",
+    "submission_id": "sub_d7dd31e54955",
+    "repo": "h2-int-division",
+    "base_sha": "f1ff8f65102f1a3106030af15b87665f33d0bdc5",
+    "head_sha": "fcd81ae7eea6d1ad0d6673faf5e6212372614a4b",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change.",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "Use integer division in average to avoid floating point noise.",
+        "kind": "performance"
+      },
+      {
+        "id": "c2",
+        "text": "No behavior change.",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "unverifiable",
+        "explanation": "The test suite results and code execution do not provide evidence that integer division was used or that it affects the performance in terms of avoiding floating point noise.",
+        "command_indexes": [
+          2,
+          3
+        ]
+      },
+      {
+        "claim_id": "c2",
+        "status": "refuted",
+        "explanation": "Behavior differs: average([1, 2, 3]) returned 2.0 on base but returned 2 on head; average([1.1, 2.2, 3.3]) returned 2.1999999999999997 on base but returned 2.0 on head; average([1, 2, 3, 4]) returned 2.5 on base but returned 2 on head",
+        "command_indexes": [
+          0,
+          1,
+          4,
+          5,
+          16,
+          17
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: No behavior change.",
+        "detail": "Behavior differs: average([1, 2, 3]) returned 2.0 on base but returned 2 on head; average([1.1, 2.2, 3.3]) returned 2.1999999999999997 on base but returned 2.0 on head; average([1, 2, 3, 4]) returned 2.5 on base but returned 2 on head",
+        "severity": "high",
+        "command_indexes": [
+          16,
+          17
+        ]
+      },
+      {
+        "source": "auditor",
+        "title": "Claim not verified: Use integer division in average to avoid floating point noise.",
+        "detail": "The test suite results and code execution do not provide evidence that integer division was used or that it affects the performance in terms of avoiding floating point noise.",
+        "severity": "low",
+        "command_indexes": [
+          2,
+          3
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: empty list",
+        "detail": "E\n======================================================================\nERROR: probe_1 (unittest.loader._FailedTest.probe_1)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_1\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_1.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          6,
+          7
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: single element",
+        "detail": "E\n======================================================================\nERROR: probe_2 (unittest.loader._FailedTest.probe_2)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_2\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_2.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          8,
+          9
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: all zeros",
+        "detail": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          10,
+          11
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: mixed values",
+        "detail": "E\n======================================================================\nERROR: probe_4 (unittest.loader._FailedTest.probe_4)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_4\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_4.py\", line 1, in <module>\n    import unittest; from pkg.averages import average; import random\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          12,
+          13
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 24 input(s) compared, 19 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          16,
+          17
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.279,
+        "started_at": "2026-11-18T08:07:00.294321Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.233,
+        "started_at": "2026-11-18T08:07:00.573617Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import averages; print(averages.average([1.5, 2.5]))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "2.0\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.156,
+        "started_at": "2026-11-18T08:07:04.674243Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import averages; print(averages.average([1.5, 2.5]))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "2.0\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.137,
+        "started_at": "2026-11-18T08:07:04.830744Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import averages; print(averages.average([1.5, 2.5]))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "2.0\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.161,
+        "started_at": "2026-11-18T08:07:12.884307Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-c",
+          "import averages; print(averages.average([1.5, 2.5]))"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "2.0\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.125,
+        "started_at": "2026-11-18T08:07:13.046231Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_1 (unittest.loader._FailedTest.probe_1)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_1\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_1.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.388,
+        "started_at": "2026-11-18T08:07:33.341345Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "8f8ace9304b020757e2a33677b8267666992f93e5f2aa15d304f532a9462fde9"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_1 (unittest.loader._FailedTest.probe_1)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_1\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_1.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.286,
+        "started_at": "2026-11-18T08:07:33.729476Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "8f8ace9304b020757e2a33677b8267666992f93e5f2aa15d304f532a9462fde9"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_2 (unittest.loader._FailedTest.probe_2)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_2\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_2.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.252,
+        "started_at": "2026-11-18T08:07:34.016278Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "445ed286eb55324bb867c61586c85934b356ca3e20a82786f464ec920362790a"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_2 (unittest.loader._FailedTest.probe_2)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_2\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_2.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.247,
+        "started_at": "2026-11-18T08:07:34.269042Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "445ed286eb55324bb867c61586c85934b356ca3e20a82786f464ec920362790a"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.243,
+        "started_at": "2026-11-18T08:07:34.516502Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "fecacf5d2237a3227635d48621984601e4b980220de1b1c19ac4557a78e45bc7"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 1, in <module>\n    import unittest; from pkg.averages import average\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.242,
+        "started_at": "2026-11-18T08:07:34.760114Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "fecacf5d2237a3227635d48621984601e4b980220de1b1c19ac4557a78e45bc7"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_4 (unittest.loader._FailedTest.probe_4)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_4\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_4.py\", line 1, in <module>\n    import unittest; from pkg.averages import average; import random\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.276,
+        "started_at": "2026-11-18T08:07:35.002442Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "3563ece9b23bb330422ff1e640252ef51e84ce24d0e247780905e4170443236c"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_4 (unittest.loader._FailedTest.probe_4)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_4\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_4.py\", line 1, in <module>\n    import unittest; from pkg.averages import average; import random\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.27,
+        "started_at": "2026-11-18T08:07:35.278704Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "3563ece9b23bb330422ff1e640252ef51e84ce24d0e247780905e4170443236c"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.237,
+        "started_at": "2026-11-18T08:07:35.550158Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_average (test_averages.T.test_average)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_averages.py\", line 8, in test_average\n    self.assertEqual(average([2, 4, 6]), 4)\nAssertionError: None != 4\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.232,
+        "started_at": "2026-11-18T08:07:35.787580Z",
+        "side": "head",
+        "overlay": {
+          "averages.py": "137be1141dd5146d0fd1075baf00250cbaabd33098508e8003f48d541ae613bb"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"2.0\", \"state\": \"[[[1, 2, 3]], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"2.0\", \"state\": \"[[[1.0, 2.0, 3.0]], {}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"2.1999999999999997\", \"state\": \"[[[1.1, 2.2, 3.3]], {}]\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"average() takes 1 positional argument but 2 were given\", \"state\": \"[[[], []], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"2.5\", \"state\": \"[[[1, 2, 3, 4]], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"-2.0\", \"state\": \"[[[-1, -2, -3]], {}]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"200.0\", \"state\": \"[[[100, 200, 300]], {}]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"-200.0\", \"state\": \"[[[-100, -200, -300]], {}]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"2.5\", \"state\": \"[[[1.5, 2.5, 3.5]], {}]\"}\n{\"i\": 9, \"ok\": true, \"value\": \"1.3\", \"state\": \"[[[0.9, 1.1, 1.9]], {}]\"}\n{\"i\": 10, \"ok\": true, \"value\": \"-2.5\", \"state\": \"[[[-0.5, -2.5, -4.5]], {}]\"}\n{\"i\": 11, \"ok\": true, \"value\": \"3.0\", \"state\": \"[[[1, 2, 3, 4, 5]], {}]\"}\n{\"i\": 12, \"ok\": true, \"value\": \"-25.0\", \"state\": \"[[[-10, -20, -30, -40]], {}]\"}\n{\"i\": 13, \"ok\": true, \"value\": \"3.0\", \"state\": \"[[[1.5, 2.5, 3.5, 4.5]], {}]\"}\n{\"i\": 14, \"ok\": true, \"value\": \"-1.3\", \"state\": \"[[[-0.9, -1.1, -1.9]], {}]\"}\n{\"i\": 15, \"ok\": true, \"value\": \"3.5\", \"state\": \"[[[1, 2, 3, 4, 5, 6]], {}]\"}\n{\"i\": 16, \"ok\": true, \"value\": \"-30.0\", \"state\": \"[[[-10, -20, -30, -40, -50]], {}]\"}\n{\"i\": 17, \"ok\": true, \"value\": \"3.5\", \"state\": \"[[[1.5, 2.5, 3.5, 4.5, 5.5]], {}]\"}\n{\"i\": 18, \"ok\": true, \"value\": \"-1.5\", \"state\": \"[[[-0.9, -1.1, -1.9, -2.1]], {}]\"}\n{\"i\": 19, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"'NoneType' object is not iterable\", \"state\": \"[[None], {}]\"}\n{\"i\": 20, \"ok\": true, \"value\": \"4.0\", \"state\": \"[[[1, 2, 3, 4, 5, 6, 7]], {}]\"}\n{\"i\": 21, \"ok\": true, \"value\": \"-35.0\", \"state\": \"[[[-10, -20, -30, -40, -50, -60]], {}]\"}\n{\"i\": 22, \"ok\": true, \"value\": \"4.0\", \"state\": \"[[[1.5, 2.5, 3.5, 4.5, 5.5, 6.5]], {}]\"}\n{\"i\": 23, \"ok\": true, \"value\": \"-1.6600000000000001\", \"state\": \"[[[-0.9, -1.1, -1.9, -2.1, -2.3]], {}]\"}\n{\"trace\": {\"averages.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.281,
+        "started_at": "2026-11-18T08:08:26.556066Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "dd216f3fc832dbefdc80c9d772d3b88de07b218aa24b95bf423d9d8fa274d74f",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"2\", \"state\": \"[[[1, 2, 3]], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"2.0\", \"state\": \"[[[1.0, 2.0, 3.0]], {}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"2.0\", \"state\": \"[[[1.1, 2.2, 3.3]], {}]\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"average() takes 1 positional argument but 2 were given\", \"state\": \"[[[], []], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"2\", \"state\": \"[[[1, 2, 3, 4]], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"-2\", \"state\": \"[[[-1, -2, -3]], {}]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"200\", \"state\": \"[[[100, 200, 300]], {}]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"-200\", \"state\": \"[[[-100, -200, -300]], {}]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"2.0\", \"state\": \"[[[1.5, 2.5, 3.5]], {}]\"}\n{\"i\": 9, \"ok\": true, \"value\": \"1.0\", \"state\": \"[[[0.9, 1.1, 1.9]], {}]\"}\n{\"i\": 10, \"ok\": true, \"value\": \"-3.0\", \"state\": \"[[[-0.5, -2.5, -4.5]], {}]\"}\n{\"i\": 11, \"ok\": true, \"value\": \"3\", \"state\": \"[[[1, 2, 3, 4, 5]], {}]\"}\n{\"i\": 12, \"ok\": true, \"value\": \"-25\", \"state\": \"[[[-10, -20, -30, -40]], {}]\"}\n{\"i\": 13, \"ok\": true, \"value\": \"3.0\", \"state\": \"[[[1.5, 2.5, 3.5, 4.5]], {}]\"}\n{\"i\": 14, \"ok\": true, \"value\": \"-2.0\", \"state\": \"[[[-0.9, -1.1, -1.9]], {}]\"}\n{\"i\": 15, \"ok\": true, \"value\": \"3\", \"state\": \"[[[1, 2, 3, 4, 5, 6]], {}]\"}\n{\"i\": 16, \"ok\": true, \"value\": \"-30\", \"state\": \"[[[-10, -20, -30, -40, -50]], {}]\"}\n{\"i\": 17, \"ok\": true, \"value\": \"3.0\", \"state\": \"[[[1.5, 2.5, 3.5, 4.5, 5.5]], {}]\"}\n{\"i\": 18, \"ok\": true, \"value\": \"-2.0\", \"state\": \"[[[-0.9, -1.1, -1.9, -2.1]], {}]\"}\n{\"i\": 19, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"'NoneType' object is not iterable\", \"state\": \"[[None], {}]\"}\n{\"i\": 20, \"ok\": true, \"value\": \"4\", \"state\": \"[[[1, 2, 3, 4, 5, 6, 7]], {}]\"}\n{\"i\": 21, \"ok\": true, \"value\": \"-35\", \"state\": \"[[[-10, -20, -30, -40, -50, -60]], {}]\"}\n{\"i\": 22, \"ok\": true, \"value\": \"4.0\", \"state\": \"[[[1.5, 2.5, 3.5, 4.5, 5.5, 6.5]], {}]\"}\n{\"i\": 23, \"ok\": true, \"value\": \"-2.0\", \"state\": \"[[[-0.9, -1.1, -1.9, -2.1, -2.3]], {}]\"}\n{\"trace\": {\"averages.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.148,
+        "started_at": "2026-11-18T08:08:26.837374Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "dd216f3fc832dbefdc80c9d772d3b88de07b218aa24b95bf423d9d8fa274d74f",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": true, \"value\": \"2\", \"state\": \"[[[1, 2, 3]], {}]\"}\n{\"i\": 1, \"ok\": true, \"value\": \"2.0\", \"state\": \"[[[1.0, 2.0, 3.0]], {}]\"}\n{\"i\": 2, \"ok\": true, \"value\": \"2.0\", \"state\": \"[[[1.1, 2.2, 3.3]], {}]\"}\n{\"i\": 3, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"average() takes 1 positional argument but 2 were given\", \"state\": \"[[[], []], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"2\", \"state\": \"[[[1, 2, 3, 4]], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"-2\", \"state\": \"[[[-1, -2, -3]], {}]\"}\n{\"i\": 6, \"ok\": true, \"value\": \"200\", \"state\": \"[[[100, 200, 300]], {}]\"}\n{\"i\": 7, \"ok\": true, \"value\": \"-200\", \"state\": \"[[[-100, -200, -300]], {}]\"}\n{\"i\": 8, \"ok\": true, \"value\": \"2.0\", \"state\": \"[[[1.5, 2.5, 3.5]], {}]\"}\n{\"i\": 9, \"ok\": true, \"value\": \"1.0\", \"state\": \"[[[0.9, 1.1, 1.9]], {}]\"}\n{\"i\": 10, \"ok\": true, \"value\": \"-3.0\", \"state\": \"[[[-0.5, -2.5, -4.5]], {}]\"}\n{\"i\": 11, \"ok\": true, \"value\": \"3\", \"state\": \"[[[1, 2, 3, 4, 5]], {}]\"}\n{\"i\": 12, \"ok\": true, \"value\": \"-25\", \"state\": \"[[[-10, -20, -30, -40]], {}]\"}\n{\"i\": 13, \"ok\": true, \"value\": \"3.0\", \"state\": \"[[[1.5, 2.5, 3.5, 4.5]], {}]\"}\n{\"i\": 14, \"ok\": true, \"value\": \"-2.0\", \"state\": \"[[[-0.9, -1.1, -1.9]], {}]\"}\n{\"i\": 15, \"ok\": true, \"value\": \"3\", \"state\": \"[[[1, 2, 3, 4, 5, 6]], {}]\"}\n{\"i\": 16, \"ok\": true, \"value\": \"-30\", \"state\": \"[[[-10, -20, -30, -40, -50]], {}]\"}\n{\"i\": 17, \"ok\": true, \"value\": \"3.0\", \"state\": \"[[[1.5, 2.5, 3.5, 4.5, 5.5]], {}]\"}\n{\"i\": 18, \"ok\": true, \"value\": \"-2.0\", \"state\": \"[[[-0.9, -1.1, -1.9, -2.1]], {}]\"}\n{\"i\": 19, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"'NoneType' object is not iterable\", \"state\": \"[[None], {}]\"}\n{\"i\": 20, \"ok\": true, \"value\": \"4\", \"state\": \"[[[1, 2, 3, 4, 5, 6, 7]], {}]\"}\n{\"i\": 21, \"ok\": true, \"value\": \"-35\", \"state\": \"[[[-10, -20, -30, -40, -50, -60]], {}]\"}\n{\"i\": 22, \"ok\": true, \"value\": \"4.0\", \"state\": \"[[[1.5, 2.5, 3.5, 4.5, 5.5, 6.5]], {}]\"}\n{\"i\": 23, \"ok\": true, \"value\": \"-2.0\", \"state\": \"[[[-0.9, -1.1, -1.9, -2.1, -2.3]], {}]\"}\n{\"trace\": {\"averages.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.168,
+        "started_at": "2026-11-18T08:08:26.986055Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "dd216f3fc832dbefdc80c9d772d3b88de07b218aa24b95bf423d9d8fa274d74f",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      }
+    ],
+    "blobs": {
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "8f8ace9304b020757e2a33677b8267666992f93e5f2aa15d304f532a9462fde9": "import unittest; from pkg.averages import average\nclass TestAverage(unittest.TestCase):\n    def test_empty_list(self):\n        self.assertEqual(average([]), 0)\ndef suite():\n    return unittest.defaultTestLoader.loadTestsFromTestCase(TestAverage)",
+      "445ed286eb55324bb867c61586c85934b356ca3e20a82786f464ec920362790a": "import unittest; from pkg.averages import average\nclass TestAverage(unittest.TestCase):\n    def test_single_element(self):\n        self.assertEqual(average([42]), 42)\ndef suite():\n    return unittest.defaultTestLoader.loadTestsFromTestCase(TestAverage)",
+      "fecacf5d2237a3227635d48621984601e4b980220de1b1c19ac4557a78e45bc7": "import unittest; from pkg.averages import average\nclass TestAverage(unittest.TestCase):\n    def test_all_zeros(self):\n        self.assertEqual(average([0, 0, 0]), 0)\ndef suite():\n    return unittest.defaultTestLoader.loadTestsFromTestCase(TestAverage)",
+      "3563ece9b23bb330422ff1e640252ef51e84ce24d0e247780905e4170443236c": "import unittest; from pkg.averages import average; import random\nclass TestAverage(unittest.TestCase):\n    def test_mixed_values(self):\n        rng = random.Random(1234)\n        xs = [rng.randint(-100, 100) for _ in range(50)]\n        self.assertEqual(average(xs), sum(xs) // len(xs))\ndef suite():\n    return unittest.defaultTestLoader.loadTestsFromTestCase(TestAverage)",
+      "137be1141dd5146d0fd1075baf00250cbaabd33098508e8003f48d541ae613bb": "def average(xs):\n    return None\n",
+      "dd216f3fc832dbefdc80c9d772d3b88de07b218aa24b95bf423d9d8fa274d74f": "{\"calls\": [{\"module\": \"averages\", \"function\": \"average\", \"args\": [[1, 2, 3]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[1.0, 2.0, 3.0]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[1.1, 2.2, 3.3]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[], []], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[1, 2, 3, 4]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[-1, -2, -3]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[100, 200, 300]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[-100, -200, -300]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[1.5, 2.5, 3.5]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[0.9, 1.1, 1.9]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[-0.5, -2.5, -4.5]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[1, 2, 3, 4, 5]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[-10, -20, -30, -40]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[1.5, 2.5, 3.5, 4.5]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[-0.9, -1.1, -1.9]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[1, 2, 3, 4, 5, 6]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[-10, -20, -30, -40, -50]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[1.5, 2.5, 3.5, 4.5, 5.5]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[-0.9, -1.1, -1.9, -2.1]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [null], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[1, 2, 3, 4, 5, 6, 7]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[-10, -20, -30, -40, -50, -60]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[1.5, 2.5, 3.5, 4.5, 5.5, 6.5]], \"kwargs\": {}}, {\"module\": \"averages\", \"function\": \"average\", \"args\": [[-0.9, -1.1, -1.9, -2.1, -2.3]], \"kwargs\": {}}], \"trace\": [\"averages.py\"]}",
+      "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee": "import contextlib\nimport copy\nimport importlib\nimport io\nimport json\nimport os\nimport signal\nimport sys\n\nCALL_TIMEOUT_S = 5\n\n\nclass _Timeout(Exception):\n    pass\n\n\ndef _on_alarm(signum, frame):\n    raise _Timeout()\n\n\ndef _describe(value):\n    text = repr(value)\n    return text if len(text) <= 500 else text[:500] + \"...\"\n\n\ndef main():\n    with open(\"tribunal_chars/calls.json\", encoding=\"utf-8\") as handle:\n        spec = json.load(handle)\n    calls = spec[\"calls\"]\n    watch = set(spec.get(\"trace\", []))\n    executed = {}\n    names = {}\n\n    def watched(filename):\n        if filename not in names:\n            try:\n                rel = os.path.relpath(os.path.abspath(filename), os.getcwd()).replace(os.sep, \"/\")\n            except ValueError:\n                rel = \"\"\n            names[filename] = rel if rel in watch else \"\"\n        return names[filename]\n\n    def tracer(frame, event, arg):\n        rel = watched(frame.f_code.co_filename)\n        if not rel:\n            return None\n        lines = executed.setdefault(rel, set())\n\n        def local(frame, event, arg):\n            if event == \"line\":\n                lines.add(frame.f_lineno)\n            return local\n\n        return local\n\n    signal.signal(signal.SIGALRM, _on_alarm)\n    if watch:\n        sys.settrace(tracer)\n    try:\n        for index, call in enumerate(calls):\n            signal.alarm(CALL_TIMEOUT_S)\n            args = copy.deepcopy(call[\"args\"])\n            kwargs = copy.deepcopy(call[\"kwargs\"])\n            try:\n                module = importlib.import_module(call[\"module\"])\n                function = getattr(module, call[\"function\"])\n                with contextlib.redirect_stdout(io.StringIO()):\n                    value = function(*args, **kwargs)\n                record = {\"i\": index, \"ok\": True, \"value\": _describe(value)}\n            except _Timeout:\n                record = {\"i\": index, \"ok\": False, \"exc\": \"Timeout\", \"msg\": \"\"}\n            except BaseException as exc:\n                record = {\"i\": index, \"ok\": False, \"exc\": type(exc).__name__, \"msg\": str(exc)[:200]}\n            finally:\n                signal.alarm(0)\n            record[\"state\"] = _describe([args, kwargs])\n            print(json.dumps(record), flush=True)\n    finally:\n        sys.settrace(None)\n    trace = {name: sorted(lines) for name, lines in executed.items()}\n    print(json.dumps({\"trace\": trace}), flush=True)\n\n\nmain()\n"
+    },
+    "issued_at": "2026-11-18T08:08:27.156536Z"
+  },
+  "digest": "ed5dbeffe4a23e9740e697edfd28daffc7f3578b1ba317f4d29e501d655dc2f0",
+  "signature": "IY89RvuR8mqO1HvjL94FqneCkoWfwQLiBPGpnuslP1ushr7Qj0w7xvG/rq7mwyEOq8rYLWln27PW4Ls3kMWCBg==",
+  "public_key": "woiCy9IUIYaZJ87l6X+N94xdNYU5FHQhx4ZZZeiFwOI="
+}

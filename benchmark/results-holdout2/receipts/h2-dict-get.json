@@ -1,0 +1,490 @@
+{
+  "body": {
+    "version": 2,
+    "receipt_id": "rcp_3d356e1b0329",
+    "submission_id": "sub_0c7e7ae3e1b6",
+    "repo": "h2-dict-get",
+    "base_sha": "d2dda550ac19c33bc729e1833e5aa50af5f440f9",
+    "head_sha": "e7008985c0b79d22c368055cd8fe8a2c038d71b8",
+    "verdict": "fail",
+    "rationale": "1 blocking issue(s):\n- Claim refuted: No behavior change",
+    "claims": [
+      {
+        "id": "c1",
+        "text": "No behavior change",
+        "kind": "no_behavior_change"
+      }
+    ],
+    "claim_results": [
+      {
+        "claim_id": "c1",
+        "status": "refuted",
+        "explanation": "Behavior differs: config_value([], {}) raised TypeError on base but raised AttributeError on head; config_value([[1, 2]], {}) raised TypeError on base but raised AttributeError on head; config_value({'key1': 'value1', 'key2': 'value2'}, 'nonexistent_key') raised KeyError on base but returned None on head",
+        "command_indexes": [
+          0,
+          1,
+          2,
+          3,
+          14,
+          15
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "source": "characterize",
+        "title": "Claim refuted: No behavior change",
+        "detail": "Behavior differs: config_value([], {}) raised TypeError on base but raised AttributeError on head; config_value([[1, 2]], {}) raised TypeError on base but raised AttributeError on head; config_value({'key1': 'value1', 'key2': 'value2'}, 'nonexistent_key') raised KeyError on base but returned None on head",
+        "severity": "high",
+        "command_indexes": [
+          14,
+          15
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: None input",
+        "detail": "E\n======================================================================\nERROR: probe_1 (unittest.loader._FailedTest.probe_1)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_1\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_1.py\", line 2, in <module>\n    from pkg.config import config_value\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          4,
+          5
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Empty dictionary",
+        "detail": "E\n======================================================================\nERROR: probe_2 (unittest.loader._FailedTest.probe_2)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_2\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_2.py\", line 2, in <module>\n    from pkg.config import config_value\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          6,
+          7
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Key not found",
+        "detail": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 2, in <module>\n    from pkg.config import config_value\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          8,
+          9
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Probe fails on both base and head: Fuzz testing",
+        "detail": "E\n======================================================================\nERROR: probe_4 (unittest.loader._FailedTest.probe_4)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_4\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_4.py\", line 2, in <module>\n    from pkg.config import config_value\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "severity": "low",
+        "command_indexes": [
+          10,
+          11
+        ]
+      },
+      {
+        "source": "characterize",
+        "title": "Differential check: 8 input(s) compared, 3 differ",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": [
+          14,
+          15
+        ]
+      },
+      {
+        "source": "skeptic",
+        "title": "Mutation score: 1/1 mutants killed",
+        "detail": "",
+        "severity": "info",
+        "command_indexes": []
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.542,
+        "started_at": "2026-11-18T08:04:33.833730Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.252,
+        "started_at": "2026-11-18T08:04:34.377805Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_config.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.314,
+        "started_at": "2026-11-18T08:04:38.946910Z",
+        "side": "base",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "test_config.py"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.224,
+        "started_at": "2026-11-18T08:04:39.261423Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 120
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_1 (unittest.loader._FailedTest.probe_1)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_1\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_1.py\", line 2, in <module>\n    from pkg.config import config_value\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.375,
+        "started_at": "2026-11-18T08:05:04.056837Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "9fc1bd667cc21fba06c00262306f5bf97269875e8aaea55c34b162b1145ee598"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_1"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_1 (unittest.loader._FailedTest.probe_1)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_1\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_1.py\", line 2, in <module>\n    from pkg.config import config_value\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.242,
+        "started_at": "2026-11-18T08:05:04.433941Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_1.py": "9fc1bd667cc21fba06c00262306f5bf97269875e8aaea55c34b162b1145ee598"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_2 (unittest.loader._FailedTest.probe_2)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_2\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_2.py\", line 2, in <module>\n    from pkg.config import config_value\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.22,
+        "started_at": "2026-11-18T08:05:04.676453Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "28b7888ab3c88b3f9fa68e9eb170f32521d55a74e5ea9ea93cc007dca0d0c631"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_2"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_2 (unittest.loader._FailedTest.probe_2)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_2\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_2.py\", line 2, in <module>\n    from pkg.config import config_value\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.229,
+        "started_at": "2026-11-18T08:05:04.897211Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_2.py": "28b7888ab3c88b3f9fa68e9eb170f32521d55a74e5ea9ea93cc007dca0d0c631"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 2, in <module>\n    from pkg.config import config_value\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.229,
+        "started_at": "2026-11-18T08:05:05.126459Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "18aa32a9259317646636ad1c117e4ba3c18cd1ab8b6f0c0c73a273fcbc960f4f"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_3"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_3 (unittest.loader._FailedTest.probe_3)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_3\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_3.py\", line 2, in <module>\n    from pkg.config import config_value\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.226,
+        "started_at": "2026-11-18T08:05:05.355689Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_3.py": "18aa32a9259317646636ad1c117e4ba3c18cd1ab8b6f0c0c73a273fcbc960f4f"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_4 (unittest.loader._FailedTest.probe_4)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_4\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_4.py\", line 2, in <module>\n    from pkg.config import config_value\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.223,
+        "started_at": "2026-11-18T08:05:05.582120Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "ff2f8db388dc9a17b30cc15f7bd281dfccdc20f80ee92b1194adade88393d734"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest",
+          "tribunal_probes.probe_4"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "E\n======================================================================\nERROR: probe_4 (unittest.loader._FailedTest.probe_4)\n----------------------------------------------------------------------\nImportError: Failed to import test module: probe_4\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/tribunal_probes/probe_4.py\", line 2, in <module>\n    from pkg.config import config_value\nModuleNotFoundError: No module named 'pkg'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.23,
+        "started_at": "2026-11-18T08:05:05.805515Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_probes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_probes/probe_4.py": "ff2f8db388dc9a17b30cc15f7bd281dfccdc20f80ee92b1194adade88393d734"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.221,
+        "started_at": "2026-11-18T08:05:06.041438Z",
+        "side": "head",
+        "overlay": {},
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "unittest"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout": "",
+        "stderr": "F\n======================================================================\nFAIL: test_config_value (test_config.T.test_config_value)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_config.py\", line 8, in test_config_value\n    self.assertEqual(config_value({\"a\": 1}, \"a\"), 1)\nAssertionError: None != 1\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.227,
+        "started_at": "2026-11-18T08:05:06.262986Z",
+        "side": "head",
+        "overlay": {
+          "config.py": "e998b03afa2b87584258ac6d5f45ba12a5e2da5433bd0a02a88df5415d1d7070"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"config_value() missing 1 required positional argument: 'key'\", \"state\": \"[[['key1', 'key2']], {}]\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"list indices must be integers or slices, not dict\", \"state\": \"[[[], {}], {}]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"list indices must be integers or slices, not dict\", \"state\": \"[[[[1, 2]], {}], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"'value'\", \"state\": \"[[{'key': 'value'}, 'key'], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"'value1'\", \"state\": \"[[{'key1': 'value1', 'key2': 'value2'}, 'key1'], {}]\"}\n{\"i\": 5, \"ok\": false, \"exc\": \"KeyError\", \"msg\": \"'nonexistent_key'\", \"state\": \"[[{'key1': 'value1', 'key2': 'value2'}, 'nonexistent_key'], {}]\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"config_value() got an unexpected keyword argument 'default'\", \"state\": \"[[{'key1': 'value1', 'key2': 'value2'}, 'key1'], {'default': 'default_value'}]\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"config_value() got an unexpected keyword argument 'default'\", \"state\": \"[[{}, 'key'], {'default': 'default_value'}]\"}\n{\"trace\": {\"config.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.236,
+        "started_at": "2026-11-18T08:05:23.383474Z",
+        "side": "base",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "79a9a44032c16b855bcfe8809cd16fc51a0e9b82434a38ad3196fbe727a6b340",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"config_value() missing 1 required positional argument: 'key'\", \"state\": \"[[['key1', 'key2']], {}]\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"AttributeError\", \"msg\": \"'list' object has no attribute 'get'\", \"state\": \"[[[], {}], {}]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"AttributeError\", \"msg\": \"'list' object has no attribute 'get'\", \"state\": \"[[[[1, 2]], {}], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"'value'\", \"state\": \"[[{'key': 'value'}, 'key'], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"'value1'\", \"state\": \"[[{'key1': 'value1', 'key2': 'value2'}, 'key1'], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"None\", \"state\": \"[[{'key1': 'value1', 'key2': 'value2'}, 'nonexistent_key'], {}]\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"config_value() got an unexpected keyword argument 'default'\", \"state\": \"[[{'key1': 'value1', 'key2': 'value2'}, 'key1'], {'default': 'default_value'}]\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"config_value() got an unexpected keyword argument 'default'\", \"state\": \"[[{}, 'key'], {'default': 'default_value'}]\"}\n{\"trace\": {\"config.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.155,
+        "started_at": "2026-11-18T08:05:23.619785Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "79a9a44032c16b855bcfe8809cd16fc51a0e9b82434a38ad3196fbe727a6b340",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      },
+      {
+        "argv": [
+          "python",
+          "-m",
+          "tribunal_chars.driver"
+        ],
+        "image": "python:3.12-slim",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout": "{\"i\": 0, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"config_value() missing 1 required positional argument: 'key'\", \"state\": \"[[['key1', 'key2']], {}]\"}\n{\"i\": 1, \"ok\": false, \"exc\": \"AttributeError\", \"msg\": \"'list' object has no attribute 'get'\", \"state\": \"[[[], {}], {}]\"}\n{\"i\": 2, \"ok\": false, \"exc\": \"AttributeError\", \"msg\": \"'list' object has no attribute 'get'\", \"state\": \"[[[[1, 2]], {}], {}]\"}\n{\"i\": 3, \"ok\": true, \"value\": \"'value'\", \"state\": \"[[{'key': 'value'}, 'key'], {}]\"}\n{\"i\": 4, \"ok\": true, \"value\": \"'value1'\", \"state\": \"[[{'key1': 'value1', 'key2': 'value2'}, 'key1'], {}]\"}\n{\"i\": 5, \"ok\": true, \"value\": \"None\", \"state\": \"[[{'key1': 'value1', 'key2': 'value2'}, 'nonexistent_key'], {}]\"}\n{\"i\": 6, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"config_value() got an unexpected keyword argument 'default'\", \"state\": \"[[{'key1': 'value1', 'key2': 'value2'}, 'key1'], {'default': 'default_value'}]\"}\n{\"i\": 7, \"ok\": false, \"exc\": \"TypeError\", \"msg\": \"config_value() got an unexpected keyword argument 'default'\", \"state\": \"[[{}, 'key'], {'default': 'default_value'}]\"}\n{\"trace\": {\"config.py\": [1, 2]}}\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false,
+        "duration_s": 0.157,
+        "started_at": "2026-11-18T08:05:23.775298Z",
+        "side": "head",
+        "overlay": {
+          "tribunal_chars/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tribunal_chars/calls.json": "79a9a44032c16b855bcfe8809cd16fc51a0e9b82434a38ad3196fbe727a6b340",
+          "tribunal_chars/driver.py": "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee"
+        },
+        "timeout_s": 60
+      }
+    ],
+    "blobs": {
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "9fc1bd667cc21fba06c00262306f5bf97269875e8aaea55c34b162b1145ee598": "import unittest\nfrom pkg.config import config_value\nclass TestConfigValue(unittest.TestCase):\n    def test_none_config(self):\n        self.assertIsNone(config_value(None, 'key'))\nif __name__ == '__main__':\n    unittest.main()",
+      "28b7888ab3c88b3f9fa68e9eb170f32521d55a74e5ea9ea93cc007dca0d0c631": "import unittest\nfrom pkg.config import config_value\nclass TestConfigValue(unittest.TestCase):\n    def test_empty_dict(self):\n        self.assertIsNone(config_value({}, 'key'))\nif __name__ == '__main__':\n    unittest.main()",
+      "18aa32a9259317646636ad1c117e4ba3c18cd1ab8b6f0c0c73a273fcbc960f4f": "import unittest\nfrom pkg.config import config_value\nclass TestConfigValue(unittest.TestCase):\n    def test_key_not_found(self):\n        self.assertIsNone(config_value({'other_key': 'value'}, 'key'))\nif __name__ == '__main__':\n    unittest.main()",
+      "ff2f8db388dc9a17b30cc15f7bd281dfccdc20f80ee92b1194adade88393d734": "import unittest\nfrom pkg.config import config_value\nimport random\nimport string\n\nclass TestConfigValue(unittest.TestCase):\n    def test_fuzz(self):\n        random.seed(1234)\n        for _ in range(500):\n            key = ''.join(random.choices(string.ascii_letters, k=random.randint(1, 10)))\n            config = {k: v for k, v in zip(random.sample(range(100), random.randint(1, 99)), \\\n                                           [random.randint(-1000, 1000) for _ in range(random.randint(1, 99))])}\n            self.assertIsNone(config_value(config, key))\nif __name__ == '__main__':\n    unittest.main()",
+      "e998b03afa2b87584258ac6d5f45ba12a5e2da5433bd0a02a88df5415d1d7070": "def config_value(config, key):\n    return None\n",
+      "79a9a44032c16b855bcfe8809cd16fc51a0e9b82434a38ad3196fbe727a6b340": "{\"calls\": [{\"module\": \"config\", \"function\": \"config_value\", \"args\": [[\"key1\", \"key2\"]], \"kwargs\": {}}, {\"module\": \"config\", \"function\": \"config_value\", \"args\": [[], {}], \"kwargs\": {}}, {\"module\": \"config\", \"function\": \"config_value\", \"args\": [[[1, 2]], {}], \"kwargs\": {}}, {\"module\": \"config\", \"function\": \"config_value\", \"args\": [{\"key\": \"value\"}, \"key\"], \"kwargs\": {}}, {\"module\": \"config\", \"function\": \"config_value\", \"args\": [{\"key1\": \"value1\", \"key2\": \"value2\"}, \"key1\"], \"kwargs\": {}}, {\"module\": \"config\", \"function\": \"config_value\", \"args\": [{\"key1\": \"value1\", \"key2\": \"value2\"}, \"nonexistent_key\"], \"kwargs\": {}}, {\"module\": \"config\", \"function\": \"config_value\", \"args\": [{\"key1\": \"value1\", \"key2\": \"value2\"}, \"key1\"], \"kwargs\": {\"default\": \"default_value\"}}, {\"module\": \"config\", \"function\": \"config_value\", \"args\": [{}, \"key\"], \"kwargs\": {\"default\": \"default_value\"}}], \"trace\": [\"config.py\"]}",
+      "4e1e489c956891c54a84bc905e93541da3d18f23eaeb9953c86c04bf6331abee": "import contextlib\nimport copy\nimport importlib\nimport io\nimport json\nimport os\nimport signal\nimport sys\n\nCALL_TIMEOUT_S = 5\n\n\nclass _Timeout(Exception):\n    pass\n\n\ndef _on_alarm(signum, frame):\n    raise _Timeout()\n\n\ndef _describe(value):\n    text = repr(value)\n    return text if len(text) <= 500 else text[:500] + \"...\"\n\n\ndef main():\n    with open(\"tribunal_chars/calls.json\", encoding=\"utf-8\") as handle:\n        spec = json.load(handle)\n    calls = spec[\"calls\"]\n    watch = set(spec.get(\"trace\", []))\n    executed = {}\n    names = {}\n\n    def watched(filename):\n        if filename not in names:\n            try:\n                rel = os.path.relpath(os.path.abspath(filename), os.getcwd()).replace(os.sep, \"/\")\n            except ValueError:\n                rel = \"\"\n            names[filename] = rel if rel in watch else \"\"\n        return names[filename]\n\n    def tracer(frame, event, arg):\n        rel = watched(frame.f_code.co_filename)\n        if not rel:\n            return None\n        lines = executed.setdefault(rel, set())\n\n        def local(frame, event, arg):\n            if event == \"line\":\n                lines.add(frame.f_lineno)\n            return local\n\n        return local\n\n    signal.signal(signal.SIGALRM, _on_alarm)\n    if watch:\n        sys.settrace(tracer)\n    try:\n        for index, call in enumerate(calls):\n            signal.alarm(CALL_TIMEOUT_S)\n            args = copy.deepcopy(call[\"args\"])\n            kwargs = copy.deepcopy(call[\"kwargs\"])\n            try:\n                module = importlib.import_module(call[\"module\"])\n                function = getattr(module, call[\"function\"])\n                with contextlib.redirect_stdout(io.StringIO()):\n                    value = function(*args, **kwargs)\n                record = {\"i\": index, \"ok\": True, \"value\": _describe(value)}\n            except _Timeout:\n                record = {\"i\": index, \"ok\": False, \"exc\": \"Timeout\", \"msg\": \"\"}\n            except BaseException as exc:\n                record = {\"i\": index, \"ok\": False, \"exc\": type(exc).__name__, \"msg\": str(exc)[:200]}\n            finally:\n                signal.alarm(0)\n            record[\"state\"] = _describe([args, kwargs])\n            print(json.dumps(record), flush=True)\n    finally:\n        sys.settrace(None)\n    trace = {name: sorted(lines) for name, lines in executed.items()}\n    print(json.dumps({\"trace\": trace}), flush=True)\n\n\nmain()\n"
+    },
+    "issued_at": "2026-11-18T08:05:23.934759Z"
+  },
+  "digest": "51404a6399a182a83f21df4c92e27db6fc1549428b0fa7e5061cd70e84035173",
+  "signature": "nlcFaiiaw15CJFGTqeBy7I3KhZG9D0ucjg4gGzkvjR/V/lbz0rzKYK7ZM8JfNQTL92AztmZz2hWSeoyAGcsKBg==",
+  "public_key": "woiCy9IUIYaZJ87l6X+N94xdNYU5FHQhx4ZZZeiFwOI="
+}
