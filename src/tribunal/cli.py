@@ -164,7 +164,9 @@ def build_image_cmd(
         str,
         typer.Option(help="Commit whose dependency files are used. Use the base of the change"),
     ] = "HEAD",
-    base_image: Annotated[str | None, typer.Option("--base-image", help="Image to build on")] = None,
+    base_image: Annotated[
+        str | None, typer.Option("--base-image", help="Image to build on")
+    ] = None,
     requirements: Annotated[
         list[str] | None,
         typer.Option("--requirements", help="Requirements file in the repo, repeatable"),
@@ -178,7 +180,9 @@ def build_image_cmd(
     allow_sdist: Annotated[
         bool, typer.Option("--allow-sdist", help="Allow building packages from source")
     ] = False,
-    force: Annotated[bool, typer.Option("--force", help="Rebuild even if the image exists")] = False,
+    force: Annotated[
+        bool, typer.Option("--force", help="Rebuild even if the image exists")
+    ] = False,
     as_json: Annotated[bool, typer.Option("--json")] = False,
 ) -> None:
     try:
@@ -295,7 +299,9 @@ def ci_cmd(
     try:
         context = load_pr_context(event_path)
         base = merge_base(repo_path, context.base_sha, context.head_sha)
-        image = _prepare_environment(repo_path, base, allow_sdist=allow_sdist) if build_env else None
+        image = (
+            _prepare_environment(repo_path, base, allow_sdist=allow_sdist) if build_env else None
+        )
         pipeline = build_pipeline(**_pipeline_options(image))
         submission = pipeline.submit(
             repo_path=repo_path,
@@ -325,7 +331,9 @@ def ci_cmd(
             typer.echo("warning: GITHUB_TOKEN is not set, skipping comment", err=True)
         else:
             try:
-                typer.echo(f"comment: {upsert_comment(context.repo, context.number, token, markdown)}")
+                typer.echo(
+                    f"comment: {upsert_comment(context.repo, context.number, token, markdown)}"
+                )
             except CIError as exc:
                 typer.echo(f"warning: {exc}", err=True)
 

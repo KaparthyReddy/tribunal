@@ -261,7 +261,9 @@ def collect_requirements(
 
     requirements = _finalize(collector.specs)
     if len(requirements) > MAX_REQUIREMENTS:
-        raise EnvBuildError(f"{len(requirements)} dependencies is more than the limit of {MAX_REQUIREMENTS}")
+        raise EnvBuildError(
+            f"{len(requirements)} dependencies is more than the limit of {MAX_REQUIREMENTS}"
+        )
     return Collected(tuple(requirements), tuple(collector.skipped), tuple(collector.sources))
 
 

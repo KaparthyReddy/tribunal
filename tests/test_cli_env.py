@@ -232,7 +232,9 @@ def _run_ci(scenario, tmp_path: Path, monkeypatch, extra_args: list[str]):
         "build_pipeline",
         lambda **options: captured.update(options) or _stub_pipeline(tmp_path),
     )
-    result = cli_runner.invoke(cli.app, ["ci", "--repo-path", str(repo), "--no-comment", *extra_args])
+    result = cli_runner.invoke(
+        cli.app, ["ci", "--repo-path", str(repo), "--no-comment", *extra_args]
+    )
     return result, built, captured, shas
 
 
