@@ -139,6 +139,12 @@ uv run tribunal replay receipt.json --repo-path /path/to/repo
 Exit codes for `submit`: `0` pass, `1` fail, `2` inconclusive, `3` error.
 Exit codes for `replay`: `0` reproduced, `1` diverged, `2` incomplete, `3` error.
 
+Tests that need third-party packages need an image that contains them. Add `--build-env` to build
+one from the base commit's requirements, and use `python -m pytest` so the project is importable:
+
+    uv run tribunal submit --repo-path /path/to/repo --base main --head HEAD --build-env \
+      --test-cmd "python -m pytest -q"
+      
 ## Docs
 
 - [Architecture](docs/architecture.md)
