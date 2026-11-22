@@ -157,6 +157,8 @@ one from the base commit's requirements, and use `python -m pytest` so the proje
 
 ## Status
 
-Under active development. Python only. The sandbox has no network, so test dependencies must
-already be in the sandbox image. Differential execution covers top-level functions only, and
-sampled inputs can show that two versions differ but cannot show that they never do.
+Under active development. Python only. Every check runs offline, so the project's dependencies
+must be in the sandbox image: `tribunal build-image` builds one from the base commit's
+requirements ([Dependencies](docs/dependencies.md)). Differential execution covers top-level
+functions only, and sampled inputs can show that two versions differ but cannot show that they
+never do.
