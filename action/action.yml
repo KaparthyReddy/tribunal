@@ -19,9 +19,17 @@ inputs:
     required: false
     default: ""
   sandbox-image:
-    description: Docker image used for every sandboxed command. It must already contain the project's test dependencies.
+    description: Docker image used for every sandboxed command. With build-env it is the base image the dependencies are installed on.
     required: false
     default: python:3.12-slim
+  build-env:
+    description: Build an image with the project's dependencies from the pull request's base commit, then run every check offline in it. Docker has network access during the build only.
+    required: false
+    default: "false"
+  allow-sdist:
+    description: Let the dependency build compile packages that have no wheel. Source builds run package build scripts with network access.
+    required: false
+    default: "false"
   model:
     description: Anthropic model used by the agents.
     required: false
@@ -68,6 +76,8 @@ runs:
         TRIBUNAL_LLM_PROVIDER: anthropic
         TRIBUNAL_DATA_DIR: ${{ runner.temp }}/tribunal
         TRIBUNAL_SANDBOX_IMAGE: ${{ inputs.sandbox-image }}
+        TRIBUNAL_BUILD_ENV: ${{ inputs.build-env }}
+        TRIBUNAL_ALLOW_SDIST: ${{ inputs.allow-sdist }}
         TRIBUNAL_LLM_MODEL: ${{ inputs.model }}
         TRIBUNAL_TEST_COMMAND: ${{ inputs.test-command }}
         TRIBUNAL_AGENT: ${{ inputs.agent }}
