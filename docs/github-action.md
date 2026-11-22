@@ -25,7 +25,7 @@ jobs:
       - uses: KaparthyReddy/tribunal/action@main
         with:
           anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
-          sandbox-image: ghcr.io/your-org/your-test-image:latest
+          build-env: "true"
           test-command: python -m pytest -q
 ```
 
@@ -38,7 +38,9 @@ jobs:
 | `anthropic-api-key` | required | Key for the verification agents. |
 | `github-token` | `github.token` | Used to post the comment. |
 | `test-command` | empty | Test command, run inside the sandbox image. |
-| `sandbox-image` | `python:3.12-slim` | Image for every sandboxed command. |
+| `sandbox-image` | `python:3.12-slim` | Image for every sandboxed command. With `build-env` it is the base image. |
+| `build-env` | `false` | Build an image with the project's dependencies from the merge base. |
+| `allow-sdist` | `false` | Let that build compile packages that have no wheel. |
 | `model` | `claude-sonnet-5-5` | Model used by the agents. |
 | `agent` | PR author | Agent name used by the trust ledger. |
 | `comment` | `true` | Post or update one verdict comment. |
@@ -57,19 +59,23 @@ jobs:
 | fail | failure |
 | inconclusive | success, or failure with `fail-on: inconclusive` |
 
-## Sandbox image
+## Dependencies
 
-The sandbox has no network, so the image must contain the project's test dependencies.
-Build one in your own pipeline and pass it as `sandbox-image`. The default image only has the
-Python standard library, so probes written with `unittest` run but `pytest` based suites do not.
+The sandbox has no network, so the image must contain the project's test dependencies. Either set
+`build-env: "true"`, which builds the image from the merge base's requirements, or build one in your
+own pipeline and pass it as `sandbox-image`. See [Dependencies](dependencies.md) for what is
+installed and why the build is restricted. Use `python -m pytest`, not `pytest`.
 
 ## Security
 
 - Use the `pull_request` trigger. Do not use `pull_request_target`.
 - Pull requests from forks do not receive repository secrets, so the action cannot run on them.
 - Pull request code only runs inside the sandbox container, never on the runner.
+- The dependency build uses the merge base's files, not the pull request's, and installs wheels only
+  unless `allow-sdist` is set. Source builds run package build scripts with network access.
 
 ## Cost
 
-Each run makes several model calls: claim extraction, a plan and an evaluation per claim, and
-probe generation. Gate the workflow with a label or a path filter on busy repositories.
+Each run makes several model calls: claim extraction, a plan and an evaluation per claim, input
+generation, and probe generation. Gate the workflow with a label or a path filter on busy
+repositories.
