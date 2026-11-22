@@ -9,6 +9,13 @@ import typer
 from tribunal import __version__
 from tribunal.ci import CIError, load_pr_context, upsert_comment, write_outputs, write_step_summary
 from tribunal.config import get_settings
+from tribunal.envbuild import (
+    DEFAULT_BASE_IMAGE,
+    ENV_PREFIX,
+    EnvBuildError,
+    Environment,
+    build_environment,
+)
 from tribunal.gitutil import GitError, merge_base
 from tribunal.ledger import compute_trust
 from tribunal.llm import LLMError
@@ -44,6 +51,7 @@ EXIT_ERROR = 3
 
 HANDLED = (
     CIError,
+    EnvBuildError,
     GitError,
     LLMError,
     PipelineError,
@@ -106,9 +114,92 @@ def _render_replay(report: ReplayReport) -> str:
     return "\n".join(lines)
 
 
+def _base_image(option: str | None) -> str:
+    if option:
+        return option
+    current = get_settings().sandbox_image
+    return DEFAULT_BASE_IMAGE if current.startswith(ENV_PREFIX) else current
+
+
+def _render_environment(environment: Environment) -> str:
+    sources = ", ".join(environment.sources) or "no dependency files"
+    lines = [
+        f"environment: {environment.image} ({environment.status})",
+        f"dependencies: {len(environment.requirements)} from {sources}",
+    ]
+    if environment.unpinned:
+        lines.append(
+            f"warning: unpinned dependencies: {environment.unpinned}; "
+            "the image may not be reproducible"
+        )
+    lines.extend(f"skipped: {note}" for note in environment.skipped)
+    return "\n".join(lines)
+
+
+def _prepare_environment(
+    repo_path: Path, ref: str, *, allow_sdist: bool, base_image: str | None = None
+) -> str:
+    environment = build_environment(
+        repo_path, ref, base_image=_base_image(base_image), allow_sdist=allow_sdist
+    )
+    typer.echo(_render_environment(environment), err=True)
+    return environment.image
+
+
+def _pipeline_options(image: str | None) -> dict[str, object]:
+    if not image:
+        return {}
+    return {"settings": get_settings().model_copy(update={"sandbox_image": image})}
+
+
 @app.command()
 def version() -> None:
     typer.echo(__version__)
+
+
+@app.command("build-image")
+def build_image_cmd(
+    repo_path: Annotated[Path, typer.Option("--repo-path", help="Local git repo")] = Path("."),
+    ref: Annotated[
+        str,
+        typer.Option(help="Commit whose dependency files are used. Use the base of the change"),
+    ] = "HEAD",
+    base_image: Annotated[str | None, typer.Option("--base-image", help="Image to build on")] = None,
+    requirements: Annotated[
+        list[str] | None,
+        typer.Option("--requirements", help="Requirements file in the repo, repeatable"),
+    ] = None,
+    extra: Annotated[
+        list[str] | None, typer.Option("--extra", help="pyproject extra to install, repeatable")
+    ] = None,
+    group: Annotated[
+        list[str] | None, typer.Option("--group", help="Dependency group to install, repeatable")
+    ] = None,
+    allow_sdist: Annotated[
+        bool, typer.Option("--allow-sdist", help="Allow building packages from source")
+    ] = False,
+    force: Annotated[bool, typer.Option("--force", help="Rebuild even if the image exists")] = False,
+    as_json: Annotated[bool, typer.Option("--json")] = False,
+) -> None:
+    try:
+        environment = build_environment(
+            repo_path,
+            ref,
+            base_image=_base_image(base_image),
+            requirements_files=requirements,
+            extras=extra,
+            groups=group,
+            allow_sdist=allow_sdist,
+            force=force,
+        )
+    except HANDLED as exc:
+        _fail(str(exc))
+
+    if as_json:
+        typer.echo(json.dumps(environment.as_dict(), indent=2))
+        return
+    typer.echo(_render_environment(environment))
+    typer.echo(f"TRIBUNAL_SANDBOX_IMAGE={environment.image}")
 
 
 @app.command()
@@ -121,10 +212,22 @@ def submit(
     agent: Annotated[str, typer.Option(help="Name of the agent that wrote the change")] = "unknown",
     repo: Annotated[str | None, typer.Option(help="Repository name")] = None,
     test_cmd: Annotated[str | None, typer.Option("--test-cmd", help="Test command")] = None,
+    image: Annotated[str | None, typer.Option("--image", help="Sandbox image to run in")] = None,
+    build_env: Annotated[
+        bool,
+        typer.Option("--build-env", help="Build an image from the base commit's dependencies"),
+    ] = False,
+    allow_sdist: Annotated[
+        bool, typer.Option("--allow-sdist", help="Allow building packages from source")
+    ] = False,
     as_json: Annotated[bool, typer.Option("--json", help="Print the signed receipt")] = False,
 ) -> None:
+    if image and build_env:
+        _fail("use either --image or --build-env, not both")
     try:
-        pipeline = build_pipeline()
+        if build_env:
+            image = _prepare_environment(repo_path, base, allow_sdist=allow_sdist)
+        pipeline = build_pipeline(**_pipeline_options(image))
         submission = pipeline.submit(
             repo_path=repo_path,
             base=base,
@@ -166,6 +269,22 @@ def ci_cmd(
         Path | None,
         typer.Option("--receipt-out", envvar="TRIBUNAL_RECEIPT_OUT", help="Write receipt JSON"),
     ] = None,
+    build_env: Annotated[
+        bool,
+        typer.Option(
+            "--build-env/--no-build-env",
+            envvar="TRIBUNAL_BUILD_ENV",
+            help="Build an image from the base commit's dependencies",
+        ),
+    ] = False,
+    allow_sdist: Annotated[
+        bool,
+        typer.Option(
+            "--allow-sdist/--no-allow-sdist",
+            envvar="TRIBUNAL_ALLOW_SDIST",
+            help="Allow building packages from source",
+        ),
+    ] = False,
 ) -> None:
     if fail_on not in {"fail", "inconclusive"}:
         _fail("--fail-on must be 'fail' or 'inconclusive'")
@@ -176,7 +295,8 @@ def ci_cmd(
     try:
         context = load_pr_context(event_path)
         base = merge_base(repo_path, context.base_sha, context.head_sha)
-        pipeline = build_pipeline()
+        image = _prepare_environment(repo_path, base, allow_sdist=allow_sdist) if build_env else None
+        pipeline = build_pipeline(**_pipeline_options(image))
         submission = pipeline.submit(
             repo_path=repo_path,
             base=base,
@@ -205,9 +325,7 @@ def ci_cmd(
             typer.echo("warning: GITHUB_TOKEN is not set, skipping comment", err=True)
         else:
             try:
-                typer.echo(
-                    f"comment: {upsert_comment(context.repo, context.number, token, markdown)}"
-                )
+                typer.echo(f"comment: {upsert_comment(context.repo, context.number, token, markdown)}")
             except CIError as exc:
                 typer.echo(f"warning: {exc}", err=True)
 
