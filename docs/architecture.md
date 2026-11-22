@@ -93,7 +93,8 @@ receipt, along with the files it used, so it can be replayed.
 ## Known limits
 
 - The sandbox has no network. The sandbox image must already contain the project's test
-  dependencies. A networked setup phase is planned.
+  dependencies. `tribunal build-image` builds one from the base commit's dependency files
+  with network access, and only that build step has it. See [Dependencies](dependencies.md).
 - Differential execution calls top-level functions only. Methods, class bodies and code that
   cannot be imported are reported as outside its reach, which blocks support for the claim.
 - Coverage is line based. A change that alters behavior on an input without changing which lines
