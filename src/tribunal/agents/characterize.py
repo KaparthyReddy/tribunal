@@ -26,7 +26,7 @@ IMPORT_ERRORS = frozenset({"ModuleNotFoundError", "ImportError"})
 SIGNATURE_ERROR = re.compile(
     r"unexpected keyword argument|positional argument|required positional|takes \d+ positional"
 )
-DOC_SUFFIXES = (".md", ".rst", ".txt")
+DOC_SUFFIXES = (".md", ".rst")
 
 DRIVER = """\
 import contextlib
