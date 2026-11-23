@@ -468,7 +468,9 @@ class Characterizer:
 
         explanation = self._static(ctx, changed_files)
         if explanation is not None:
-            return self._settled(result, no_change, "Static check: no runtime change", explanation)
+            self._settled(result, no_change, "Static check: no runtime change", explanation)
+            result.proven_identical = True
+            return result
 
         analysis = analyze_changes(ctx.base_dir, ctx.head_dir, changes)
         if not analysis.targets:
