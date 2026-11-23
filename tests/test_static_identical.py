@@ -38,7 +38,9 @@ def test_untested_code_findings_are_demoted_only_for_blast_radius() -> None:
             title="Wide blast radius: 30 dependent function(s)",
             severity=Severity.LOW,
         ),
-        Finding(source="skeptic", title="No test reaches changed code: x", severity=Severity.MEDIUM),
+        Finding(
+            source="skeptic", title="No test reaches changed code: x", severity=Severity.MEDIUM
+        ),
     ]
     demoted = demote_uncovered(findings)
 
