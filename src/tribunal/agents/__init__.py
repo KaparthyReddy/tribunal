@@ -12,7 +12,7 @@ from tribunal.agents.claims import deterministic_claims, extract_claims
 from tribunal.agents.failtopass import FailToPass
 from tribunal.agents.judge import Judge, JudgePolicy
 from tribunal.agents.mutants import Mutant, generate_mutants
-from tribunal.agents.rules import demote_test_gaps, enforce_fixed_rules
+from tribunal.agents.rules import demote_test_gaps, demote_uncovered, enforce_fixed_rules
 from tribunal.agents.skeptic import Skeptic
 
 __all__ = [
@@ -29,6 +29,7 @@ __all__ = [
     "Mutant",
     "Skeptic",
     "demote_test_gaps",
+    "demote_uncovered",
     "deterministic_claims",
     "enforce_fixed_rules",
     "extract_claims",
