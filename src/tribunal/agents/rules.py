@@ -2,6 +2,8 @@ from tribunal.agents.base import CRITICAL_KINDS, AgentResult
 from tribunal.models import Claim, ClaimStatus, Finding, Severity
 
 SURVIVOR_PREFIX = "Surviving mutant at"
+UNCOVERED_PREFIX = "No test reaches changed code:"
+UNCOVERED_SUFFIX = "have no test coverage"
 
 
 def enforce_fixed_rules(audit: AgentResult, claims: list[Claim]) -> None:
@@ -44,6 +46,30 @@ def demote_test_gaps(findings: list[Finding]) -> list[Finding]:
                         "detail": (
                             "Behavior was identical on every compared input and the changed code ran, "
                             "so this is a gap in the tests, not an error in the change."
+                        ),
+                    }
+                )
+            )
+        else:
+            demoted.append(finding)
+    return demoted
+
+
+def demote_uncovered(findings: list[Finding]) -> list[Finding]:
+    demoted: list[Finding] = []
+    for finding in findings:
+        uncovered = finding.title.startswith(UNCOVERED_PREFIX) or finding.title.endswith(
+            UNCOVERED_SUFFIX
+        )
+        if finding.source == "blast_radius" and uncovered:
+            demoted.append(
+                finding.model_copy(
+                    update={
+                        "severity": Severity.INFO,
+                        "title": f"Test gap, syntax unchanged: {finding.title[0].lower()}{finding.title[1:]}",
+                        "detail": (
+                            "The syntax trees of every changed file are identical, so the change "
+                            "cannot behave differently. The missing test coverage was already there."
                         ),
                     }
                 )
