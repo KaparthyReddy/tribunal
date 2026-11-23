@@ -58,6 +58,9 @@ more round of inputs aimed at them. Lines still unrun become a `medium` finding.
   tests or claims a fix.
 - When behavior is shown identical, surviving mutants are reported as test gaps at `info` level.
   New code is exempt, so untested new functions stay `medium`.
+- When the syntax trees of every changed file are identical, nothing can behave differently, and
+  findings about untested changed code are reported at `info` level. Sampled agreement does not do
+  this, because it cannot prove identity. Only `.md` and `.rst` files count as documentation.
 
 The model chooses inputs but never interprets the results.
 
@@ -105,3 +108,8 @@ receipt, along with the files it used, so it can be replayed.
   Import errors are excluded, other causes are not.
 - Python only. Receipts prove what was run and what it printed. They do not prove the absence of
   bugs.
+- The call graph links calls by name. Code that is only invoked indirectly, for example through a
+  CLI test runner, a decorator or dynamic dispatch, can be reported as untested although tests
+  exercise it.
+- The syntax comparison ignores docstrings. Code that reads `__doc__` at runtime, such as CLI help
+  generation, can change behavior without changing the syntax tree.
