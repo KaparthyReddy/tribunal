@@ -14,6 +14,7 @@ from tribunal.agents import (
     Judge,
     Skeptic,
     demote_test_gaps,
+    demote_uncovered,
     deterministic_claims,
     enforce_fixed_rules,
     extract_claims,
@@ -176,20 +177,25 @@ class Pipeline:
                     )
                 )
 
-            findings.extend(self.blast.analyze(head_dir, ranges).findings)
+            blast_findings = self.blast.analyze(head_dir, ranges).findings
             audit = Auditor(self.llm, self.runner).audit(ctx, claims)
             enforce_fixed_rules(audit, claims)
             skeptic = Skeptic(self.llm, self.runner).attack(ctx, ranges)
 
             identical = False
+            proven = False
             if self.differential:
                 characterization = Characterizer(self.llm, self.runner).run(
                     ctx, claims, changes, changed
                 )
                 merge_characterization(audit, characterization, claims)
                 identical = characterization.behavior_identical
-            merge_characterization(audit, FailToPass(self.runner).run(ctx, claims, changed), claims)
+                proven = characterization.proven_identical
+            merge_characterization(
+                audit, FailToPass(self.runner).run(ctx, claims, changed), claims
+            )
 
+            findings.extend(demote_uncovered(blast_findings) if proven else blast_findings)
             findings.extend(audit.findings)
             findings.extend(demote_test_gaps(skeptic.findings) if identical else skeptic.findings)
 
