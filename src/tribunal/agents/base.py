@@ -79,6 +79,7 @@ class AgentResult:
     findings: list[Finding] = field(default_factory=list)
     claim_results: list[ClaimResult] = field(default_factory=list)
     behavior_identical: bool = False
+    proven_identical: bool = False
 
 
 def passed(record: CommandRecord) -> bool:
