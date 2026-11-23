@@ -21,7 +21,7 @@ A human reads the verdict and the receipt, not the raw diff.
 - CLI: `tribunal submit`, `verdict`, `verify-receipt`, `replay`, `trust`, `public-key`
 - HTTP API: `tribunal serve`, interactive docs at `/docs`
 - MCP server: `tribunal mcp` with `submit`, `verdict`, `verify`, `replay`
-- GitHub Action: verifies pull requests and comments the verdict
+- GitHub Action: verifies pull requests and comments the verdict. It is unit-tested against mocked GitHub APIs and has not yet run on a real pull request
 
 ## Guarantees
 
