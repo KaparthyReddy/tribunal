@@ -113,3 +113,8 @@ receipt, along with the files it used, so it can be replayed.
   exercise it.
 - The syntax comparison ignores docstrings. Code that reads `__doc__` at runtime, such as CLI help
   generation, can change behavior without changing the syntax tree.
+- The "every changed line ran" condition cannot fail for a change on a `def` line, such as a default
+  value, or on a line that every call executes. For those changes, support for a no-behavior-change
+  claim rests on the sampled inputs alone.
+- Surviving mutants are reported as test gaps when sampled inputs agree, even when the mutant sits
+  on the changed line.

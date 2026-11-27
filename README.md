@@ -93,7 +93,9 @@ How to read it:
   short of the 2 more that the criteria required to call it a success.
 - **The two versions blocked the same 7 changes.** The redesign changed four outcomes. Two
   improved (one false green became a flag, one flagged clean change became a pass). Two got worse,
-  and both are buggy changes that went from flagged to passed.
+  and both are buggy changes that went from flagged to passed. The receipts show why: v3 treats
+  agreement on sampled inputs as support for a "no behavior change" claim, and a changed line can
+  run on every call without any input exposing the difference.
 - **Both versions beat the baseline on this set,** 7 of 11 caught against 4, and neither blocked
   a clean change. The intervals overlap, and the set favors the tool: 9 of the 11 buggy cases
   are an edited top-level function with a "no behavior change" claim, which is what differential

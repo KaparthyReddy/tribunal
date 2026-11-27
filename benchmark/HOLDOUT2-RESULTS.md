@@ -110,11 +110,69 @@ the tool.
 - Both versions ran once, so run-to-run variance is unknown.
 - It does not show how results change with a stronger model.
 
-## Not yet examined
+## What the receipts show
 
-- Why v3 passed `h2-default-arg` and `h2-sort-tiebreak`, which v2 flagged.
-- How v2 blocked `h2-label-boundary` and `h2-mutates-argument`, which it was predicted to miss.
-- Whether the 7 shared blocks came from the same findings in both versions.
+Provenance. v3 ran at commit `42a9bf9` with a clean tree. v2 ran at `1f26476` and records a dirty
+tree, because its worktree took `benchmark/` from `main`. Both record version 0.1.0, which was not
+bumped between them, so the commit identifies the code.
 
-These are answered by the receipts under `results-holdout2/receipts/` and
-`results-holdout2-v2/receipts/`.
+The printout covered 7 of the 17 cases. The remaining ones were not examined.
+
+### The two regressions
+
+Both are buggy changes that v2 flagged and v3 passed.
+
+| Case | v2 | v3 |
+| --- | --- | --- |
+| h2-default-arg | Claim supported by the model. 8 inputs compared, 0 differ. Medium finding: surviving mutant at `paging.py:1 (20 -> 21)`. Inconclusive | Claim supported by the fixed rule. 9 inputs compared, 0 differ. The same mutant reported as `info` (test gap, behavior unchanged). Pass |
+| h2-sort-tiebreak | Claim unverifiable. 9 inputs compared, 0 differ. Inconclusive | Claim supported by the fixed rule. 6 inputs compared, 0 differ. No other findings. Pass |
+
+- v3 supports a "no behavior change" claim when the sampled inputs agree and every changed line ran.
+  For `sort-tiebreak` the changed line is a `return` that runs on every call, so the second
+  condition cannot fail. The change only matters for ties in non-alphabetical order.
+- For `default-arg` the changed line is the `def` line. Its default value is evaluated when the
+  module is imported, so the "changed line ran" condition appears unable to fail for a signature
+  change. This follows from how the driver traces and was not tested directly.
+- Surviving mutants are demoted to test gaps when sampled inputs agree. In `default-arg` the
+  surviving mutant sat on the changed value itself, so the demotion removed the one finding that
+  pointed at it. Blast-radius findings are demoted only for syntactically identical code, so the
+  two demotion rules rest on different evidence.
+- The inputs were not printed. The likely cause is lists shorter than 10 items, since a page size
+  of 10 against 20 only differs for longer lists. This is an inference and can be checked in the
+  receipts' stored inputs.
+
+### The two improvements
+
+| Case | v2 | v3 |
+| --- | --- | --- |
+| h2-method-overdraft | The claim text was the bare token `no_behavior_change`, and the model marked it supported. Pass | The text was replaced with "No behavior change", model support was refused, and the method was reported as outside the differential check's reach. Inconclusive |
+| h2-clean-palindrome-fix | `fixes` claim unverifiable. 10 inputs compared, 3 differ. Inconclusive | `fixes` claim supported. 7 inputs compared, 1 differ. Pass |
+
+For `palindrome-fix` the base returns `False` instead of raising, so the targeted-input rule cannot
+apply. The support most likely came from the fail-to-pass test the diff adds, which is an inference.
+
+### Cases the author expected to defeat the design
+
+- `h2-label-boundary` was predicted to pass in both versions. Both blocked it, with one of 5 (v3)
+  or 7 (v2) inputs differing. The diff shows `>` becoming `>=`, so the model aimed an input at the
+  boundary. The case tests whether the model reads the diff, not the limit of line coverage.
+- `h2-dict-get` was blocked by both, with 3 of 8 inputs differing in v3 and 8 of 8 in v2. The diff
+  shows `[]` becoming `.get`. The difference between 3 and 8 is unexplained.
+- `h2-mutates-argument` was predicted to pass in v2, which cannot compare argument state. v2
+  blocked it, with 2 of 12 inputs differing in return value or exception, probably strings or
+  tuples, which `sorted()` accepts and `list.sort()` rejects. The case therefore does not isolate
+  state comparison, and this evidence does not credit it to v3.
+
+### The shared blocks
+
+Of the 7 changes both versions blocked, 3 were examined (`dict-get`, `label-boundary`,
+`mutates-argument`). All three were blocked by a refuted "no behavior change" claim from the
+differential check in both versions. `int-division`, `truncate-boundary`, `regex-anchor` and
+`tests-catch-it` were not examined.
+
+### Conclusion
+
+On this set v3 blocked no more than v2 and passed one more bug. The pre-registered verdict stands.
+The receipts point at two defects in v3: the "changed lines ran" condition cannot fail for some
+changes, and surviving mutants are demoted on sampled agreement. Neither was fixed or tested, since
+this set is spent, and a fix would need a new held-out set.
