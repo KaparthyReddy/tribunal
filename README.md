@@ -148,6 +148,8 @@ one from the base commit's requirements, and use `python -m pytest` so the proje
 ## Docs
 
 - [Architecture](docs/architecture.md)
+- [Dependencies](docs/dependencies.md)
+- [Dogfooding](docs/dogfooding.md)
 - [Receipt format](docs/receipt-format.md)
 - [GitHub Action](docs/github-action.md)
 - [MCP clients](docs/mcp-clients.md)
